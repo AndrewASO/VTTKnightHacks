@@ -4,6 +4,7 @@ const os = require('os');
 const path = require('path');
 const { Server } = require('socket.io');
 const { GRID, insideRoom } = require('./public/rules.js');
+const { resolveAttack } = require('./combat/attack.js');
 
 const PORT = process.env.PORT || 3000;
 const DM_CODE = process.env.DM_CODE || 'dm';
@@ -25,7 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/vendor/konva', express.static(path.join(__dirname, 'node_modules/konva')));
 
 // The one source of truth. Clients only ever send intents.
-const board = { tokens: [], nextId: 1 };
+const board = { tokens: [], nextId: 1, log: [], nextLogId: 1 };
+const MAX_LOG_ENTRIES = 100;
 
 // Build the view a given role is allowed to see.
 // Players get full sheets for characters but only a name for monsters,
@@ -44,7 +46,14 @@ function buildState(isDM) {
     .filter((c) => isDM || c.team === 'player')
     .map((c) => ({ id: c.id, name: c.name, team: c.team }));
 
-  return { tokens, creatures, roster, isDM };
+  // The DM sees every roll. Players only see the one-line outcome.
+  const log = board.log.map((entry) => ({
+    id: entry.id,
+    outcome: entry.outcome,
+    lines: isDM ? entry.dm : [entry.pub],
+  }));
+
+  return { tokens, creatures, roster, log, isDM };
 }
 
 function broadcast() {
@@ -101,6 +110,7 @@ io.on('connection', (socket) => {
       y: spot.y,
       hp: c.hp,
       maxHp: c.hp,
+      defeated: false,
     });
     broadcast();
   });
@@ -115,6 +125,52 @@ io.on('connection', (socket) => {
       token.x = x;
       token.y = y;
     }
+    broadcast();
+  });
+
+  socket.on('attack:declare', ({ attackerId, targetId, actionName }) => {
+    const attacker = board.tokens.find((t) => t.id === attackerId);
+    const target = board.tokens.find((t) => t.id === targetId);
+    if (!attacker || !target || attacker.id === target.id) return;
+
+    // Players can only attack with their own side's tokens.
+    if (!socket.data.isDM && attacker.team !== 'player') return;
+
+    const result = resolveAttack({
+      attacker,
+      target,
+      actionName,
+      tokens: board.tokens,
+      catalog,
+    });
+
+    // Rule problems (out of range, defeated) go back to the sender only.
+    if (!result.ok) {
+      socket.emit('attack:error', { message: result.error });
+      return;
+    }
+
+    target.hp = result.hpAfter;
+    target.defeated = result.defeated;
+
+    board.log.push({
+      id: board.nextLogId++,
+      outcome: result.outcome,
+      dm: result.dm,
+      pub: result.pub,
+    });
+    if (board.log.length > MAX_LOG_ENTRIES) board.log.shift();
+
+    broadcast();
+  });
+
+  // Handy for demos: put a token back to full health.
+  socket.on('token:restore', ({ id }) => {
+    if (!socket.data.isDM) return;
+    const token = board.tokens.find((t) => t.id === id);
+    if (!token) return;
+    token.hp = token.maxHp;
+    token.defeated = false;
     broadcast();
   });
 

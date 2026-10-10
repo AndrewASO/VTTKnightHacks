@@ -79,6 +79,12 @@ function snapPixels(pos) {
   return { x: col * GRID.size, y: row * GRID.size };
 }
 
+function hpColor(pct) {
+  if (pct > 0.5) return '#6aa84f';
+  if (pct > 0.25) return '#d6a032';
+  return '#c0432f';
+}
+
 function makeToken(token) {
   const size = GRID.size;
   const isSelected = selected.includes(token.id);
@@ -88,6 +94,7 @@ function makeToken(token) {
     y: token.y * size,
     draggable: canMove(token),
     dragBoundFunc: snapPixels,
+    opacity: token.defeated ? 0.35 : 1,
   });
 
   group.add(new Konva.Circle({
@@ -112,6 +119,13 @@ function makeToken(token) {
     fill: '#ffffff',
     listening: false,
   }));
+
+  // Small HP bar along the bottom. Hidden when the viewer is not allowed to see HP.
+  if (token.hp !== null && token.maxHp) {
+    const pct = Math.max(0, token.hp / token.maxHp);
+    group.add(new Konva.Rect({ x: 6, y: size - 9, width: size - 12, height: 5, fill: '#3b4450', listening: false }));
+    group.add(new Konva.Rect({ x: 6, y: size - 9, width: (size - 12) * pct, height: 5, fill: hpColor(pct), listening: false }));
+  }
 
   group.on('click tap', (e) => selectToken(token.id, e.evt.shiftKey));
   group.on('dragmove', updateMeasure);
@@ -277,6 +291,10 @@ function renderDetail() {
   });
 
   if (state.isDM) {
+    const restore = el('button', 'Restore HP');
+    restore.addEventListener('click', () => socket.emit('token:restore', { id: token.id }));
+    box.appendChild(restore);
+
     const remove = el('button', 'Remove token', 'danger');
     remove.addEventListener('click', () => {
       socket.emit('token:remove', { id: token.id });
@@ -286,9 +304,95 @@ function renderDetail() {
   }
 }
 
+function tokenById(id) {
+  return state.tokens.find((t) => t.id === id);
+}
+
+// The farthest an action can reach, counting both melee reach and ranged distance.
+function maxReach(action) {
+  const reach = action.reach || 0;
+  const range = action.range ? action.range.long : 0;
+  return Math.max(reach, range);
+}
+
+// Shows one button per action the attacker has. Select an attacker, then
+// shift-click a target. Both stay selected so you can keep attacking.
+function renderAttack() {
+  const box = document.getElementById('attack-actions');
+  box.replaceChildren();
+  document.getElementById('attack-msg').textContent = '';
+
+  const attacker = tokenById(selected[0]);
+  const target = tokenById(selected[1]);
+
+  if (!attacker || !target) {
+    box.appendChild(el('p', 'Select an attacker, then shift-click a target.', 'detail-sub'));
+    return;
+  }
+
+  const creature = state.creatures[attacker.creatureId];
+  const actions = creature.actions || [];
+  const allowed = state.isDM || attacker.team === 'player';
+
+  if (actions.length === 0 || !allowed) {
+    box.appendChild(el('p', 'Pick one of your own characters as the attacker.', 'detail-sub'));
+    return;
+  }
+
+  const feet = feetBetween(attacker, target);
+
+  actions.forEach((action) => {
+    const button = el('button', action.name);
+    let hint = '';
+
+    if (attacker.defeated || target.defeated) {
+      hint = 'a defeated token is involved';
+    } else if (action.saveAbility) {
+      hint = 'needs save rules (coming soon)';
+    } else if (feet > maxReach(action)) {
+      hint = `out of range (${feet} ft away)`;
+    }
+
+    if (hint) {
+      button.disabled = true;
+      button.appendChild(el('span', hint, 'hint'));
+    }
+
+    button.addEventListener('click', () => {
+      socket.emit('attack:declare', {
+        attackerId: attacker.id,
+        targetId: target.id,
+        actionName: action.name,
+      });
+    });
+    box.appendChild(button);
+  });
+}
+
+// Newest entry first, so there is no scrolling needed to see the latest attack.
+function renderLog() {
+  const box = document.getElementById('log');
+  box.replaceChildren();
+
+  if (state.log.length === 0) {
+    box.appendChild(el('p', 'No attacks yet.', 'detail-sub'));
+    return;
+  }
+
+  state.log.slice().reverse().forEach((entry) => {
+    const item = el('div', undefined, `log-entry ${entry.outcome}`);
+    entry.lines.forEach((line, index) => {
+      item.appendChild(el('p', line, index === 0 ? 'log-head' : 'log-line'));
+    });
+    box.appendChild(item);
+  });
+}
+
 function renderPanel() {
   document.getElementById('role').textContent = state.isDM ? 'Dungeon Master view' : 'Player view';
   renderRoster();
+  renderAttack();
+  renderLog();
   renderDetail();
 }
 
@@ -300,6 +404,11 @@ socket.on('state', (newState) => {
   selected = selected.filter((id) => state.tokens.some((t) => t.id === id));
   renderTokens();
   renderPanel();
+});
+
+// Rule errors such as "out of range" come back only to the player who asked.
+socket.on('attack:error', ({ message }) => {
+  document.getElementById('attack-msg').textContent = message;
 });
 
 drawGrid();

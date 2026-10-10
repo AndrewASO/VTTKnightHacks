@@ -1,0 +1,22 @@
+# Dependencies, rebuilt by npm install
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Environment and secrets
+.env
+.env.*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build output, in case a bundler is added later
+dist/
+build/
