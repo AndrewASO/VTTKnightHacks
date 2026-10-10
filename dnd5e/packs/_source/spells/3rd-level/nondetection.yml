@@ -1,0 +1,171 @@
+_id: aU62xVUBYkAQWIHv
+name: Nondetection
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>For the Duration, you hide a target that you touch from Divination
+      magic. The target can be a willing creature or a place or an object no
+      larger than 10 feet in any dimension. The target can't be targeted by any
+      divination magic or perceived through magical
+      @UUID[Compendium.dnd5e.spells.Item.fVbCxFRaORalHB20]{scrying} sensors.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '8'
+    units: hour
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 3
+  school: abj
+  materials:
+    value: >-
+      A pinch of diamond dust worth 25 gp sprinkled over the target, which the
+      spell consumes
+    consumed: true
+    cost: 25
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    2NuVawqLGZyCNlFT:
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: VcHisfZtWwBeEBCP
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      name: Cast
+      img: ''
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      _id: 2NuVawqLGZyCNlFT
+  identifier: nondetection
+sort: 0
+flags: {}
+img: icons/magic/perception/shadow-stealth-eyes-purple.webp
+effects:
+  - name: Nondetection
+    img: icons/magic/perception/shadow-stealth-eyes-purple.webp
+    origin: Compendium.dnd5e.spells.Item.aU62xVUBYkAQWIHv
+    transfer: false
+    _id: VcHisfZtWwBeEBCP
+    type: base
+    system:
+      changes: []
+    disabled: false
+    start: null
+    duration:
+      value: 8
+      units: hours
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>For the Duration, you are hidden from Divination magic. You can't be
+      targeted by any divination magic or perceived through magical
+      @UUID[Compendium.dnd5e.spells.Item.fVbCxFRaORalHB20]{scrying} sensors.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781356910548
+      modifiedTime: 1783217155373
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!aU62xVUBYkAQWIHv.VcHisfZtWwBeEBCP'
+folder: 5Si35RRLLaaoWvC3
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037359727
+  modifiedTime: 1783217151195
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!aU62xVUBYkAQWIHv'

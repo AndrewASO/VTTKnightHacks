@@ -1,0 +1,90 @@
+_id: LOMdcNAGWh5xpfm4
+name: Lucky
+ownership:
+  default: 0
+type: feat
+system:
+  description:
+    value: >-
+      <p>When you roll a 1 on the d20 for an attack roll, ability check, or
+      saving throw, you can reroll the die and must use the new roll.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: race
+    subtype: ''
+  requirements: Halfling
+  properties:
+    - trait
+  activities: {}
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: lucky
+flags: {}
+img: icons/sundries/gaming/dice-runed-brown.webp
+effects:
+  - name: Lucky
+    img: icons/sundries/gaming/dice-runed-brown.webp
+    origin: Compendium.dnd5e.races.Item.LOMdcNAGWh5xpfm4
+    type: base
+    _id: uG46N3C6WoFQmW0W
+    system:
+      changes:
+        - key: flags.dnd5e.halflingLucky
+          type: override
+          value: true
+          phase: initial
+          priority: null
+    disabled: false
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>When you roll a 1 on the d20 for an attack roll, ability check, or
+      saving throw, you can reroll the die and must use the new roll.</p>
+    tint: '#ffffff'
+    transfer: true
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781473123404
+      modifiedTime: 1781473205332
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!LOMdcNAGWh5xpfm4.uG46N3C6WoFQmW0W'
+folder: kbtbKofcv13crhke
+sort: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037392827
+  modifiedTime: 1781473162772
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!LOMdcNAGWh5xpfm4'

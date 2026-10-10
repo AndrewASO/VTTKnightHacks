@@ -20,3 +20,34 @@ Thumbs.db
 # Build output, in case a bundler is added later
 dist/
 build/
+
+# Foundry checkout copied into dnd5e/. Its own .git and install stay out.
+dnd5e/.git/
+dnd5e/node_modules/
+
+# Foundry-only artwork. LICENSE files in these folders are still committed.
+# See README.md. server.js reads portraits from ../dnd5e/tokens, outside this repo.
+dnd5e/tokens/**/*.webp
+dnd5e/tokens/**/*.png
+dnd5e/tokens/**/*.jpg
+dnd5e/tokens/**/*.jpeg
+dnd5e/tokens/**/*.gif
+dnd5e/tokens/**/*.svg
+dnd5e/ui/official/**/*.webp
+dnd5e/ui/official/**/*.png
+dnd5e/ui/official/**/*.jpg
+dnd5e/ui/official/**/*.jpeg
+dnd5e/ui/official/**/*.gif
+dnd5e/ui/official/**/*.svg
+dnd5e/icons/spell-tiers/**/*.webp
+dnd5e/icons/spell-tiers/**/*.png
+dnd5e/icons/spell-tiers/**/*.jpg
+dnd5e/icons/spell-tiers/**/*.jpeg
+dnd5e/icons/spell-tiers/**/*.gif
+dnd5e/icons/spell-tiers/**/*.svg
+dnd5e/icons/svg/schools/**/*.webp
+dnd5e/icons/svg/schools/**/*.png
+dnd5e/icons/svg/schools/**/*.jpg
+dnd5e/icons/svg/schools/**/*.jpeg
+dnd5e/icons/svg/schools/**/*.gif
+dnd5e/icons/svg/schools/**/*.svg

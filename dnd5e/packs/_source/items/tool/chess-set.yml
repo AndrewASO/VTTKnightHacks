@@ -1,0 +1,136 @@
+_id: 23y8FvWKf9YLcnBL
+name: Chess Set
+type: tool
+img: icons/sundries/gaming/chess-knight-white.webp
+system:
+  description:
+    value: >-
+      <p>This item is a complete set of chess pieces and board. The board can
+      also be used for variations of draughts and checkers.</p>
+
+      <p>If you are proficient with a gaming set, you can add your proficiency
+      bonus to ability checks you make to play a game with that set. Each type
+      of gaming set requires a separate proficiency.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  quantity: 1
+  weight:
+    value: 0.5
+    units: lb
+  price:
+    value: 1
+    denomination: gp
+  attunement: ''
+  equipped: false
+  rarity: ''
+  identified: true
+  ability: dex
+  chatFlavor: ''
+  proficient: null
+  bonus: ''
+  type:
+    value: game
+    baseItem: chess
+  unidentified:
+    description: ''
+    name: Unidentified Chess Set
+  container: null
+  properties: []
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  activities:
+    RUUCcFGTvTV9vhrS:
+      type: check
+      activation:
+        type: ''
+        value: null
+        condition: ''
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        concentration: false
+        value: ''
+        units: inst
+        special: ''
+        override: false
+      effects: []
+      range:
+        units: self
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ft
+          stationary: false
+        affects:
+          count: ''
+          type: ''
+          choice: false
+          special: ''
+        prompt: true
+        override: false
+      check:
+        ability: dex
+        dc:
+          calculation: ''
+          formula: ''
+        associated: []
+        visible: true
+        bonus: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+        identifier: ''
+      _id: RUUCcFGTvTV9vhrS
+      name: Play Game
+  attuned: false
+  identifier: chess-set
+effects: []
+folder: uvZXbqK3cHirDzeT
+sort: 0
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037087406
+  modifiedTime: 1783649832856
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!23y8FvWKf9YLcnBL'

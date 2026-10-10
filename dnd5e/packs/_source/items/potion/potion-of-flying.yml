@@ -1,0 +1,200 @@
+_id: eTNc8XPtvZNe3yQs
+name: Potion of Flying
+type: consumable
+img: icons/consumables/potions/potion-flask-corked-cyan.webp
+system:
+  description:
+    value: >-
+      <p><em>This potion's clear liquid floats at the top of its container and
+      has cloudy white impurities drifting in it.</em></p><p>When you drink this
+      potion, you gain a flying speed equal to your walking speed for [[lookup
+      @labels.duration activity=dQ5KoAo9EfRNjkIg]] and can hover. If you're in
+      the air when the potion wears off, you fall unless you have some other
+      means of staying aloft.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  quantity: 1
+  weight:
+    value: 0.1
+    units: lb
+  price:
+    value: 20000
+    denomination: gp
+  attunement: ''
+  equipped: false
+  rarity: veryRare
+  identified: true
+  uses:
+    max: '1'
+    recovery: []
+    autoDestroy: true
+    spent: 0
+  damage:
+    base:
+      number: null
+      denomination: null
+      types: []
+      custom:
+        enabled: false
+      scaling:
+        number: 1
+    replace: false
+  type:
+    value: potion
+    subtype: ''
+  unidentified:
+    description: >-
+      <p>This potion's clear liquid floats at the top of its container and has
+      cloudy white impurities drifting in it.</p>
+    name: Unidentified Potion
+  container: null
+  properties:
+    - mgc
+  magicalBonus: null
+  activities:
+    dQ5KoAo9EfRNjkIg:
+      type: utility
+      activation:
+        type: action
+        value: 1
+        condition: ''
+        override: false
+      consumption:
+        targets:
+          - type: itemUses
+            value: '1'
+            target: ''
+            scaling: {}
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        concentration: false
+        value: '1'
+        units: hour
+        special: ''
+        override: false
+      effects:
+        - _id: UumpsHK33ePtvz3s
+          uuid: null
+          level: {}
+      range:
+        units: touch
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ft
+          stationary: false
+        affects:
+          count: '1'
+          type: creature
+          choice: false
+          special: ''
+        prompt: true
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      name: Drink
+      img: ''
+      visibility:
+        requireMagic: true
+        level:
+          min: null
+          max: null
+        identifier: ''
+        requireAttunement: false
+        requireIdentification: false
+      behaviors: []
+      flags: {}
+      _id: dQ5KoAo9EfRNjkIg
+  attuned: false
+  identifier: potion-of-flying
+effects:
+  - name: Alchemical Flight
+    img: icons/creatures/abilities/wings-birdlike-blue.webp
+    origin: Compendium.dnd5e.items.Item.eTNc8XPtvZNe3yQs
+    transfer: false
+    _id: UumpsHK33ePtvz3s
+    type: base
+    system:
+      changes:
+        - key: system.attributes.movement.fly
+          type: upgrade
+          value: '@attributes.movement.walk'
+          phase: initial
+          priority: null
+        - key: system.attributes.movement.hover
+          type: override
+          value: 1
+          phase: initial
+          priority: null
+      magical: true
+      rider:
+        statuses: []
+    disabled: false
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>For the duration, you gain a flying speed equal to your walking speed
+      and can hover. If you're in the air when the potion wears off, you fall
+      unless you have some other means of staying aloft.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1783373930475
+      modifiedTime: 1783374083017
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!eTNc8XPtvZNe3yQs.UumpsHK33ePtvz3s'
+folder: gyBZp72zKb56Da84
+sort: 0
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037241439
+  modifiedTime: 1783374202146
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!eTNc8XPtvZNe3yQs'

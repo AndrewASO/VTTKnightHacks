@@ -1,0 +1,148 @@
+import SystemDataModel from "../../abstract/system-data-model.mjs";
+
+const { BooleanField, StringField } = foundry.data.fields;
+
+/**
+ * @import { CompendiumBrowserFilterDefinitionEntry } from "../../../applications/compendium-browser.mjs";
+ * @import { EquippableItemTemplateData } from "./_types.mjs";
+ */
+
+/**
+ * Data model template with information on items that can be attuned and equipped.
+ * @extends {SystemDataModel<EquippableItemTemplateData>}
+ * @mixin
+ */
+export default class EquippableItemTemplate extends SystemDataModel {
+  /** @inheritDoc */
+  static defineSchema() {
+    return {
+      attunement: new StringField({required: true, label: "DND5E.Attunement"}),
+      attuned: new BooleanField({label: "DND5E.Attuned"}),
+      equipped: new BooleanField({required: true, label: "DND5E.Equipped"})
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Create attunement filter configuration.
+   * @returns {CompendiumBrowserFilterDefinitionEntry}
+   */
+  static get compendiumBrowserAttunementFilter() {
+    return {
+      label: "DND5E.Attunement",
+      type: "boolean",
+      createFilter: (filters, value, def) => {
+        if ( value === 0 ) return;
+        const filter = { k: "system.attunement", o: "in", v: ["required", 1] };
+        if ( value === 1 ) filters.push(filter);
+        else filters.push({ o: "NOT", v: filter });
+      }
+    };
+  }
+
+  /* -------------------------------------------- */
+  /*  Properties                                  */
+  /* -------------------------------------------- */
+
+  /**
+   * This item is capable of being attuned.
+   * @type {boolean}
+   */
+  get canAttune() {
+    return (this.attunement === "required") || (this.attunement === "optional");
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Chat properties for equippable items.
+   * @type {string[]}
+   */
+  get equippableItemCardProperties() {
+    return [
+      (this.attuned || CONFIG.DND5E.attunementTypes[this.attunement])
+        ? { type: "attunement", attuned: this.attuned, attunement: this.attunement } : null,
+      this.equipped ? null : { type: "label", label: "DND5E.Unequipped" },
+      ("proficient" in this) ? { type: "proficiency", proficiency: this.prof?.multiplier || 0 } : null
+    ].filter(_ => _);
+  }
+
+  /* -------------------------------------------- */
+  /*  Data Migration                              */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  static _migrateData(source) {
+    super._migrateData(source);
+    EquippableItemTemplate.#migrateAttunement(source);
+    EquippableItemTemplate.#migrateEquipped(source);
+    return source;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Migrate the item's attuned boolean to attunement string.
+   * @param {object} source  The candidate source data from which the model will be constructed.
+   */
+  static #migrateAttunement(source) {
+    switch ( source.attunement ) {
+      case 2: source.attuned = true;
+      case 1: source.attunement = "required"; break;
+      case 0: source.attunement = ""; break;
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Migrate the equipped field.
+   * @param {object} source  The candidate source data from which the model will be constructed.
+   */
+  static #migrateEquipped(source) {
+    if ( !("equipped" in source) ) return;
+    if ( (source.equipped === null) || (source.equipped === undefined) ) source.equipped = false;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  static _resetData(source) {
+    super._resetData(source);
+    delete source.equipped;
+    delete source.attuned;
+  }
+
+  /* -------------------------------------------- */
+  /*  Data Preparation                            */
+  /* -------------------------------------------- */
+
+  /**
+   * Ensure items that cannot be attuned are not marked as attuned. If attuned and on an actor type that
+   * tracks attunement, increase that actor's attunement count.
+   */
+  prepareFinalEquippableData() {
+    if ( this.validProperties.has("mgc") && !this.properties.has("mgc") ) this.attunement = "";
+    if ( !this.attunement ) this.attuned = false;
+    if ( this.attuned && this.parent.actor?.system.attributes?.attunement ) {
+      this.parent.actor.system.attributes.attunement.value += 1;
+    }
+  }
+
+  /* -------------------------------------------- */
+  /*  Socket Event Handlers                       */
+  /* -------------------------------------------- */
+
+  /**
+   * Set as equipped for NPCs, and unequipped for PCs.
+   * @param {object} data     The initial data object provided to the document creation request.
+   * @param {object} options  Additional options which modify the creation request.
+   * @param {User} user       The User requesting the document creation.
+   */
+  preCreateEquipped(data, options, user) {
+    if ( this.parent.actor?.system.isCreature && !foundry.utils.hasProperty(data, "system.equipped") ) {
+      this.updateSource({ equipped: this.parent.actor.system.isNPC });
+    }
+  }
+}

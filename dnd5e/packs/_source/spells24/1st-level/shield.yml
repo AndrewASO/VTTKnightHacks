@@ -1,0 +1,176 @@
+name: Shield
+system:
+  description:
+    value: >-
+      <p>An imperceptible barrier of magical force protects you. Until the start
+      of your next turn, you have a +5 bonus to AC, including against the
+      triggering attack, and you take no damage from
+      <em>@UUID[Compendium.dnd-players-handbook.spells.Item.phbsplMagicMissi]{Magic
+      Missile}</em>.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    revision: 2
+    book: ''
+    license: CC-BY-4.0
+  activation:
+    type: reaction
+    condition: when you are hit by an attack roll or targeted by the Magic Missile spell
+    value: null
+  duration:
+    value: '1'
+    units: round
+  target:
+    affects:
+      choice: false
+      count: ''
+      type: self
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+      stationary: false
+  range:
+    units: self
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 1
+  school: abj
+  properties:
+    - vocal
+    - somatic
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        override: false
+        concentration: false
+      effects:
+        - _id: Bv3EoHGfYCprLdG1
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: ''
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: shield
+  method: spell
+  prepared: 0
+_id: phbsplShield0000
+type: spell
+img: icons/equipment/shield/heater-crystal-blue.webp
+effects:
+  - _id: Bv3EoHGfYCprLdG1
+    flags: {}
+    disabled: true
+    duration:
+      value: null
+      units: rounds
+      expiry: sourceStart
+      expired: false
+    origin: Compendium.dnd5e.spells24.Item.phbsplShield0000
+    tint: '#ffffff'
+    transfer: false
+    name: Imperceptible Barrier
+    description: >-
+      <p>Until the start of your next turn, you have a +5 bonus to AC, including
+      against the triggering attack, and you take no damage from <em>Magic
+      Missile</em>.</p>
+    statuses: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693626984
+      modifiedTime: 1787693626984
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    img: icons/equipment/shield/heater-steel-crystal-red.webp
+    type: base
+    system:
+      changes:
+        - key: system.attributes.ac.bonus
+          value: 5
+          priority: null
+          type: add
+          phase: initial
+          _id: AOVTL6UbE1BphM3E
+          conditions: '{}'
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    sort: 0
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplShield0000.Bv3EoHGfYCprLdG1'
+folder: pBaAAtXBCq9FVEnL
+sort: 700000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1787693626984
+  modifiedTime: 1787693626984
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplShield0000'

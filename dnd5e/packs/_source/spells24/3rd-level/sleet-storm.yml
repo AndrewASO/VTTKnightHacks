@@ -1,0 +1,152 @@
+name: Sleet Storm
+system:
+  description:
+    value: >-
+      <p>Until the spell ends, sleet falls in a 40-foot-tall, 20-foot-radius
+      Cylinder centered on a point you choose within range. The area is
+      &amp;Reference[heavilyobscured], and exposed flames in the area are
+      doused.</p><p>Ground in the Cylinder is &amp;Reference[difficultterrain].
+      When a creature enters the Cylinder for the first time on a turn or starts
+      its turn there, it must succeed on a Dexterity saving throw or have the
+      &amp;Reference[prone] condition and lose
+      &amp;Reference[concentration].</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    revision: 2
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      choice: false
+      count: ''
+      type: ''
+    template:
+      units: ft
+      type: cylinder
+      size: '20'
+      contiguous: false
+      height: ''
+      count: ''
+      stationary: false
+  range:
+    value: '150'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 3
+  school: con
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  materials:
+    value: a miniature umbrella
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        override: false
+        concentration: false
+      effects: []
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: half
+        parts: []
+      save:
+        ability:
+          - dex
+        dc:
+          calculation: spellcasting
+          formula: ''
+        visible: true
+        bonus: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      img: ''
+      behaviors:
+        - name: ''
+          _id: g8r7ffr94j68JiS6
+          type: difficultTerrain
+          config:
+            types:
+              - ice
+          level:
+            min: null
+            max: null
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      name: ''
+  identifier: sleet-storm
+  method: spell
+  prepared: 0
+_id: phbsplSleetStorm
+type: spell
+img: icons/magic/water/projectile-icecicles-salvo.webp
+effects: []
+folder: HCovEE4VoPGlIbKi
+sort: 125000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.365'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1786472106603
+  modifiedTime: 1786472106603
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplSleetStorm'

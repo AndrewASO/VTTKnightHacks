@@ -3,10 +3,19 @@
 (function (root) {
   const GRID = { cols: 20, rows: 14, size: 48, feetPerSquare: 5 };
 
+  // Squares between the near edges of two footprints. A missing size is one square.
+  function axisGap(origin, span, otherOrigin, otherSpan) {
+    const end = origin + span - 1;
+    const otherEnd = otherOrigin + otherSpan - 1;
+    if (end < otherOrigin) return otherOrigin - end;
+    if (otherEnd < origin) return origin - otherEnd;
+    return 0;
+  }
+
   // Standard 5e diagonals: a diagonal step costs the same as a straight one.
   function squareDistance(a, b) {
-    const dx = Math.abs(a.x - b.x);
-    const dy = Math.abs(a.y - b.y);
+    const dx = axisGap(a.x, a.w || a.width || 1, b.x, b.w || b.width || 1);
+    const dy = axisGap(a.y, a.h || a.height || 1, b.y, b.h || b.height || 1);
     return Math.max(dx, dy);
   }
 

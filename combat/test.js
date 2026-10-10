@@ -1,88 +1,56 @@
-// Quick sanity check with no server or browser. Run with: npm test
+// Checks the generated 2024 roster. Run with: npm test
 const { resolveAttack } = require('./attack.js');
+const { feetBetween } = require('../public/rules.js');
 const monsters = require('../data/monsters.json');
 const characters = require('../data/characters.json');
 
 const catalog = {};
 [...monsters, ...characters].forEach((c) => (catalog[c.id] = c));
 
-function token(id, creatureId, name, team, x, y) {
+function fail(message) {
+  console.error(message);
+  process.exit(1);
+}
+
+const goblin = catalog.mmGoblinWarrior0;
+const zanna = catalog.ZannaLv050000000;
+if (!goblin) fail('Goblin Warrior is missing from monsters.json');
+if (!zanna) fail('Level 5 Zanna is missing from characters.json');
+if (goblin.ac !== 15) fail(`Goblin AC is ${goblin.ac}`);
+if (goblin.token !== 'tokens/humanoid/Goblin.webp') fail(`Goblin token is ${goblin.token}`);
+if (goblin.width !== 1 || goblin.height !== 1) fail(`Goblin footprint is ${goblin.width}x${goblin.height}`);
+
+const giant = catalog.mmHillGiant00000;
+const dragon = catalog.mmAncientRedDrag;
+if (!giant || giant.width !== 3 || giant.height !== 3) fail('Hill Giant is not 3 by 3');
+if (!dragon || dragon.width !== 4 || dragon.height !== 4) fail('Ancient Red Dragon is not 4 by 4');
+const besideGiant = feetBetween({ x: 1, y: 1, w: 3, h: 3 }, { x: 4, y: 1, w: 1, h: 1 });
+if (besideGiant !== 5) fail(`A creature beside a Hill Giant is ${besideGiant} ft away`);
+
+const missile = zanna.actions.find((action) => action.name === 'Magic Missile');
+if (!missile || !missile.autoHit) fail('Zanna has no Magic Missile auto-hit');
+if (missile.img !== 'icons/magic/light/projectiles-pink-purple.webp') {
+  fail(`Magic Missile icon is ${missile.img}`);
+}
+
+function token(id, creatureId, name, x, y) {
   const c = catalog[creatureId];
-  return { id, creatureId, name, team, x, y, hp: c.hp, maxHp: c.hp, defeated: false };
+  return { id, creatureId, name, team: c.team, x, y, hp: c.hp, maxHp: c.hp, defeated: false };
 }
 
-// Run one attack many times, resetting HP each time, and report the numbers.
-function simulate(label, build, actionName, runs = 5000) {
-  let hits = 0;
-  let crits = 0;
-  let damage = 0;
-  for (let i = 0; i < runs; i++) {
-    const { tokens, attacker, target } = build();
-    const result = resolveAttack({ attacker, target, actionName, tokens, catalog });
-    if (!result.ok) {
-      console.log(label, 'failed:', result.error);
-      return;
-    }
-    if (result.hit) hits++;
-    if (result.crit) crits++;
-    damage += result.totalDamage;
-  }
-  const pct = (n) => ((n / runs) * 100).toFixed(1) + '%';
-  console.log(`${label}: hit ${pct(hits)}, crit ${pct(crits)}, avg damage ${(damage / runs).toFixed(2)}`);
-}
-
-// Goblin scimitar vs Fighter AC 19: needs a 15+, expect about 30% hits.
-simulate('Goblin vs Fighter (melee)', () => {
-  const a = token(1, 'goblin', 'Goblin 1', 'monster', 1, 1);
-  const t = token(2, 'pc-fighter', 'Dagny', 'player', 2, 1);
-  return { tokens: [a, t], attacker: a, target: t };
-}, 'Scimitar');
-
-// Fighter with Improved Critical vs Skeleton AC 13: crit on 19 or 20, so about 10%.
-simulate('Fighter vs Skeleton (Longsword)', () => {
-  const a = token(1, 'pc-fighter', 'Dagny', 'player', 1, 1);
-  const t = token(2, 'skeleton', 'Skeleton 1', 'monster', 2, 1);
-  return { tokens: [a, t], attacker: a, target: t };
-}, 'Longsword');
-
-// Rogue with an ally next to the target gets Sneak Attack, so damage should jump.
-simulate('Rogue vs Goblin with ally (Sneak Attack)', () => {
-  const a = token(1, 'pc-rogue', 'Wren', 'player', 1, 1);
-  const ally = token(3, 'pc-fighter', 'Dagny', 'player', 3, 2);
-  const t = token(2, 'goblin', 'Goblin 1', 'monster', 2, 1);
-  return { tokens: [a, ally, t], attacker: a, target: t };
-}, 'Rapier');
-
-// Wolf with Pack Tactics: should hit more often than a lone wolf.
-['alone', 'with pack'].forEach((label) => {
-  simulate(`Wolf vs Rogue (${label})`, () => {
-    const a = token(1, 'wolf', 'Wolf 1', 'monster', 1, 1);
-    const t = token(2, 'pc-rogue', 'Wren', 'player', 2, 1);
-    const tokens = [a, t];
-    if (label === 'with pack') tokens.push(token(3, 'wolf', 'Wolf 2', 'monster', 3, 1));
-    return { tokens, attacker: a, target: t };
-  }, 'Bite');
+const attacker = token(1, goblin.id, 'Goblin Warrior 1', 1, 1);
+const target = token(2, zanna.id, zanna.name, 2, 1);
+const result = resolveAttack({
+  attacker,
+  target,
+  actionName: 'Scimitar',
+  tokens: [attacker, target],
+  catalog,
 });
 
-// Damage types: a skeleton is vulnerable to bludgeoning and immune to poison.
-// Zombie slam is bludgeoning, so the fighter's resistance is not involved here.
-simulate('Zombie vs Fighter (Slam)', () => {
-  const a = token(1, 'zombie', 'Zombie 1', 'monster', 1, 1);
-  const t = token(2, 'pc-fighter', 'Dagny', 'player', 2, 1);
-  return { tokens: [a, t], attacker: a, target: t };
-}, 'Slam');
+if (!result.ok) fail(result.error);
+if (result.dm[0].indexOf('Scimitar') === -1) fail('Scimitar was not the action that resolved');
 
-// Range checks.
-let a = token(1, 'pc-rogue', 'Wren', 'player', 0, 0);
-let t = token(2, 'goblin', 'Goblin 1', 'monster', 10, 0); // 50 ft
-console.log('Rapier at 50 ft:', resolveAttack({ attacker: a, target: t, actionName: 'Rapier', tokens: [a, t], catalog }).error);
-const bow = resolveAttack({ attacker: a, target: t, actionName: 'Shortbow', tokens: [a, t], catalog });
-console.log('Shortbow at 50 ft ok:', bow.ok);
-
-// One full example log so you can read what the DM sees.
-a = token(1, 'pc-rogue', 'Wren Ashdown', 'player', 1, 1);
-t = token(2, 'skeleton', 'Skeleton 1', 'monster', 2, 1);
-const sample = resolveAttack({ attacker: a, target: t, actionName: 'Rapier', tokens: [a, t], catalog });
-console.log('\nSample DM log:');
-sample.dm.forEach((line) => console.log('  ' + line));
-console.log('Sample player log:\n  ' + sample.pub);
+console.log(`${goblin.name} AC ${goblin.ac}, token ${goblin.token}`);
+console.log(`${zanna.name} ${zanna.class}, Magic Missile ${missile.damage[0].dice} x${missile.damage[0].darts}`);
+console.log(result.pub);

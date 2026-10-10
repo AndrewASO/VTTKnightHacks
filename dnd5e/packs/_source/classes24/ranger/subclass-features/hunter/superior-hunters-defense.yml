@@ -1,0 +1,179 @@
+_id: phbrgrSuperiorDe
+name: Superior Hunter's Defense
+type: feat
+img: icons/magic/lightning/fist-unarmed-strike-blue-green.webp
+system:
+  description:
+    value: >-
+      <p>When you take damage, you can take a Reaction to give yourself
+      Resistance to that damage and any other damage of the same type until the
+      end of the current turn.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 15
+    items: []
+    repeatable: false
+  properties: []
+  requirements: ''
+  activities:
+    KAgnJeRtqjDeYJ2S:
+      type: utility
+      name: Resistances
+      _id: KAgnJeRtqjDeYJ2S
+      activation:
+        type: reaction
+        value: null
+        override: false
+        condition: When you take damage
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        value: '1'
+        expiry: turnEnd
+      effects:
+        - _id: Pjc7rcLjRcREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.LgYCf64lsSs9CMJT
+          level:
+            min: null
+            max: null
+        - _id: 24NaoTGDrvREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.O6zfaImuJIxdGHdF
+          level:
+            min: null
+            max: null
+        - _id: ZptgYdV9WAREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.O9xghs0pD5GnHYhZ
+          level:
+            min: null
+            max: null
+        - _id: DDpB4Ul4EEREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.QM7b36MGNpZhgazC
+          level:
+            min: null
+            max: null
+        - _id: K5LB8u8cnLREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.6iFyLFsU5Hm6DujQ
+          level:
+            min: null
+            max: null
+        - _id: q9XQfJfH0xREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.ReKGnHejsakwCPu6
+          level:
+            min: null
+            max: null
+        - _id: plXrolA13vREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.Ov6uH9J75Acwill4
+          level:
+            min: null
+            max: null
+        - _id: WjDpStnF6PREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.IdNNpjW2XJ9FdmCh
+          level:
+            min: null
+            max: null
+        - _id: TASoBW2XxTREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.ym9IrYvM7nCXrS7w
+          level:
+            min: null
+            max: null
+        - _id: xK1PCem4upREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.gs15XxV40R4iHoxD
+          level:
+            min: null
+            max: null
+        - _id: hQ6MBiuXbaREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.cTO4X1NnWJAe35E2
+          level:
+            min: null
+            max: null
+        - _id: nJzalyy2XUREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.cwurJ5JjwCud9ix8
+          level:
+            min: null
+            max: null
+        - _id: jBS3DZGDxkREMOTE
+          uuid: Compendium.dnd5e.effects.ActiveEffect.QascUtAkYgBnGi9C
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+        units: self
+        special: ''
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: ''
+          type: self
+          special: ''
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      roll:
+        prompt: false
+        visible: false
+        name: ''
+        formula: ''
+      img: systems/dnd5e/icons/svg/rosa-shield.svg
+      visibility:
+        level:
+          min: null
+          max: null
+        identifier: ''
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      behaviors: []
+      flags: {}
+  enchant: {}
+  identifier: superior-hunters-defense
+  advancement: {}
+  crewed: false
+effects: []
+folder: GWWL7NqfCEyqwfhZ
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1790979069172
+  modifiedTime: 1790979069172
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 200000
+ownership:
+  default: 0
+_key: '!items!phbrgrSuperiorDe'

@@ -1,0 +1,264 @@
+name: Ray of Enfeeblement
+system:
+  description:
+    value: >-
+      <p>A beam of enervating energy shoots from you toward a creature within
+      range. The target must make a Constitution saving throw. On a successful
+      save, the target has Disadvantage on the next attack roll it makes until
+      the start of your next turn.</p><p>On a failed save, the target has
+      Disadvantage on Strength-based D20 Tests for the duration. During that
+      time, it also subtracts 1d8 from all its damage rolls. The target repeats
+      the save at the end of each of its turns, ending the spell on a
+      success.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 3
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+    template:
+      units: ft
+      contiguous: false
+      stationary: false
+  range:
+    value: '60'
+    units: ft
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 2
+  school: nec
+  properties:
+    - vocal
+    - somatic
+    - concentration
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        override: false
+        concentration: false
+      effects:
+        - _id: yril8uhQgO1dR507
+          onSave: false
+          uuid: null
+          level: {}
+        - _id: uaHZaHEalgWa6eoC
+          onSave: false
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: half
+        parts: []
+      save:
+        ability:
+          - con
+        dc:
+          calculation: spellcasting
+          formula: ''
+        visible: true
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+      img: null
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: ray-of-enfeeblement
+  method: spell
+  prepared: 0
+_id: phbsplRayofEnfee
+type: spell
+img: icons/magic/lightning/bolt-strike-beam-purple.webp
+effects:
+  - name: Brief Enfeeblement
+    origin: Compendium.dnd5e.spells24.Item.phbsplRayofEnfee
+    duration:
+      value: null
+      units: rounds
+      expiry: sourceStart
+      expired: false
+    disabled: false
+    flags: {}
+    img: icons/skills/melee/sword-damaged-broken-glow-red.webp
+    _id: yril8uhQgO1dR507
+    type: base
+    system:
+      changes: []
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    description: >-
+      <p>The target has Disadvantage on the next attack roll it makes until the
+      start of your next turn.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693616932
+      modifiedTime: 1787693616932
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplRayofEnfee.yril8uhQgO1dR507'
+  - name: Enervated
+    origin: Compendium.dnd5e.spells24.Item.phbsplRayofEnfee
+    duration:
+      value: 60
+      units: seconds
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders: {}
+    img: icons/skills/wounds/blood-cells-disease-green.webp
+    _id: uaHZaHEalgWa6eoC
+    type: base
+    system:
+      changes:
+        - key: system.bonuses.mwak.damage
+          value: '- 1d8'
+          priority: null
+          type: add
+          phase: initial
+          _id: ogXXyFIH4SZaHtGc
+          conditions: '{}'
+        - key: system.bonuses.rwak.damage
+          value: '- 1d8'
+          priority: null
+          type: add
+          phase: initial
+          _id: U6mQsDGcLB1Gi9eC
+          conditions: '{}'
+        - key: system.bonuses.msak.damage
+          value: '- 1d8'
+          priority: null
+          type: add
+          phase: initial
+          _id: 0fEsVBVIa4MQxEHl
+          conditions: '{}'
+        - key: system.bonuses.rsak.damage
+          value: '- 1d8'
+          priority: null
+          type: add
+          phase: initial
+          _id: sUz6h4vGlJHEPjER
+          conditions: '{}'
+        - key: system.abilities.str.check.roll.mode
+          value: -1
+          priority: null
+          type: add
+          phase: initial
+          _id: WeGsSzxJX8j4qy1F
+          conditions: '{}'
+        - key: system.abilities.str.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+          phase: initial
+          _id: 72BZsWuUnO9SncJg
+          conditions: '{}'
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    description: >-
+      <p>The target has Disadvantage on Strength-based D20 Tests for the
+      duration. During that time, it also subtracts 1d8 from all its damage
+      rolls. The target repeats the [[/save ability=con]] save at the end of
+      each of its turns, ending the spell on a success.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693616932
+      modifiedTime: 1787693616932
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplRayofEnfee.uaHZaHEalgWa6eoC'
+folder: 3SjcO2acsFnWegp4
+sort: 1100000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1787693616931
+  modifiedTime: 1787693616931
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplRayofEnfee'

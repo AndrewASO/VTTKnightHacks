@@ -1,0 +1,81 @@
+_id: phbrgrFightingSt
+name: Fighting Style
+type: feat
+folder: h5OUzaJcZzsNsOGc
+img: icons/skills/melee/hand-grip-staff-blue.webp
+system:
+  description:
+    value: >-
+      <p>You gain a Fighting Style feat of your choice. Instead of choosing one
+      of those feats, you can choose the option
+      below.</p><p>@Embed[Compendium.dnd5e.classes24.Item.phbfstDruidicWar
+      caption=false nameStyle=inline]</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: null
+    items: []
+    repeatable: false
+  properties: []
+  requirements: ''
+  activities: {}
+  enchant: {}
+  identifier: fighting-style
+  advancement:
+    AtKKnCoTLBqSxhCh:
+      _id: AtKKnCoTLBqSxhCh
+      type: ItemChoice
+      configuration:
+        choices:
+          '2':
+            count: 1
+            replacement: false
+        allowDrops: true
+        type: feat
+        pool:
+          - uuid: Compendium.dnd5e.classes24.Item.phbfstDruidicWar
+            sort: 0
+        spell: null
+        restriction:
+          type: feat
+          subtype: fightingStyle
+          list: []
+          school: []
+        sorting: a
+      value:
+        added: {}
+        replaced: {}
+      hint: >-
+        <p>You gain a Fighting Style feat of your choice. Instead of choosing
+        one of those feats, you can choose the option below.</p>
+      flags: {}
+      name: Fighting Style
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.6
+  createdTime: 1791495750940
+  modifiedTime: 1791495750940
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 800000
+ownership:
+  default: 0
+_key: '!items!phbrgrFightingSt'

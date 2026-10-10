@@ -1,0 +1,254 @@
+import { loadingTooltip } from "../../utils.mjs";
+
+/**
+ * @import { ChatMessageDataModelMetadata } from "./_types.mjs";
+ */
+
+/**
+ * Abstract base class to add some shared functionality to all of the system's custom chat message types.
+ * @abstract
+ */
+export default class ChatMessageDataModel extends foundry.abstract.TypeDataModel {
+
+  /**
+   * Metadata for this chat message type.
+   * @type {ChatMessageDataModelMetadata}
+   */
+  static metadata = Object.freeze({
+    actions: {
+      showDocument: ChatMessageDataModel.#showDocument,
+      toggleDescription: ChatMessageDataModel.#toggleDescription,
+      use: ChatMessageDataModel.#useActivity
+    },
+    summaryTemplate: "",
+    template: ""
+  });
+
+  get metadata() {
+    return this.constructor.metadata;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Whether the results of this message can be applied as damage or healing.
+   * @type {boolean}
+   */
+  get canApplyDamage() {
+    return false;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Whether this card renders eligible descendents as summaries.
+   * @type {boolean}
+   */
+  get rendersSummaries() {
+    return false;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Template to use when rendering this message as a summary item.
+   * @type {string}
+   */
+  get summaryTemplate() {
+    return this.metadata.summaryTemplate;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Template to use when rendering this message.
+   * @type {string}
+   */
+  get template() {
+    return this.metadata.template;
+  }
+
+  /* -------------------------------------------- */
+  /*  Rendering                                   */
+  /* -------------------------------------------- */
+
+  /**
+   * Perform any changes to the chat message's element before displaying in the list.
+   * @param {HTMLElement} element  Element representing the entire chat message.
+   * @param {object} options       Options forwarded to the render function.
+   */
+  async getHTML(element, options) {
+    const rendered = await this.render(options);
+    if ( rendered ) element.querySelector(".message-content").innerHTML = rendered;
+    this.parent._enrichChatCard(element, this._getEnrichmentOptions());
+    this.parent._collapseTrays(element);
+
+    const click = this.#onClick.bind(this);
+    element.addEventListener("click", click);
+    element.addEventListener("contextmenu", click);
+    this._onRender(element, options);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Render the contents of this chat message.
+   * @param {object} options  Rendering options.
+   * @returns {Promise<string>}
+   */
+  async render(options) {
+    const template = options.summary ? this.summaryTemplate : this.template;
+    if ( !template ) return "";
+    return foundry.applications.handlebars.renderTemplate(template, await this._prepareContext(options));
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Options to forward to ChatMessage5e#_enrichChatCard.
+   * @returns {ChatMessageEnrichmentOptions}
+   * @protected
+   */
+  _getEnrichmentOptions() {
+    return {};
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare application rendering context data for a given render request.
+   * @param {object} options  Rendering options.
+   * @returns {Promise<ApplicationRenderContext>}   Context data for the render operation.
+   * @protected
+   */
+  async _prepareContext(options) {
+    return {};
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Actions taken after the message has been rendered.
+   * @param {HTMLElement} element  The message element.
+   * @param {object} [options]     Render options.
+   * @protected
+   */
+  _onRender(element, options={}) {
+    for ( const e of element.querySelectorAll(".item-tooltip") ) {
+      const uuid = e.closest("[data-item-uuid]")?.dataset.itemUuid;
+      if ( !uuid ) continue;
+      Object.assign(e.dataset, {
+        tooltipHtml: loadingTooltip({ uuid }),
+        tooltipClass: "dnd5e2 dnd5e-tooltip item-tooltip document-tooltip",
+        tooltipDirection: "LEFT"
+      });
+    }
+    for ( const popover of element.querySelectorAll(".roll-breakdown[popover]") ) {
+      popover.previousElementSibling.popoverTargetElement = popover;
+    }
+    for ( const summary of element.querySelectorAll(".card-summary[data-message-id]") ) {
+      game.messages.get(summary.dataset.messageId)?.system?._onRender(summary, { summary: true });
+    }
+  }
+
+  /* -------------------------------------------- */
+  /*  Event Listeners and Handlers                */
+  /* -------------------------------------------- */
+
+  /**
+   * Handle click events within the card.
+   * @param {PointerEvent} event  Triggering pointer event.
+   */
+  #onClick(event) {
+    const target = event.target.closest("[data-action]");
+    const message = game.messages.get(event.target.closest("[data-message-id]")?.dataset.messageId) ?? this;
+    if ( target ) {
+      const action = target.dataset.action;
+      let handler = message.system.metadata.actions[action];
+      if ( handler ) {
+        let buttons = [0];
+        if ( typeof handler === "object" ) {
+          buttons = handler.buttons;
+          handler = handler.handler;
+        }
+        if ( buttons.includes(event.button) ) handler?.call(message.system, event, target);
+      } else {
+        message.system._onClickAction(event, target);
+      }
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * A generic event handler for action clicks which can be extended by subclasses, called if no action is found in
+   * the actions list in the message type's metadata.
+   * @param {PointerEvent} event  Triggering pointer event.
+   * @param {HTMLElement} target  Button with [data-action] defined.
+   * @protected
+   */
+  _onClickAction(event, target) {}
+
+  /* -------------------------------------------- */
+
+  /**
+   * Context menu options for button groups.
+   * @returns {ContextMenuEntry[]}
+   * @protected
+   */
+  _getButtonGroupContextOptions() {
+    return [];
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle showing a Document's sheet.
+   * @this {ChatMessageDataModel}
+   * @param {Event} event         Triggering click event.
+   * @param {HTMLElement} target  Action target.
+   * @returns {Promise}
+   */
+  static async #showDocument(event, target) {
+    event.stopPropagation();
+    const { uuid } = target.closest("[data-uuid]")?.dataset ?? {};
+    const doc = await fromUuid(uuid);
+    return doc?.sheet.render({ force: true });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle toggling the card's description.
+   * @this {ChatMessageDataModel}
+   * @param {Event} event         Triggering click event.
+   * @param {HTMLElement} target  Action target.
+   */
+  static #toggleDescription(event, target) {
+    const card = target.closest(".chat-card");
+    target.classList.toggle("collapsed");
+    card.querySelector(".card-description")?.classList.toggle("collapsed");
+
+    // Clear the height from the chat popout container so that it appropriately resizes.
+    const popout = card.closest(".chat-popout");
+    if ( popout ) popout.style.height = "";
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle using an activity.
+   * @this {ChatMessageDataModel}
+   * @param {Event} event         Triggering click event.
+   * @param {HTMLElement} target  Button that was clicked.
+   */
+  static async #useActivity(event, target) {
+    target.disabled = true;
+    try {
+      const activity = await fromUuid(target.closest("[data-activity-uuid]")?.dataset.activityUuid);
+      await activity?.use({ event });
+    } finally {
+      target.disabled = false;
+    }
+  }
+}

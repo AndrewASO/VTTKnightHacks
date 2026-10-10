@@ -1,0 +1,136 @@
+_id: yxHi57T5mmVt0oDr
+name: Bagpipes
+type: tool
+img: icons/sundries/survival/waterskin-leather-brown.webp
+system:
+  description:
+    value: >-
+      <p>A set of bagpipes to evoke awe, wonder, or fear in your audience.</p>
+
+      <p>If you have proficiency with a given musical instrument, you can add
+      your proficiency bonus to any ability checks you make to play music with
+      the instrument. A bard can use a musical instrument as a spellcasting
+      focus. Each type of musical instrument requires a separate proficiency.
+      </p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  quantity: 1
+  weight:
+    value: 6
+    units: lb
+  price:
+    value: 30
+    denomination: gp
+  attunement: ''
+  equipped: false
+  rarity: ''
+  identified: true
+  ability: cha
+  chatFlavor: ''
+  proficient: null
+  bonus: ''
+  type:
+    value: music
+    baseItem: bagpipes
+  unidentified:
+    description: ''
+  container: null
+  properties: []
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  activities:
+    CW68axGLrRC2ZfAB:
+      type: check
+      activation:
+        type: ''
+        value: null
+        condition: ''
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        concentration: false
+        value: ''
+        units: inst
+        special: ''
+        override: false
+      effects: []
+      range:
+        units: self
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ft
+          stationary: false
+        affects:
+          count: ''
+          type: ''
+          choice: false
+          special: ''
+        prompt: true
+        override: false
+      check:
+        ability: cha
+        dc:
+          calculation: ''
+          formula: ''
+        associated: []
+        visible: true
+        bonus: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+        identifier: ''
+      _id: CW68axGLrRC2ZfAB
+      name: Use Tools
+  attuned: false
+  identifier: bagpipes
+effects: []
+folder: uvZXbqK3cHirDzeT
+sort: 0
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037327849
+  modifiedTime: 1783650777847
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!yxHi57T5mmVt0oDr'

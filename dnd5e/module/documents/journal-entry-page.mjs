@@ -1,0 +1,23 @@
+import EmbeddableDocumentMixin from "./mixins/embeddable.mjs";
+
+/**
+ * @import { JournalEntryPageRollData } from "./_types.mjs";
+ */
+
+/**
+ * Custom implementation of journal entry pages for providing roll data.
+ */
+export default class JournalEntryPage5e extends EmbeddableDocumentMixin(JournalEntryPage) {
+  /**
+   * Return a data object regarding this page and from the containing journal entry.
+   * @returns {JournalEntryPageRollData}
+   */
+  getRollData() {
+    const { name, flags, system } = this;
+    return {
+      name: this.parent.name,
+      flags: this.parent.flags,
+      page: { ...system, name, flags }
+    };
+  }
+}

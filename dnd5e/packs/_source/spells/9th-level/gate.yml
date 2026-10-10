@@ -1,0 +1,219 @@
+_id: XbwGq5kDJNvAxNXV
+name: Gate
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You conjure a portal linking an unoccupied space you can see within
+      range to a precise location on a different plane of existence. The portal
+      is a circular opening, which you can make 5 to 20 feet in diameter. You
+      can orient the portal in any direction you choose. The portal lasts for
+      the Duration.</p><p>The portal has a front and a back on each plane where
+      it appears. Travel through the portal is possible only by moving through
+      its front. Anything that does so is instantly transported to the other
+      plane, appearing in the unoccupied space nearest to the
+      portal.</p><p>Deities and other planar rulers can prevent portals created
+      by this spell from opening in their presence or anywhere within their
+      domains.</p><p>When you cast this spell, you can speak the name of a
+      specific creature (a pseudonym, title, or nickname doesn't work). If that
+      creature is on a plane other than the one you are on, the portal opens in
+      the named creature's immediate vicinity and draws the creature through it
+      to the nearest unoccupied space on your side of the portal. You gain no
+      special power over the creature, and it is free to act as the DM deems
+      appropriate. It might leave, Attack you, or help you.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: space
+      count: '20'
+      choice: false
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 9
+  school: con
+  materials:
+    value: A diamond at least worth 5000gp
+    consumed: false
+    cost: 5000
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    MK80gFeRLzsr2PUJ:
+      type: utility
+      name: Cast
+      _id: MK80gFeRLzsr2PUJ
+      img: null
+      sort: 100000
+      activation:
+        type: action
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      roll:
+        prompt: false
+        visible: false
+    lFO5S0pA2P2d5GpZ:
+      type: summon
+      name: Summon Creature
+      _id: lFO5S0pA2P2d5GpZ
+      img: ''
+      sort: 200000
+      activation:
+        type: special
+        override: true
+        condition: When you cast this spell.
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: false
+        targets: []
+      description:
+        value: >-
+          <p>You can speak the name of a specific creature (a pseudonym, title,
+          or nickname doesn't work). If that creature is on a plane other than
+          the one you are on, the portal opens in the named creature's immediate
+          vicinity and draws the creature through it to the nearest unoccupied
+          space on your side of the portal. You gain no special power over the
+          creature, and it is free to act as the DM deems appropriate. It might
+          leave, Attack you, or help you.</p>
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: true
+      effects: []
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+          type: ''
+        affects:
+          choice: false
+          type: ''
+        override: true
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      bonuses:
+        ac: ''
+        hd: ''
+        hp: ''
+        attackDamage: ''
+        saveDamage: ''
+        healing: ''
+      creatureSizes: []
+      creatureTypes: []
+      match:
+        attacks: false
+        disposition: false
+        proficiency: false
+        saves: false
+        ability: ''
+      profiles:
+        - count: '1'
+          cr: ''
+          name: ''
+          _id: atQl8547y7jYbwqk
+          uuid: null
+          types: []
+          level:
+            min: null
+            max: null
+      summon:
+        prompt: true
+        mode: cr
+      tempHP: ''
+  identifier: gate
+sort: 0
+flags: {}
+img: icons/environment/wilderness/portal.webp
+effects: []
+folder: KL6ZY4VRMjojGrL4
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037358568
+  modifiedTime: 1781389486102
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!XbwGq5kDJNvAxNXV'

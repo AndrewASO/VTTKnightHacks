@@ -1,0 +1,143 @@
+_id: phbrgrFavoredEne
+name: Favored Enemy
+type: feat
+folder: h5OUzaJcZzsNsOGc
+img: icons/creatures/abilities/dragon-breath-purple.webp
+system:
+  description:
+    value: >-
+      <p>You always have the
+      @UUID[Compendium.dnd-players-handbook.spells.Item.phbsplHuntersMar]{Hunter's
+      Mark} spell prepared. You can cast it twice without expending a spell
+      slot, and you regain all expended uses of this ability when you finish a
+      Long Rest.</p><p>The number of times you can cast the spell without a
+      spell slot increases when you reach certain Ranger levels, as shown in the
+      Favored Enemy column of the Ranger Features table.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  uses:
+    max: '@scale.ranger.favored-enemy'
+    spent: 0
+    recovery:
+      - period: lr
+        type: recoverAll
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 1
+    items: []
+    repeatable: false
+  properties:
+    - mgc
+  requirements: ''
+  activities:
+    18OW4UKZ5cSPPLhC:
+      type: cast
+      spell:
+        uuid: Compendium.dnd-players-handbook.spells.Item.phbsplHuntersMar
+        challenge:
+          override: false
+        properties: []
+        spellbook: true
+        ability: ''
+        level: 1
+      _id: 18OW4UKZ5cSPPLhC
+      img: ''
+      sort: 0
+      activation:
+        type: bonus
+        override: true
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets:
+          - type: itemUses
+            value: '1'
+            target: ''
+            scaling: {}
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+        identifier: ''
+      name: ''
+      behaviors: []
+  enchant: {}
+  identifier: favored-enemy
+  advancement:
+    DOENALOWWjAUHzb7:
+      _id: DOENALOWWjAUHzb7
+      type: ItemGrant
+      configuration:
+        items:
+          - optional: false
+            uuid: Compendium.dnd-players-handbook.spells.Item.phbsplHuntersMar
+            sort: 0
+        optional: false
+        spell:
+          ability: []
+          uses:
+            max: ''
+            per: ''
+            requireSlot: false
+          method: spell
+          prepared: 2
+        sorting: m
+      value: {}
+      level: 1
+      hint: ''
+      flags: {}
+      name: Favored Enemy
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1790976133200
+  modifiedTime: 1790976133200
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!phbrgrFavoredEne'

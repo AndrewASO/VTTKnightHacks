@@ -1,0 +1,186 @@
+name: Vicious Mockery
+system:
+  description:
+    value: >-
+      <p>You unleash a string of insults laced with subtle enchantments at one
+      creature you can see or hear within range. The target must succeed on a
+      Wisdom saving throw or take 1d6 Psychic damage and have Disadvantage on
+      the next attack roll it makes before the end of its next
+      turn.</p><p><strong>Cantrip Upgrade.</strong> The damage increases by 1d6
+      when you reach levels 5 (2d6), 11 (3d6), and 17 (4d6).</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    revision: 2
+    book: ''
+    license: CC-BY-4.0
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+      count: '1'
+      type: creature
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+      stationary: false
+  range:
+    units: ft
+    special: ''
+    value: '60'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  level: 0
+  school: enc
+  properties:
+    - vocal
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    DwMhkWD6NEwUa1L3:
+      type: save
+      _id: DwMhkWD6NEwUa1L3
+      sort: 0
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: suEeAQQXl0X2JqzF
+          onSave: false
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      damage:
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 1
+            denomination: 6
+            bonus: ''
+            types:
+              - psychic
+            scaling:
+              mode: whole
+              number: 1
+            modifiers: []
+        onSave: none
+      save:
+        ability:
+          - wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+        visible: true
+      name: ''
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: vicious-mockery
+  method: spell
+  prepared: 2
+_id: phbsplViciousMoc
+type: spell
+img: icons/magic/control/fear-fright-monster-grin-green.webp
+effects:
+  - name: Mocked
+    img: icons/sundries/flags/banner-flag-white.webp
+    origin: Compendium.dnd5e.spells24.Item.phbsplViciousMoc
+    transfer: false
+    _id: suEeAQQXl0X2JqzF
+    type: base
+    system:
+      changes: []
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    disabled: false
+    duration:
+      value: null
+      units: rounds
+      expiry: targetEnd
+      expired: false
+    description: >-
+      <p>The target has Disadvantage on the next attack roll it makes before the
+      end of its next turn.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693667914
+      modifiedTime: 1787693667914
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplViciousMoc.suEeAQQXl0X2JqzF'
+folder: 4FhsY9FJQd7h7MZb
+sort: 100013
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1787693667914
+  modifiedTime: 1787693667914
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplViciousMoc'

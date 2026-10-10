@@ -1,0 +1,126 @@
+_id: wqfAVANuQonNBgnL
+name: Misty Step
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>Briefly surrounded by silvery mist, you teleport up to 30 feet to an
+      unoccupied space that you can see.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: bonus
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: ''
+      count: '30'
+      choice: false
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+  range:
+    units: self
+    special: ''
+    value: '30'
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 2
+  school: con
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+  activities:
+    jJNyKYNO9N4a3PZh:
+      type: teleport
+      name: Cast
+      _id: jJNyKYNO9N4a3PZh
+      img: ''
+      sort: 100000
+      activation:
+        type: action
+        override: false
+      behaviors: []
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        value: ''
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      flags: {}
+      range:
+        units: ft
+        override: true
+        special: ''
+        value: '30'
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+          type: ''
+        affects:
+          choice: false
+          type: self
+          special: ''
+        override: true
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      teleport:
+        override: false
+        units: ft
+  identifier: misty-step
+sort: 0
+flags: {}
+img: icons/magic/lightning/orb-ball-blue.webp
+effects: []
+folder: Qi4Se3we69ukl2V9
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037366542
+  modifiedTime: 1783217643612
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!wqfAVANuQonNBgnL'

@@ -1,0 +1,220 @@
+name: Power Word Stun
+system:
+  description:
+    value: >-
+      <p>You overwhelm the mind of one creature you can see within range. If the
+      target has 150 Hit Points or fewer, it has the Stunned condition.
+      Otherwise, its Speed is 0 until the start of your next turn.</p><p>The
+      &amp;Reference[Stunned apply=false] target makes a [[/save ability=con
+      dc=@attributes.spell.dc]] saving throw at the end of each of its turns,
+      ending the condition on itself on a success.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 4
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+      count: '1'
+      type: creature
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+      stationary: false
+  range:
+    units: ft
+    special: ''
+    value: '60'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  level: 8
+  school: enc
+  properties:
+    - vocal
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    Sy5x2VhhG7mcnPvF:
+      type: utility
+      _id: Sy5x2VhhG7mcnPvF
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: o7XJceFSBTiIIPFo
+          uuid: null
+          level: {}
+        - _id: B5dLPDfw1fDtfRW1
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      roll:
+        prompt: false
+        visible: false
+        name: ''
+        formula: ''
+      name: ''
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: power-word-stun
+  method: spell
+  prepared: 0
+_id: phbsplPowerWordS
+type: spell
+img: icons/magic/unholy/strike-body-life-soul-purple.webp
+effects:
+  - name: Stunned
+    img: systems/dnd5e/icons/svg/statuses/stunned.svg
+    origin: Compendium.dnd5e.spells24.Item.phbsplPowerWordS
+    transfer: false
+    _id: o7XJceFSBTiIIPFo
+    type: base
+    system:
+      changes: []
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    disabled: false
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>The &amp;Reference[Stunned apply=false] target makes a [[/save
+      ability=con]] saving throw at the end of each of its turns, ending the
+      condition on itself on a success.</p>
+    tint: '#ffffff'
+    statuses:
+      - stunned
+    sort: 0
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693609840
+      modifiedTime: 1787693609840
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!phbsplPowerWordS.o7XJceFSBTiIIPFo'
+  - name: No Movement
+    img: icons/svg/anchor.svg
+    origin: Compendium.dnd5e.spells24.Item.phbsplPowerWordS
+    transfer: false
+    _id: B5dLPDfw1fDtfRW1
+    type: base
+    system:
+      changes:
+        - key: system.attributes.movement.multiplier
+          value: 0
+          priority: null
+          type: override
+          phase: initial
+          _id: NkUmiPsajiHlEqyV
+          conditions: '{}'
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    disabled: false
+    duration:
+      value: null
+      units: rounds
+      expiry: sourceStart
+      expired: false
+    description: <p>The target's Speed is 0 until the start of your next turn.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        riders: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693609840
+      modifiedTime: 1787693609840
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplPowerWordS.B5dLPDfw1fDtfRW1'
+folder: M5CvwK9zVtzx6Dnn
+sort: 100013
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1787693609840
+  modifiedTime: 1787693609840
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplPowerWordS'

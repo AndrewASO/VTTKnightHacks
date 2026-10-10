@@ -1,0 +1,175 @@
+_id: ZU9d6woBdUP8pIPt
+name: Beacon of Hope
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>This spell bestows hope and vitality. Choose any number of creatures
+      within range. For the duration, each target has advantage on Wisdom saving
+      throws and death saving throws, and regains the maximum number of hit
+      points possible from any healing.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: creature
+      choice: false
+      count: ''
+      special: ''
+    template:
+      units: any
+      contiguous: false
+      type: ''
+  range:
+    value: '30'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 3
+  school: abj
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - concentration
+  activities:
+    neGH93QTgzddzbRa:
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      name: Cast
+      img: ''
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      _id: neGH93QTgzddzbRa
+  identifier: beacon-of-hope
+sort: 0
+flags: {}
+img: icons/magic/light/orb-hands-humanoid-yellow.webp
+effects:
+  - name: Hopeful
+    origin: Compendium.dnd5e.spells.Item.ZU9d6woBdUP8pIPt
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: icons/magic/light/orb-hands-humanoid-yellow.webp
+    _id: rTmKyD87PuzUBGpJ
+    type: base
+    system:
+      changes:
+        - key: system.abilities.wis.save.roll.mode
+          value: 1
+          priority: null
+          type: add
+        - key: system.attributes.death.roll.mode
+          value: 1
+          priority: null
+          type: add
+    description: >-
+      <p>You have advantage on Wisdom saving throws and Death Saving Throws and
+      regains the maximum number of Hit Points possible from any healing.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.ZU9d6woBdUP8pIPt.ActiveEffect.rTmKyD87PuzUBGpJ
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761859046145
+      modifiedTime: 1781359646912
+      lastModifiedBy: dnd5ebuilder0000
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!ZU9d6woBdUP8pIPt.rTmKyD87PuzUBGpJ'
+folder: 5Si35RRLLaaoWvC3
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037359331
+  modifiedTime: 1781359656872
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!ZU9d6woBdUP8pIPt'

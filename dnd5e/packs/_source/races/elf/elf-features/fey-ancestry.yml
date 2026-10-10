@@ -1,0 +1,47 @@
+_id: cnTbpPPeGW7vGjOV
+name: Fey Ancestry
+ownership:
+  default: 0
+type: feat
+system:
+  description:
+    value: >-
+      <p>You have advantage on saving throws against being
+      &amp;reference[charmed apply=false], and magic can't put you to sleep.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: race
+    subtype: ''
+  requirements: Elf, Half-Elf
+  properties:
+    - trait
+  activities: {}
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: fey-ancestry
+flags: {}
+img: icons/consumables/plants/leaf-veins-glowing-green.webp
+effects: []
+folder: aLN5eM7XnKvAtnRj
+sort: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037393133
+  modifiedTime: 1781472823229
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!cnTbpPPeGW7vGjOV'

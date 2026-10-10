@@ -1,0 +1,111 @@
+_id: mQPZDRbUhgYTbXKa
+name: Stonecunning
+ownership:
+  default: 0
+type: feat
+system:
+  description:
+    value: >-
+      <p>Whenever you make an Intelligence (History) check related to the origin
+      of stonework, you are considered proficient in the History skill and add
+      double your proficiency bonus to the check, instead of your normal
+      proficiency bonus.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: race
+    subtype: ''
+  requirements: Dwarf
+  properties:
+    - trait
+  activities:
+    nwTutalWcjDp3gUk:
+      type: check
+      name: Inspect Stonework
+      _id: nwTutalWcjDp3gUk
+      img: ''
+      sort: 0
+      activation:
+        type: special
+        override: false
+        condition: >-
+          Whenever you make an Intelligence (History) check related to the
+          origin of stonework.
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        value: ''
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      flags: {}
+      range:
+        units: spec
+        override: false
+        special: ''
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+          type: ''
+        affects:
+          choice: false
+          type: ''
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+        identifier: ''
+      check:
+        associated:
+          - his
+        dc:
+          calculation: ''
+          formula: ''
+        visible: true
+        ability: ''
+        bonus: ''
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: stonecunning
+flags: {}
+img: icons/commodities/stone/paver-brick-brown.webp
+effects: []
+folder: bYq316CbmhMdFGG4
+sort: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037393212
+  modifiedTime: 1781472717027
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!mQPZDRbUhgYTbXKa'

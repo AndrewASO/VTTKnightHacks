@@ -1,0 +1,168 @@
+_id: n4JDcFKe5ikzYmAc
+name: Gentle Repose
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You touch a corpse or other remains. For the duration, the target is
+      protected from decay and can't become undead.</p><p>The spell also
+      effectively extends the time limit on raising the target from the dead,
+      since days spent under the influence of this spell don't count against the
+      time limit of spells such as
+      @UUID[Compendium.dnd5e.spells.Item.AGFMPAmuzwWO6Dfz]{raise dead}.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '10'
+    units: day
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 2
+  school: nec
+  materials:
+    value: >-
+      A pinch of salt and one copper piece placed on each of the corpse's eyes,
+      which must remain there for the duration
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - ritual
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: 1gNoHqJuC8LJbPaB
+          level: {}
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: gentle-repose
+sort: 0
+flags: {}
+img: icons/magic/holy/prayer-hands-glowing-yellow-white.webp
+effects:
+  - name: Gentle Repose
+    img: icons/magic/holy/prayer-hands-glowing-yellow-white.webp
+    origin: Compendium.dnd5e.spells.Item.n4JDcFKe5ikzYmAc
+    transfer: false
+    _id: 1gNoHqJuC8LJbPaB
+    type: base
+    system:
+      changes: []
+    disabled: false
+    start: null
+    duration:
+      value: 10
+      units: days
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>You are protected from decay and can't become undead. This spell also
+      effectively extends the time limit on raising you from the dead, since
+      days spent under the influence of this spell don't count against the time
+      limit of spells such as
+      @UUID[Compendium.dnd5e.spells.Item.AGFMPAmuzwWO6Dfz]{raise dead}.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781225891853
+      modifiedTime: 1783217754572
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!n4JDcFKe5ikzYmAc.1gNoHqJuC8LJbPaB'
+folder: Qi4Se3we69ukl2V9
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037364600
+  modifiedTime: 1783217749186
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!n4JDcFKe5ikzYmAc'

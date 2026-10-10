@@ -1,0 +1,156 @@
+_id: 5m9ErO9In8Uc5yyf
+name: Potion of Superior Healing
+type: consumable
+img: icons/consumables/potions/bottle-round-corked-red.webp
+system:
+  description:
+    value: >-
+      <p><em>The potion's red liquid glimmers when agitated.</em></p><p>You
+      regain [[/healing]] when you drink this potion.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  quantity: 1
+  weight:
+    value: 0.1
+    units: lb
+  price:
+    value: 2000
+    denomination: gp
+  attunement: ''
+  equipped: false
+  rarity: rare
+  identified: true
+  uses:
+    max: '1'
+    recovery: []
+    autoDestroy: true
+    spent: 0
+  damage:
+    base:
+      number: 8
+      denomination: 4
+      bonus: '8'
+      types:
+        - healing
+      custom:
+        enabled: false
+        formula: ''
+      scaling:
+        mode: ''
+        number: null
+        formula: ''
+    replace: false
+  type:
+    value: potion
+    subtype: ''
+  unidentified:
+    description: <p>The potion's red liquid glimmers when agitated.</p>
+    name: Unidentified Potion
+  container: null
+  properties:
+    - mgc
+  magicalBonus: null
+  activities:
+    Kzhyy0MhTDsOwDWy:
+      type: heal
+      activation:
+        type: action
+        value: 1
+        condition: ''
+        override: false
+      consumption:
+        targets:
+          - type: itemUses
+            value: '1'
+            target: ''
+            scaling: {}
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        concentration: false
+        value: ''
+        units: inst
+        special: ''
+        override: false
+      effects: []
+      range:
+        units: touch
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ft
+          stationary: false
+        affects:
+          count: '1'
+          type: creature
+          choice: false
+          special: ''
+        prompt: true
+        override: false
+      healing:
+        number: 8
+        denomination: 4
+        bonus: '8'
+        types:
+          - healing
+        custom:
+          enabled: false
+          formula: ''
+        scaling:
+          mode: whole
+          number: null
+          formula: ''
+        modifiers: []
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      name: Drink
+      img: ''
+      visibility:
+        requireMagic: true
+        level:
+          min: null
+          max: null
+        identifier: ''
+        requireAttunement: false
+        requireIdentification: false
+      behaviors: []
+      flags: {}
+      _id: Kzhyy0MhTDsOwDWy
+  attuned: false
+  identifier: potion-of-superior-healing
+effects: []
+folder: gyBZp72zKb56Da84
+sort: 0
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037101838
+  modifiedTime: 1783372670336
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!5m9ErO9In8Uc5yyf'

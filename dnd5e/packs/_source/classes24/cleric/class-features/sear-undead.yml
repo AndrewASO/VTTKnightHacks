@@ -1,0 +1,53 @@
+_id: phbclcSearUndead
+name: Sear Undead
+type: feat
+folder: 3wY92TRgyyyDkpmF
+img: icons/magic/fire/flame-burning-skeleton-explosion.webp
+system:
+  description:
+    value: >-
+      <p>Whenever you use Turn Undead, you can roll a number of d8s equal to
+      your Wisdom modifier (minimum of 1d8, currently [[lookup
+      @abilities.wis.mod]]) and add the rolls together. Each Undead that fails
+      its saving throw against that use of Turn Undead takes Radiant damage
+      equal to the roll's total. This damage doesn't end the turn effect.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    license: CC-BY-4.0
+    revision: 1
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  type:
+    value: class
+    subtype: channelDivinity
+  prerequisites:
+    level: 5
+    items: []
+    repeatable: false
+  properties: []
+  requirements: Cleric
+  activities: {}
+  enchant: {}
+  identifier: sear-undead
+  advancement: {}
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791232041726
+  modifiedTime: 1791232041726
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 900000
+ownership:
+  default: 0
+_key: '!items!phbclcSearUndead'

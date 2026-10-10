@@ -1,0 +1,251 @@
+import { getHumanReadableAttributeLabel } from "../utils.mjs";
+import MovementSensesConfig from "./shared/movement-senses-config.mjs";
+
+const { BooleanField } = foundry.data.fields;
+
+/**
+ * Custom token configuration application for handling dynamic rings & resource labels.
+ */
+export class TokenConfig5e extends foundry.applications.sheets.TokenConfig {
+
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    actions: {
+      toggleSizeLock: TokenConfig5e._onToggleSizeLock
+    }
+  };
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    if ( !this.rendered ) return;
+    this._applySenseSyncNotice(this.element);
+    this._applyTokenScaleLock(this.element);
+    this._prepareResourceLabels(this.element);
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
+    context.scale = Math.abs(this.token._source.texture.scaleX);
+    return context;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _prepareResourcesTab() {
+    const context = await super._prepareResourcesTab();
+    this._addItemAttributes(context.barAttributes);
+    return context;
+  }
+
+  /* -------------------------------------------- */
+  /*  Appearance                                  */
+  /* -------------------------------------------- */
+
+  /**
+   * Adjust form state based on lockSize state.
+   * @internal
+   */
+  _applySizeLockState() {
+    const lockSize = this.form.elements["flags.dnd5e.lockSize"].checked;
+    ["width", "height", "depth"].forEach(name => this.form.elements[name].readOnly = !lockSize);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Add control to link token scale to actor scale.
+   * @param {HTMLElement} html  The rendered markup.
+   * @protected
+   */
+  _applyTokenScaleLock(html) {
+    if ( !dnd5e.settings.tokenSizeSync ) return;
+    const sizeGroup = this.form.elements.width.closest(".form-group");
+    if ( !sizeGroup || sizeGroup.querySelector("[data-action=toggleSizeLock]") ) return;
+
+    const lockSize = this.token._source.flags.dnd5e?.lockSize;
+    const lockSizeInput = new BooleanField().toInput({ name: "flags.dnd5e.lockSize", value: lockSize });
+    lockSizeInput.hidden = true;
+    const toggleSizeLock = document.createElement("button");
+    toggleSizeLock.type = "button";
+    toggleSizeLock.classList.add("inline-control", "icon", "fa-solid", lockSize ? "fa-lock-open" : "fa-lock");
+    toggleSizeLock.toggleAttribute("data-tooltip", true);
+    toggleSizeLock.dataset.action = "toggleSizeLock";
+    toggleSizeLock.ariaLabel = _loc("DND5E.TOKEN.LockSize.Hint");
+    sizeGroup.querySelector(".form-fields").append(lockSizeInput, toggleSizeLock);
+    TokenConfig5e.prototype._applySizeLockState.call(this);
+
+    if ( html.querySelector('[name="flags.dnd5e.lockScale"]') ) return;
+    const lockScale = new BooleanField().toFormGroup({
+      hint: _loc("DND5E.TOKEN.LockScale.Hint"),
+      label: _loc("DND5E.TOKEN.LockScale.Label")
+    }, {
+      name: "flags.dnd5e.lockScale",
+      value: this.token._source.flags.dnd5e?.lockScale
+    });
+
+    const lockRotation = html.querySelector('.form-group:has([name="lockRotation"])');
+    lockRotation.after(lockScale);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle toggling the token size lock.
+   * @this {TokenConfig5e|PrototypeTokenConfig5e}
+   * @param {PointerEvent} event        The triggering event.
+   * @param {HTMLButtonElement} target  The action target.
+   * @internal
+   */
+  static _onToggleSizeLock(event, target) {
+    const input = this.form.elements["flags.dnd5e.lockSize"];
+    const lockSize = input.checked = !input.checked;
+    target.classList.toggle("fa-lock-open", lockSize);
+    target.classList.toggle("fa-lock", !lockSize);
+    TokenConfig5e.prototype._applySizeLockState.call(this);
+  }
+
+  /* -------------------------------------------- */
+  /*  Resources                                   */
+  /* -------------------------------------------- */
+
+  /**
+   * Adds charge based items as attributes for the current token.
+   * @param {object} attributes  The attribute groups to add the item entries to.
+   * @protected
+   */
+  _addItemAttributes(attributes) {
+    const actor = this.actor ?? this.object?.actor;
+    const items = actor?.items.reduce((arr, i) => {
+      if ( i.hasLimitedUses ) arr.push([foundry.utils.buildRelativeUuid(i, actor), i.name]);
+      return arr;
+    }, []) ?? [];
+    if ( items.length ) {
+      const group = _loc("DND5E.ConsumeCharges");
+      items.sort(([, a], [, b]) => a.localeCompare(b, game.i18n.lang));
+      attributes.push(...items.map(([value, label]) => ({ group, value, label })));
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Replace the attribute paths in token resources with human readable labels and sort them alphabetically.
+   * @param {HTMLElement} html  The rendered markup.
+   * @protected
+   */
+  _prepareResourceLabels(html) {
+    const actor = this.actor ?? this.object?.actor;
+
+    for ( const select of html.querySelectorAll('select:is(.bar-attribute, [name$=".attribute"])') ) {
+      select.querySelectorAll("optgroup").forEach(group => {
+        const options = Array.from(group.querySelectorAll("option"));
+
+        // Localize attribute paths.
+        options.forEach(option => {
+          const label = getHumanReadableAttributeLabel(option.value, { actor });
+          if ( label ) option.innerText = label;
+        });
+
+        // Sort options by localized label.
+        options.sort((a, b) => a.innerText.localeCompare(b.innerText, game.i18n.lang));
+        group.append(...options);
+      });
+    }
+  }
+
+  /* -------------------------------------------- */
+  /*  Vision                                      */
+  /* -------------------------------------------- */
+
+  /**
+   * Lock the Vision tab fields that are derived from the actor's senses and surface a sync notice.
+   * @param {HTMLElement} html  The rendered markup.
+   * @protected
+   */
+  _applySenseSyncNotice(html) {
+    if ( !game.settings.get("dnd5e", "senseVisionSync") ) return;
+    const actor = this.actor ?? this.object?.actor;
+    const senses = actor?.system?.attributes?.senses;
+    if ( !senses ) return;
+
+    const { sight, detectionModes } = CONFIG.Token.documentClass.computeSenseOverrides(senses);
+    if ( !sight.enabled && foundry.utils.isEmpty(detectionModes) ) return;
+
+    // Lock sight to the derived values; these bind to source, so they would otherwise show stale, editable data.
+    if ( sight.enabled ) {
+      for ( const [key, value] of Object.entries(sight) ) {
+        if ( key === "enabled" ) continue;
+        const field = html.querySelector(`[name="sight.${key}"]`);
+        if ( !field ) continue;
+        if ( foundry.utils.isElementInstanceOf(field, foundry.applications.elements.AbstractFormInputElement) ) {
+          // Avoid firing a change event that will trigger a preview refresh.
+          field._setValue(value ?? "");
+          field._refresh();
+        } else {
+          field.value = value ?? "";
+        }
+        field.disabled = true;
+      }
+    }
+
+    // Hide the override control on sense-derived rows; core already renders their derived range disabled.
+    const ids = sight.enabled ? [...Object.keys(detectionModes), "basicSight"] : Object.keys(detectionModes);
+    for ( const id of ids ) {
+      const pencil = html.querySelector(`[data-id="${id}"] [data-action="overrideDetectionMode"]`);
+      if ( pencil ) pencil.hidden = true;
+    }
+
+    // Surface a notice atop the Vision tab linking to the senses config.
+    const tab = html.querySelector('[data-application-part="vision"]');
+    if ( !tab || tab.querySelector(".sense-sync-notice") ) return;
+    const link = `<a data-action="editSenses">${_loc("SETTINGS.DND5E.AUTOMATION.SenseVision.Senses")}</a>`;
+    const notice = document.createElement("p");
+    notice.className = "hint sense-sync-notice";
+    notice.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${
+      _loc("SETTINGS.DND5E.AUTOMATION.SenseVision.Notice", { senses: link })}`;
+    notice.querySelector("[data-action=editSenses]")?.addEventListener("click", () => {
+      new MovementSensesConfig({ document: actor, type: "senses" }).render({ force: true });
+    });
+    tab.prepend(notice);
+  }
+}
+
+/**
+ * Custom prototype token configuration application for handling dynamic rings & resource labels.
+ */
+export class PrototypeTokenConfig5e extends foundry.applications.sheets.PrototypeTokenConfig {
+
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    actions: {
+      toggleSizeLock: TokenConfig5e._onToggleSizeLock
+    }
+  };
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    if ( !this.rendered ) return;
+    TokenConfig5e.prototype._applySenseSyncNotice.call(this, this.element);
+    TokenConfig5e.prototype._applyTokenScaleLock.call(this, this.element);
+    TokenConfig5e.prototype._prepareResourceLabels.call(this, this.element);
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _prepareResourcesTab() {
+    const context = await super._prepareResourcesTab();
+    TokenConfig5e.prototype._addItemAttributes.call(this, context.barAttributes);
+    return context;
+  }
+}

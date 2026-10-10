@@ -1,0 +1,505 @@
+_id: phbclcChannelDiv
+name: Channel Divinity
+type: feat
+folder: 3wY92TRgyyyDkpmF
+img: icons/magic/symbols/star-rising-purple.webp
+system:
+  description:
+    value: >-
+      <p>You can channel divine energy directly from the Outer Planes to fuel
+      magical effects. You start with two such effects: Divine Spark and Turn
+      Undead, each of which is described below. Each time you use this class's
+      Channel Divinity, choose which Channel Divinity effect from this class to
+      create. You gain additional effect options at higher Cleric
+      levels.</p><p>You can use this class's Channel Divinity twice. You regain
+      one of its expended uses when you finish a Short Rest, and you regain all
+      expended uses when you finish a Long Rest. You gain additional uses when
+      you reach certain Cleric levels, as shown in the Channel Divinity column
+      of the Cleric Features table.</p><p>If a Channel Divinity effect requires
+      a saving throw, the DC equals the spell save DC from this class's
+      Spellcasting
+      feature.</p><p>@Embed[Compendium.dnd5e.classes24.Item.phbclcChannelDiv.Activity.UdbUwbvrWwgDuNy9
+      caption=false cite=false nameStyle=inline]{Divine
+      Spark}</p><p>@Embed[Compendium.dnd5e.classes24.Item.phbclcChannelDiv.Activity.aOptL5pMaj3WtR8S
+      caption=false cite=false nameStyle=inline]</p>
+    chat: ''
+  source:
+    custom: ''
+    revision: 2
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+  uses:
+    max: '@scale.cleric.channel-divinity'
+    recovery:
+      - period: lr
+        type: recoverAll
+      - period: sr
+        type: formula
+        formula: '1'
+    spent: 0
+  type:
+    value: class
+    subtype: channelDivinity
+  prerequisites:
+    level: 2
+    items: []
+    repeatable: false
+  properties:
+    - mgc
+  requirements: Cleric
+  activities:
+    UdbUwbvrWwgDuNy9:
+      type: heal
+      _id: UdbUwbvrWwgDuNy9
+      activation:
+        type: action
+        value: null
+        override: false
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets:
+          - type: itemUses
+            value: '1'
+            target: ''
+            scaling: {}
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>As a &amp;Reference[Magic] action, you point your Holy Symbol at
+          another creature you can see within 30 feet of yourself and focus
+          divine energy at it. Roll 1d8 and add your Wisdom modifier. You either
+          restore Hit Points to the creature equal to that total or force the
+          creature to make a Constitution saving throw. On a failed save, the
+          creature takes Necrotic or Radiant damage (your choice) equal to that
+          total. On a successful save, the creature takes half as much damage
+          (round down).</p><p>You roll an additional d8 when you reach Cleric
+          levels 7 (2d8), 13 (3d8), and 18 (4d8).</p>
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects: []
+      range:
+        override: false
+        units: ft
+        special: ''
+        value: '30'
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: ''
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      healing:
+        number: null
+        denomination: 8
+        types:
+          - healing
+        custom:
+          enabled: true
+          formula: (@scale.channel-divinity-cleric.spark)d8 + @abilities.wis.mod
+        scaling:
+          number: 1
+        bonus: '@abilities.wis.mod'
+        modifiers: []
+      name: 'Divine Spark: Heal'
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        identifier: ''
+        requireMagic: true
+        requireAttunement: false
+        requireIdentification: false
+      behaviors: []
+      flags: {}
+    OY9UrTXvlRL0JUoI:
+      type: save
+      name: 'Divine Spark: Save'
+      _id: OY9UrTXvlRL0JUoI
+      activation:
+        type: action
+        value: null
+        override: false
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets:
+          - type: itemUses
+            value: '1'
+            target: ''
+            scaling: {}
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>As a &amp;Reference[Magic] action, you point your Holy Symbol at
+          another creature you can see within 30 feet of yourself and focus
+          divine energy at it. Roll 1d8 and add your Wisdom modifier. You either
+          restore Hit Points to the creature equal to that total or force the
+          creature to make a Constitution saving throw. On a failed save, the
+          creature takes Necrotic or Radiant damage (your choice) equal to that
+          total. On a successful save, the creature takes half as much damage
+          (round down).</p><p>You roll an additional d8 when you reach Cleric
+          levels 7 (2d8), 13 (3d8), and 18 (4d8).</p>
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects: []
+      range:
+        override: false
+        units: ft
+        special: ''
+        value: '30'
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: ''
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      damage:
+        parts:
+          - custom:
+              enabled: true
+              formula: (@scale.channel-divinity-cleric.spark)d8 + @abilities.wis.mod
+            number: 1
+            denomination: 8
+            bonus: '@abilities.wis.mod'
+            modifiers: []
+            types:
+              - necrotic
+              - radiant
+            scaling:
+              number: 1
+        onSave: half
+      save:
+        ability:
+          - con
+        dc:
+          calculation: spellcasting
+          formula: ''
+        bonus: ''
+        visible: true
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        identifier: ''
+        requireMagic: true
+        requireAttunement: false
+        requireIdentification: false
+      behaviors: []
+      flags: {}
+    aOptL5pMaj3WtR8S:
+      type: save
+      name: Turn Undead
+      _id: aOptL5pMaj3WtR8S
+      activation:
+        type: action
+        value: null
+        override: false
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets:
+          - type: itemUses
+            value: '1'
+            target: ''
+            scaling: {}
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>As a &amp;Reference[Magic] action, you present your Holy Symbol and
+          censure Undead creatures. Each Undead of your choice within 30 feet of
+          you must make a Wisdom saving throw. If the creature fails its save,
+          it has the &amp;Reference[Frightened apply=false] and
+          &amp;Reference[Incapacitated apply=false] conditions for 1 minute. For
+          that duration, it tries to move as far from you as it can on its
+          turns. This effect ends early on the creature if it takes any damage,
+          if you have the Incapacitated condition, or if you die.</p>
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects:
+        - _id: iUeSbfduM7K8XrCF
+          uuid: null
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+        units: ft
+        special: ''
+        value: '30'
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: ''
+          type: creature
+          special: Undead of your choice
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      img: systems/dnd5e/icons/svg/trait-damage-immunities.svg
+      save:
+        ability:
+          - wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+        bonus: ''
+        visible: true
+      visibility:
+        level:
+          min: null
+          max: null
+        identifier: cleric
+        requireMagic: true
+        requireAttunement: false
+        requireIdentification: false
+      behaviors: []
+      flags: {}
+      damage:
+        onSave: half
+        parts: []
+    rprxorXdFoHbRERZ:
+      type: save
+      name: Sear Undead
+      activation:
+        type: action
+        value: null
+        override: false
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets:
+          - type: itemUses
+            value: '1'
+            target: ''
+            scaling: {}
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>As a &amp;Reference[Magic] action, you present your Holy Symbol and
+          censure Undead creatures. Each Undead of your choice within 30 feet of
+          you must make a Wisdom saving throw. If the creature fails its save,
+          it has the &amp;Reference[Frightened apply=false] and
+          &amp;Reference[Incapacitated apply=false] conditions for 1 minute. For
+          that duration, it tries to move as far from you as it can on its
+          turns. This effect ends early on the creature if it takes any damage,
+          if you have the Incapacitated condition, or if you die.</p><p>Whenever
+          you use Turn Undead, you can roll a number of d8s equal to your Wisdom
+          modifier (minimum of 1d8, currently [[lookup @abilities.wis.mod]]) and
+          add the rolls together. Each Undead that fails its saving throw
+          against that use of Turn Undead takes Radiant damage equal to the
+          roll's total. This damage doesn't end the turn effect.</p>
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects:
+        - _id: iUeSbfduM7K8XrCF
+          uuid: null
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+        units: ft
+        special: ''
+        value: '30'
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: ''
+          type: creature
+          special: Undead of your choice
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      img: systems/dnd5e/icons/svg/trait-damage-immunities.svg
+      save:
+        ability:
+          - wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+        bonus: ''
+        visible: true
+      behaviors: []
+      flags: {}
+      visibility:
+        identifier: cleric
+        level:
+          min: 5
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: true
+      damage:
+        onSave: none
+        parts:
+          - custom:
+              enabled: true
+              formula: (max(1, @abilities.wis.mod))d8
+            number: null
+            denomination: null
+            bonus: ''
+            modifiers: []
+            types:
+              - radiant
+            scaling:
+              number: 1
+      _id: rprxorXdFoHbRERZ
+  enchant: {}
+  identifier: channel-divinity-cleric
+  advancement:
+    uFauTQi3ls40bO1J:
+      type: ScaleValue
+      _id: uFauTQi3ls40bO1J
+      configuration:
+        identifier: spark
+        type: number
+        distance:
+          units: ''
+        scale:
+          '2':
+            value: 1
+          '7':
+            value: 2
+          '13':
+            value: 3
+          '18':
+            value: 4
+      value: {}
+      hint: ''
+      name: Divine Spark Die Count
+      flags: {}
+  crewed: false
+effects:
+  - name: Turned
+    img: icons/magic/symbols/star-rising-purple.webp
+    origin: Compendium.dnd5e.classes24.Item.phbclcChannelDiv
+    transfer: false
+    _id: iUeSbfduM7K8XrCF
+    type: base
+    system:
+      changes: []
+      rider:
+        statuses: []
+      origin:
+        actor: null
+        behavior: null
+        effect: null
+        item: null
+        message: null
+      conditions: '{}'
+      magical: false
+    disabled: false
+    duration:
+      value: 1
+      units: minutes
+      expiry: null
+      expired: false
+    description: >-
+      <p>For that duration, it tries to move as far from you as it can on its
+      turns. This effect ends early on the creature if it takes any damage, if
+      you have the Incapacitated condition, or if you die.</p>
+    tint: '#ffffff'
+    statuses:
+      - frightened
+      - incapacitated
+    sort: 0
+    flags:
+      dnd5e:
+        riders: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.368'
+      systemId: dnd5e
+      systemVersion: 6.0.5
+      createdTime: 1791496345915
+      modifiedTime: 1791496345915
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!phbclcChannelDiv.iUeSbfduM7K8XrCF'
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791496345915
+  modifiedTime: 1791496345915
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 200000
+ownership:
+  default: 0
+_key: '!items!phbclcChannelDiv'

@@ -1,0 +1,137 @@
+import CheckSheet from "../../applications/activity/check-sheet.mjs";
+import BaseCheckActivityData from "../../data/activity/check-data.mjs";
+import * as Trait from "../../documents/actor/trait.mjs";
+import { getSceneTargets } from "../../utils.mjs";
+import ActivityMixin from "./mixin.mjs";
+
+/**
+ * Activity for making ability checks.
+ */
+export default class CheckActivity extends ActivityMixin(BaseCheckActivityData) {
+  /* -------------------------------------------- */
+  /*  Model Configuration                         */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  static LOCALIZATION_PREFIXES = [...super.LOCALIZATION_PREFIXES, "DND5E.CHECK"];
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  static metadata = Object.freeze(
+    foundry.utils.mergeObject(super.metadata, {
+      type: "check",
+      img: "systems/dnd5e/icons/svg/activity/check.svg",
+      title: "DND5E.CHECK.Title",
+      hint: "DND5E.CHECK.Hint",
+      sheetClass: CheckSheet,
+      targetPhase: "pre",
+      usage: {
+        actions: {
+          rollCheck: CheckActivity.#rollCheck
+        }
+      }
+    }, { inplace: false })
+  );
+
+  /* -------------------------------------------- */
+  /*  Properties                                  */
+  /* -------------------------------------------- */
+
+  /** @override */
+  get hasOutcomes() {
+    return Number.isFinite(this.check.dc.value);
+  }
+
+  /* -------------------------------------------- */
+  /*  Activation                                  */
+  /* -------------------------------------------- */
+
+  /** @override */
+  _usageChatButtons(message) {
+    const buttons = [];
+    const dc = this.check.dc.value;
+
+    const createButton = (abilityKey, associated) => {
+      const ability = abilityKey === "spellcasting"
+        ? _loc("DND5E.Spellcasting") : CONFIG.DND5E.abilities[abilityKey]?.label;
+      const checkType = (associated in CONFIG.DND5E.skills) ? "skill"
+        : (associated in CONFIG.DND5E.tools) ? "tool": "ability";
+      const dataset = { ability: abilityKey };
+      if ( dc ) dataset.dc = dc;
+      if ( checkType !== "ability" ) dataset[checkType] = associated;
+
+      let type;
+      if ( checkType === "skill" ) type = CONFIG.DND5E.skills[associated]?.label;
+      else if ( checkType === "tool" ) type = Trait.keyLabel(associated, { trait: "tool" });
+      const check = wrap(type ? _loc("EDITOR.DND5E.Inline.SpecificCheck", { ability, type }) : ability);
+      const button = {
+        dataset,
+        action: "rollCheck",
+        canGroup: true,
+        icon: checkType === "tool" ? "fa-solid fa-hammer" : "fa-solid fa-dumbbell",
+        label: {
+          hidden: check,
+          value: dc ? _loc("EDITOR.DND5E.Inline.DC", { check, dc }) : check
+        }
+      };
+      if ( this.check.visible ) button.visibility = "all";
+      buttons.push(button);
+    };
+    const wrap = check => _loc("EDITOR.DND5E.Inline.CheckLong", { check });
+
+    const associated = Array.from(this.check.associated);
+    if ( !associated.length && (this.item.type === "tool") ) associated.push(this.item.system.type.baseItem);
+    if ( associated.length ) associated.forEach(a => {
+      const ability = this.getAbility(a);
+      if ( ability ) createButton(ability, a);
+    });
+    else if ( this.check.ability ) createButton(this.check.ability);
+
+    return buttons.concat(super._usageChatButtons(message));
+  }
+
+  /* -------------------------------------------- */
+  /*  Event Listeners and Handlers                */
+  /* -------------------------------------------- */
+
+  /**
+   * Handle performing an ability check.
+   * @param {PointerEvent} event     Triggering click event.
+   * @param {HTMLElement} target     The capturing HTML element which defined a [data-action].
+   * @param {ChatMessage5e} message  Message associated with the activation.
+   */
+  static async #rollCheck(event, target, message) {
+    const targets = message.system?.evaluatedTargets ?? getSceneTargets();
+    if ( !targets.length && game.user.character ) targets.push(game.user.character);
+    if ( !targets.length ) ui.notifications.warn("DND5E.ActionWarningNoToken", { localize: true });
+    const { ability, dc, skill, tool } = message.system.getButton(target)?.dataset ?? {};
+    const rollData = { event, target: Number.isFinite(dc) ? dc : this.check.dc.value };
+    const ownerData = this.getRollData();
+    if ( this.ability === "spellcasting" ) {
+      ownerData.mod = this.actor?.system.abilities?.[this.spellcastingAbility]?.mod ?? 0;
+    }
+    const bonus = CONFIG.Dice.BasicRoll.replaceFormulaData(this.check.bonus ?? "", ownerData, { missing: 0 });
+    const bonusData = CONFIG.Dice.BasicRoll.constructParts({ activityBonus: bonus });
+    if ( (ability in CONFIG.DND5E.abilities) || (ability === "spellcasting") ) rollData.ability = ability;
+
+    for ( const token of targets ) {
+      const actor = token instanceof Actor ? token : token.actor;
+      const speaker = ChatMessage.getSpeaker({ actor, scene: canvas.scene, token: token.document });
+      const messageData = { data: { speaker, system: { ...this.messageSources, origin: message.id } } };
+      if ( bonusData.parts.length ) rollData.rolls = [bonusData];
+      if ( skill ) await actor.rollSkill({ ...rollData, skill }, {}, messageData);
+      else if ( tool ) {
+        rollData.tool = tool;
+        if ( (this.item.type === "tool")
+          && (!this.item.system.type.baseItem || (tool === this.item.system.type.baseItem)) ) {
+          rollData.bonus = this.item.system.bonus;
+          rollData.prof = this.item.system.prof;
+          rollData.item = this.item;
+        }
+        await actor.rollToolCheck(rollData, {}, messageData);
+      }
+      else await actor.rollAbilityCheck(rollData, {}, messageData);
+    }
+  }
+}

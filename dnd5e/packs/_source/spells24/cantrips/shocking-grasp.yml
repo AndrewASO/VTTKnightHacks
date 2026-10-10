@@ -1,0 +1,190 @@
+name: Shocking Grasp
+system:
+  description:
+    value: >-
+      <p>Lightning springs from you to a creature that you try to touch. Make a
+      melee spell attack against the target. On a hit, the target takes 1d8
+      Lightning damage, and it can't make Opportunity Attacks until the start of
+      its next turn.</p><p><strong>Cantrip Upgrade.</strong> The damage
+      increases by 1d8 when you reach levels 5 (2d8), 11 (3d8), and 17
+      (4d8).</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    revision: 2
+    book: ''
+    license: CC-BY-4.0
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+      count: '1'
+      type: creature
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+      stationary: false
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  level: 0
+  school: evo
+  properties:
+    - vocal
+    - somatic
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    x1A2tC9t6R5uxBG0:
+      type: attack
+      _id: x1A2tC9t6R5uxBG0
+      sort: 0
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: DQCAm67ck1GEKHtE
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      attack:
+        critical:
+          threshold: null
+        flat: false
+        type:
+          value: melee
+          classification: ''
+        ability: ''
+        bonus: ''
+      damage:
+        critical:
+          bonus: ''
+        includeBase: true
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 1
+            denomination: 8
+            bonus: ''
+            types:
+              - lightning
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+            modifiers: []
+      name: ''
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: shocking-grasp
+  method: spell
+  prepared: 2
+_id: phbsplShockingGr
+type: spell
+img: icons/magic/lightning/claws-unarmed-strike-teal.webp
+effects:
+  - name: Shocked
+    img: icons/magic/lightning/bolt-strike-wide-white.webp
+    origin: Compendium.dnd5e.spells24.Item.phbsplShockingGr
+    transfer: false
+    _id: DQCAm67ck1GEKHtE
+    type: base
+    system:
+      changes: []
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    disabled: false
+    duration:
+      value: null
+      units: turns
+      expiry: targetStart
+      expired: false
+    description: >-
+      <p>The target can’t make Opportunity Attacks until the start of its next
+      turn.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693630237
+      modifiedTime: 1787693630237
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplShockingGr.DQCAm67ck1GEKHtE'
+folder: 4FhsY9FJQd7h7MZb
+sort: 106250
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1787693630237
+  modifiedTime: 1787693630237
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplShockingGr'

@@ -1,0 +1,50 @@
+_id: phbpdnExtraAttac
+name: Extra Attack
+type: feat
+folder: 6uMLnndK8UPkb7Uy
+img: icons/skills/melee/spear-tips-triple-orange.webp
+system:
+  description:
+    value: >-
+      <p>You can attack twice instead of once whenever you take the
+      &amp;Reference[Attack] action on your turn.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    license: CC-BY-4.0
+    revision: 1
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 5
+    items: []
+    repeatable: false
+  properties: []
+  requirements: ''
+  activities: {}
+  enchant: {}
+  identifier: extra-attack
+  advancement: {}
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791224423980
+  modifiedTime: 1791224423980
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!phbpdnExtraAttac'

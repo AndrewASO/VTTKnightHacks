@@ -1,0 +1,91 @@
+_id: 0kUsT4sMUOr5FcoX
+name: Savage Attacks
+ownership:
+  default: 0
+type: feat
+system:
+  description:
+    value: >-
+      <p>When you score a critical hit with a melee weapon attack, you can roll
+      one of the weapon's damage dice one additional time and add it to the
+      extra damage of the critical hit.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: race
+    subtype: ''
+  requirements: Half-Orc
+  properties:
+    - trait
+  activities: {}
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: savage-attacks
+flags: {}
+img: icons/skills/melee/weapons-crossed-swords-purple.webp
+effects:
+  - name: Savage Attacks
+    img: icons/skills/melee/weapons-crossed-swords-purple.webp
+    _id: HGtTN5utBdoMs37f
+    type: base
+    system:
+      changes:
+        - key: flags.dnd5e.meleeCriticalDamageDice
+          value: 1
+          priority: null
+          type: add
+    disabled: false
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>When you score a critical hit with a melee weapon attack, you can roll
+      one of the weapon's damage dice one additional time and add it to the
+      extra damage of the critical hit.</p>
+    origin: null
+    tint: '#ffffff'
+    transfer: true
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1726735346691
+      modifiedTime: 1781473421070
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!0kUsT4sMUOr5FcoX.HGtTN5utBdoMs37f'
+folder: jGOdLW5a5cAh2zZe
+sort: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037392505
+  modifiedTime: 1781473447633
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!0kUsT4sMUOr5FcoX'

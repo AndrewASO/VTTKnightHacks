@@ -1,0 +1,76 @@
+{
+  "rules": "2024",
+  "packs": [
+    "actors24",
+    "classes24",
+    "content24",
+    "equipment24",
+    "feats24",
+    "monsterfeatures24",
+    "origins24",
+    "spells24",
+    "tables24"
+  ],
+  "documents": 2415,
+  "skippedLegacyDocuments": 4,
+  "skippedLegacyItems": 4,
+  "activities": 6279,
+  "actors": 380,
+  "actorsWithToken": 307,
+  "actorsMissingToken": 73,
+  "activityTypes": {
+    "utility": 1911,
+    "save": 1266,
+    "damage": 293,
+    "attack": 987,
+    "check": 328,
+    "heal": 250,
+    "cast": 779,
+    "summon": 287,
+    "forward": 82,
+    "enchant": 84,
+    "transform": 4,
+    "teleport": 8
+  },
+  "byPack": {
+    "actors24": {
+      "documents": 466,
+      "activities": 4464
+    },
+    "classes24": {
+      "documents": 332,
+      "activities": 182
+    },
+    "content24": {
+      "documents": 54,
+      "activities": 0
+    },
+    "equipment24": {
+      "documents": 675,
+      "activities": 766
+    },
+    "feats24": {
+      "documents": 21,
+      "activities": 4
+    },
+    "monsterfeatures24": {
+      "documents": 395,
+      "activities": 383
+    },
+    "origins24": {
+      "documents": 66,
+      "activities": 13
+    },
+    "spells24": {
+      "documents": 352,
+      "activities": 467
+    },
+    "tables24": {
+      "documents": 54,
+      "activities": 0
+    }
+  },
+  "parseErrors": [],
+  "checked": true,
+  "failures": []
+}

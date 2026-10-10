@@ -1,0 +1,991 @@
+import aggregateDamageRolls from "../../dice/aggregate-damage-rolls.mjs";
+import simplifyRollFormula from "../../dice/simplify-roll-formula.mjs";
+import AppliedRules from "../../documents/applied-rules.mjs";
+import { safePropertyExists, staticID } from "../../utils.mjs";
+import FormulaField from "../fields/formula-field.mjs";
+import IdentifierField from "../fields/identifier-field.mjs";
+import ActivationField from "../shared/activation-field.mjs";
+import DurationField from "../shared/duration-field.mjs";
+import PropertyField from "../shared/property-field.mjs";
+import RangeField from "../shared/range-field.mjs";
+import TargetField from "../shared/target-field.mjs";
+import UsesField from "../shared/uses-field.mjs";
+import AppliedBehaviorField from "./fields/applied-behavior-field.mjs";
+import AppliedEffectField from "./fields/applied-effect-field.mjs";
+import ConsumptionTargetsField from "./fields/consumption-targets-field.mjs";
+
+const TextEditor = foundry.applications.ux.TextEditor.implementation;
+const {
+  ArrayField, BooleanField, DocumentFlagsField, DocumentIdField, FilePathField,
+  HTMLField, IntegerSortField, NumberField, SchemaField, StringField
+} = foundry.data.fields;
+
+/**
+ * @import { DamageRollConfiguration, DamageRollProcessConfiguration } from "../../dice/_types.mjs";
+ * @import { ActivityRollData, RollDataOptions } from "../../documents/_types.mjs";
+ * @import { DamageFormulaOptions } from "../shared/_types.mjs";
+ * @import { ActivityData, BehaviorApplicationData, EffectApplicationData } from "./_types.mjs";
+ */
+
+/**
+ * Data model for activities.
+ * @extends {foundry.abstract.DataModel<ActivityData>}
+ * @mixes ActivityData
+ */
+export default class BaseActivityData extends foundry.abstract.DataModel {
+
+  /* -------------------------------------------- */
+  /*  Model Configuration                         */
+  /* -------------------------------------------- */
+
+  /** @override */
+  static LOCALIZATION_PREFIXES = [
+    "DND5E.ACTIVITY", "DND5E.ACTIVATION", "DND5E.CONSUMPTION",
+    "DND5E.DURATION", "DND5E.RANGE", "DND5E.TARGET", "DND5E.USES"
+  ];
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  static defineSchema() {
+    return {
+      _id: new DocumentIdField({ initial: () => foundry.utils.randomID() }),
+      type: new StringField({
+        blank: false, required: true, readOnly: true, initial: () => this.metadata.type
+      }),
+      name: new StringField(),
+      img: new FilePathField({ blank: true, categories: ["IMAGE"], base64: false }),
+      sort: new IntegerSortField(),
+      activation: new ActivationField({
+        override: new BooleanField()
+      }),
+      behaviors: new ArrayField(new AppliedBehaviorField()),
+      consumption: new SchemaField({
+        scaling: new SchemaField({
+          allowed: new BooleanField(),
+          max: new FormulaField({ deterministic: true })
+        }),
+        spellSlot: new BooleanField({ initial: true }),
+        targets: new ConsumptionTargetsField()
+      }),
+      description: new SchemaField({
+        chatFlavor: new StringField(),
+        value: new HTMLField()
+      }),
+      duration: new DurationField({
+        concentration: new BooleanField(),
+        override: new BooleanField()
+      }),
+      effects: new ArrayField(new AppliedEffectField()),
+      flags: new DocumentFlagsField(),
+      range: new RangeField({
+        override: new BooleanField()
+      }),
+      target: new TargetField({
+        override: new BooleanField(),
+        prompt: new BooleanField({ initial: true })
+      }),
+      uses: new UsesField(),
+      visibility: new SchemaField({
+        identifier: new IdentifierField(),
+        level: new SchemaField({
+          min: new NumberField({ integer: true, min: 0 }),
+          max: new NumberField({ integer: true, min: 0 })
+        }),
+        requireAttunement: new BooleanField(),
+        requireIdentification: new BooleanField(),
+        requireMagic: new BooleanField()
+      })
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Category used to fetch rules for damage calculation.
+   * @type {"damage"|"healing"}
+   */
+  static damageRuleCategory = "damage";
+
+  /* -------------------------------------------- */
+  /*  Properties                                  */
+  /* -------------------------------------------- */
+
+  /**
+   * The primary ability for this activity that will be available as `@mod` in roll data.
+   * @type {string|null}
+   */
+  get ability() {
+    return this.isSpell ? this.spellcastingAbility : null;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Helper property to translate this activity type into the old `actionType`.
+   * @type {string}
+   */
+  get actionType() {
+    return this.metadata.type;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * A specific set of activation-specific labels displayed in chat cards.
+   * @type {object|null}
+   */
+  get activationLabels() {
+    if ( !this.activation?.type || this.isSpell ) return null;
+    const { activation, duration, range, reach, target } = this.labels;
+    return { activation, duration, range, reach, target };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Behaviors that can be applied from this activity.
+   * @type {BehaviorApplicationData[]|null}
+   */
+  get applicableBehaviors() {
+    const level = this.relevantLevel;
+    return this.behaviors?.filter(b =>
+      ((b.level?.min ?? -Infinity) <= level) && (level <= (b.level?.max ?? Infinity))
+      && (b.type in CONFIG.DND5E.activityBehaviorTypes)
+    ) ?? null;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Effect profiles that can be applied from this activity.
+   * @type {EffectApplicationData[]|null}
+   */
+  get applicableEffects() {
+    const level = this.relevantLevel;
+    return this.effects?.filter(e =>
+      ((e.level?.min ?? -Infinity) <= level) && (level <= (e.level?.max ?? Infinity))
+    ) ?? null;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Can consumption scaling be configured?
+   * @type {boolean}
+   */
+  get canConfigureScaling() {
+    return this.consumption.scaling.allowed || this.item.system.canConfigureScaling;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Is scaling possible with this activity?
+   * @type {boolean}
+   */
+  get canScale() {
+    return this.consumption.scaling.allowed || this.item.system.canScale;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Can this activity's damage be scaled?
+   * @type {boolean}
+   */
+  get canScaleDamage() {
+    return this.consumption.scaling.allowed || this.isScaledScroll || this.item.system.canScaleDamage;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Is this activity a rider for a non-applied enchantment?
+   * @type {boolean}
+   */
+  get isRider() {
+    return !!this.item.getFlag("dnd5e", "riders.activity")?.includes?.(this.id);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Is this activity on a spell scroll that is scaled.
+   * @type {boolean}
+   */
+  get isScaledScroll() {
+    return !!this.item.getFlag("dnd5e", "spellLevel");
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Is this activity on a spell?
+   * @type {boolean}
+   */
+  get isSpell() {
+    return this.item.type === "spell";
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Determine the level used to determine visibility limits, based on the spell level for spells or either the
+   * character or class level, depending on whether `classIdentifier` is set.
+   * @type {number}
+   */
+  get relevantLevel() {
+    const keyPath = (this.item.type === "spell") && (this.item.system.level > 0) ? "item.level"
+      : this.visibility?.identifier ? `classes.${this.visibility.identifier}.levels` : "details.level";
+    return foundry.utils.getProperty(this.getRollData(), keyPath) ?? 0;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Does this activity or its item require concentration?
+   * @type {boolean}
+   */
+  get requiresConcentration() {
+    return this.duration.concentration;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Does activating this activity consume a spell slot?
+   * @type {boolean}
+   */
+  get requiresSpellSlot() {
+    if ( !this.isSpell || !this.actor?.system.spells ) return false;
+    return this.canScale;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Retrieve the spellcasting ability that can be used with this activity.
+   * @type {string|null}
+   */
+  get spellcastingAbility() {
+    let ability;
+    if ( this.isSpell ) ability = this.item.system.availableAbilities?.first();
+    return ability ?? this.actor?.spellcastingAbility ?? null;
+  }
+
+  /* -------------------------------------------- */
+  /*  Data Migration                              */
+  /* -------------------------------------------- */
+
+  /**
+   * Static ID used for the automatically generated activity created during migration.
+   * @type {string}
+   */
+  static INITIAL_ID = staticID("dnd5eactivity");
+
+  /* -------------------------------------------- */
+
+  /**
+   * Migrate data from the item to a newly created activity.
+   * @param {object} source              Item's candidate source data.
+   * @param {object} [options={}]
+   * @param {number} [options.offset=0]  Adjust the default ID using this number when creating multiple activities.
+   */
+  static createInitialActivity(source, { offset=0, ...options }={}) {
+    const activityData = this.transformTypeData(source, {
+      _id: this.INITIAL_ID.replace("0", offset),
+      type: this.metadata.type,
+      activation: this.transformActivationData(source, options),
+      consumption: this.transformConsumptionData(source, options),
+      description: this.transformDescriptionData(source, options),
+      duration: this.transformDurationData(source, options),
+      effects: this.transformEffectsData(source, options),
+      range: this.transformRangeData(source, options),
+      target: this.transformTargetData(source, options),
+      uses: this.transformUsesData(source, options)
+    }, options);
+    foundry.utils.setProperty(source, `system.activities.${activityData._id}`, activityData);
+    foundry.utils.setProperty(source, "flags.dnd5e.persistSourceMigration", true);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's activation object.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object}        Creation data for new activity.
+   */
+  static transformActivationData(source, options) {
+    if ( source.type === "spell" ) return {};
+    return {
+      type: source.system.activation?.type === "none" ? "" : (source.system.activation?.type ?? ""),
+      value: source.system.activation?.cost ?? null,
+      condition: source.system.activation?.condition ?? ""
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's consumption object.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object}        Creation data for new activity.
+   */
+  static transformConsumptionData(source, options) {
+    const targets = [];
+
+    const type = {
+      attribute: "attribute",
+      hitDice: "hitDice",
+      material: "material",
+      charges: "itemUses"
+    }[source.system.consume?.type];
+
+    if ( type ) targets.push({
+      type,
+      target: source.system.consume?.target ?? "",
+      value: source.system.consume?.amount ?? "1",
+      scaling: {
+        mode: source.system.consume?.scale ? "amount" : "",
+        formula: ""
+      }
+    });
+
+    // If no target type set but this item has max uses, set consumption type to itemUses with blank target
+    else if ( source.system.uses?.max ) targets.push({
+      type: "itemUses",
+      target: "",
+      value: "1",
+      scaling: {
+        mode: source.system.consume?.scale ? "amount" : "",
+        formula: ""
+      }
+    });
+
+    if ( source.system.recharge?.value && source.system.uses?.per ) targets.push({
+      type: source.system.uses?.max ? "activityUses" : "itemUses",
+      target: "",
+      value: "1",
+      scaling: { mode: "", formula: "" }
+    });
+
+    return {
+      targets,
+      scaling: {
+        allowed: source.system.consume?.scale ?? false,
+        max: ""
+      }
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Transform an old damage part into the new damage part format.
+   * @param {object} source  Item's candidate source data to transform.
+   * @param {string[]} part  The damage part to transform.
+   * @returns {object}       Creation data for new activity.
+   */
+  static transformDamagePartData(source, [formula, type]) {
+    const data = {
+      number: null,
+      denomination: null,
+      bonus: "",
+      types: type ? [type] : [],
+      custom: {
+        enabled: false,
+        formula: ""
+      },
+      scaling: {
+        mode: source?.system.scaling?.mode !== "none" ? "whole" : "",
+        number: null,
+        formula: source?.system.scaling?.formula ?? ""
+      }
+    };
+
+    const parsed = (formula ?? "").match(/^\s*(\d+)d(\d+)(?:\s*([+|-])\s*(@?[\w\d.-]+))?\s*$/i);
+    if ( parsed && CONFIG.DND5E.dieSteps.includes(Number(parsed[2])) ) {
+      data.number = Number(parsed[1]);
+      data.denomination = Number(parsed[2]);
+      if ( parsed[4] ) data.bonus = parsed[3] === "-" ? `-${parsed[4]}` : parsed[4];
+    } else if ( formula ) {
+      data.custom.enabled = true;
+      data.custom.formula = formula;
+    }
+
+    // If scaling denomination matches the damage denomination, set scaling using number rather than formula
+    const scaling = data.scaling.formula.match(/^\s*(\d+)d(\d+)\s*$/i);
+    if ( (scaling && (Number(scaling[2]) === data.denomination)) || (source.system.scaling?.mode === "cantrip") ) {
+      data.scaling.number = Number(scaling?.[1] || 1);
+      data.scaling.formula = "";
+    }
+
+    return data;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's description object.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object}        Creation data for new activity.
+   */
+  static transformDescriptionData(source, options) {
+    return {
+      chatFlavor: source.system.chatFlavor ?? ""
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's duration object.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object}        Creation data for new activity.
+   */
+  static transformDurationData(source, options) {
+    if ( source.type === "spell" ) return {};
+    const concentration = !!source.system.properties?.findSplice(p => p === "concentration");
+    return {
+      concentration,
+      value: source.system.duration?.value ?? null,
+      units: source.system.duration?.units ?? "inst",
+      special: ""
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's effects array.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object[]}      Creation data for new activity.
+   */
+  static transformEffectsData(source, options) {
+    return source.effects
+      .filter(e => !e.transfer && (e.type !== "enchantment") && (e.flags?.dnd5e?.type !== "enchantment"))
+      .map(e => ({ _id: e._id }));
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's range object.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object}        Creation data for new activity.
+   */
+  static transformRangeData(source, options) {
+    if ( source.type === "spell" ) return {};
+    return {
+      value: source.system.range?.value ?? null,
+      units: source.system.range?.units ?? "",
+      special: ""
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's target object.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object}        Creation data for new activity.
+   */
+  static transformTargetData(source, options) {
+    if ( source.type === "spell" ) return {
+      prompt: source.system.target?.prompt ?? true
+    };
+
+    const data = {
+      template: {
+        count: "",
+        contiguous: false,
+        type: "",
+        size: "",
+        width: "",
+        height: "",
+        units: source.system.target?.units ?? "ft"
+      },
+      affects: {
+        count: "",
+        type: "",
+        choice: false,
+        special: ""
+      },
+      prompt: source.system.target?.prompt ?? true
+    };
+
+    if ( source.system.target?.type in CONFIG.DND5E.areaTargetTypes ) foundry.utils.mergeObject(data, {
+      template: {
+        type: source.system.target?.type ?? "",
+        size: source.system.target?.value ?? "",
+        width: source.system.target?.width ?? ""
+      }
+    });
+
+    else foundry.utils.mergeObject(data, {
+      affects: {
+        count: source.system.target?.value ?? "",
+        type: source.system.target?.type ?? ""
+      }
+    });
+
+    return data;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Perform any type-specific data transformations.
+   * @param {object} source        Item's candidate source data to transform.
+   * @param {object} activityData  In progress creation data.
+   * @param {object} options       Additional options passed to the creation process.
+   * @returns {object}             Creation data for new activity.
+   */
+  static transformTypeData(source, activityData, options) {
+    return activityData;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch data from the item source and transform it into an activity's uses object.
+   * @param {object} source   Item's candidate source data to transform.
+   * @param {object} options  Additional options passed to the creation process.
+   * @returns {object}        Creation data for new activity.
+   */
+  static transformUsesData(source, options) {
+    // Do not add a recharge recovery to the activity if the parent item would already get recharge recovery.
+    if ( !source.system.recharge?.value || !source.system.uses?.max || !source.system.uses?.per ) {
+      return { spent: 0, max: "", recovery: [] };
+    }
+    return {
+      spent: source.system.recharge.charged ? 0 : 1,
+      max: "1",
+      recovery: [{
+        period: "recharge",
+        type: "recoverAll",
+        formula: String(source.system.recharge.value)
+      }]
+    };
+  }
+
+  /* -------------------------------------------- */
+  /*  Data Preparation                            */
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare data related to this activity.
+   */
+  prepareData() {
+    this.name = this.name || _loc(this.metadata?.title);
+    this.img = this.img || this.metadata?.img;
+    this.labels ??= {};
+    const addBaseIndices = data => data?.forEach((d, idx) => Object.defineProperty(d, "_index", { value: idx }));
+    addBaseIndices(this.behaviors);
+    addBaseIndices(this.consumption?.targets);
+    addBaseIndices(this.damage?.parts);
+    addBaseIndices(this.effects);
+    addBaseIndices(this.uses?.recovery);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Perform final preparation after containing item is prepared.
+   * @param {ActivityRollData} [rollData]  Deterministic roll data from the activity.
+   */
+  prepareFinalData(rollData) {
+    rollData ??= this.getRollData({ deterministic: true });
+
+    if ( this.activation ) this._setOverride("activation");
+    if ( this.duration ) this._setOverride("duration");
+    if ( this.range ) {
+      this._setOverride("range");
+      if ( this.range.long > this.range.value ) this.range.value = this.range.long;
+      else if ( this.range.reach && !this.range.value ) this.range.value = this.range.reach;
+      if ( this.type !== "attack" ) delete this.range.reach;
+    }
+    if ( this.target ) this._setOverride("target");
+
+    Object.defineProperty(this, "_inferredSource", {
+      value: Object.freeze(this.toObject(false)),
+      configurable: true,
+      enumerable: false,
+      writable: false
+    });
+
+    if ( this.visibility && !this.isRider ) {
+      if ( !this.item.system.properties?.has("mgc") && this.item.system.validProperties.has("mgc") ) {
+        this.visibility.requireAttunement = false;
+        this.visibility.requireMagic = false;
+      } else if ( this.item.system.attunement === "required" ) {
+        this.visibility.requireAttunement = this.visibility.requireMagic;
+      } else {
+        if ( !this.item.system.canAttune ) this.visibility.requireAttunement = false;
+        if ( this.isSpell ) this.visibility.requireMagic = true;
+      }
+      if ( !("identified" in this.item.system) ) this.visibility.requireIdentification = false;
+    }
+
+    if ( this.activation ) ActivationField.prepareData.call(this, rollData, this.labels);
+    if ( this.duration ) DurationField.prepareData.call(this, rollData, this.labels);
+    if ( this.range ) RangeField.prepareData.call(this, rollData, this.labels);
+    if ( this.target ) TargetField.prepareData.call(this, rollData, this.labels);
+    if ( this.uses ) UsesField.prepareData.call(this, rollData, this.labels);
+
+    const actor = this.item.actor;
+    if ( !actor || !("consumption" in this) ) return;
+    for ( const target of this.consumption.targets ) {
+      if ( !["itemUses", "material"].includes(target.type) || !target.target ) continue;
+
+      // Re-link UUID or identifier target to explicit item on the actor
+      target.target = this._remapConsumptionTarget(target.target);
+
+      // If targeted item isn't found, display preparation warning
+      if ( !actor.items.has(target.target) ) {
+        const message = _loc("DND5E.CONSUMPTION.Warning.MissingItem", {
+          activity: this.name, item: this.item.name
+        });
+        actor._preparationWarnings.push({ message, link: this.uuid, type: "warning" });
+      }
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare the label for a compiled and simplified damage formula.
+   * @param {ActivityRollData} rollData  Deterministic roll data from the item.
+   */
+  prepareDamageLabel(rollData) {
+    const config = this.getDamageConfig({}, { formulaOptions: { modifiers: false }, rollData });
+    const rolls = aggregateDamageRolls(config.rolls.map(({ base, data, options, parts }) => {
+      const formula = parts.join(" + ");
+      try {
+        return new CONFIG.Dice.DamageRoll(formula, data, { base, ...options });
+      } catch (err) {
+        console.warn(`Unable to prepare formula "${formula}" for ${this.name} in item ${this.item.name}${
+          this.actor ? ` on ${this.actor.name} (${this.actor.id})` : ""
+        } (${this.uuid})`, err);
+        return null;
+      }
+    }).filter(_ => _));
+    this.labels.damage = this.labels.damages = rolls.map(roll => {
+      let formula;
+      try {
+        roll.simplify();
+        formula = simplifyRollFormula(roll.formula, { preserveFlavor: false });
+      } catch (err) {
+        console.warn(`Unable to simplify formula "${roll.formula}" for ${this.name} in item ${this.item.name}${
+          this.actor ? ` on ${this.actor.name} (${this.actor.id})` : ""
+        } (${this.uuid})`, err);
+      }
+
+      let label = formula;
+      const types = roll.options.types ?? (roll.options.type ? [roll.options.type] : []);
+      if ( types.length ) {
+        label = `${formula} ${game.i18n.getListFormatter({ type: "conjunction" }).format(
+          types.map(p => CONFIG.DND5E.damageTypes[p]?.label ?? CONFIG.DND5E.healingTypes[p]?.label).filter(_ => _)
+        )}`;
+      }
+
+      return {
+        formula, label,
+        damageType: types.length === 1 ? types[0] : null
+      };
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare context to display this activity in a parent sheet.
+   * @returns {object}
+   */
+  prepareSheetContext() {
+    const hasUses = !!this._source.uses?.max || !!this.uses?.max;
+    const hasRecharge = hasUses && (this.uses?.recovery[0]?.period === "recharge");
+    return {
+      ...this,
+      _id: this._id,
+      uses: this.uses ? {
+        ...this.uses, hasRecharge, hasUses,
+        isOnCooldown: hasRecharge && (this.uses.value < 1),
+        prop: "uses.value",
+        pct: this.uses.max ? Math.clamp((this.uses.value / this.uses.max) * 100, 0, 100) : 0
+      } : null,
+      uuid: this.uuid
+    };
+  }
+
+  /* -------------------------------------------- */
+  /*  Socket Event Handlers                       */
+  /* -------------------------------------------- */
+
+  /**
+   * Perform preliminary operations before an Activity is created.
+   * @param {object} data     The initial data object provided to the document creation request.
+   * @returns {boolean|void}  A return value of false indicates the creation operation should be cancelled.
+   * @protected
+   */
+  _preCreate(data) {}
+
+  /* -------------------------------------------- */
+  /*  Helpers                                     */
+  /* -------------------------------------------- */
+
+  /**
+   * Retrieve the action type reflecting changes based on the provided attack mode.
+   * @param {string} [attackMode=""]
+   * @returns {string}
+   */
+  getActionType(attackMode="") {
+    let actionType = this.actionType;
+    if ( (actionType === "mwak") && (attackMode?.startsWith("thrown") || (attackMode === "ranged")) ) return "rwak";
+    return actionType;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Capture the activity data for a chat card.
+   * @returns {Promise<object>}
+   */
+  async getCardData() {
+    const { description, id, img, name, type, uuid } = this;
+    return {
+      activity: { id, img, name, type, uuid, chatFlavor: description.chatFlavor },
+      description: description.value,
+      properties: [
+        ...PropertyField.getUsageProperties(this.getUsageData())
+      ],
+      subtitle: []
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare activity tooltip template data.
+   * @param {EnrichmentOptions} [options={}]  Options for text enrichment.
+   * @param {string} [options.extras]         Extra HTML displayed with the tooltip.
+   * @returns {Promise<object>}
+   */
+  async getTooltipData({ extras, ...enrichmentOptions }={}) {
+    enrichmentOptions.rollData ??= this.getRollData();
+    enrichmentOptions.relativeTo ??= this.item;
+    const context = await this.getCardData();
+
+    let { name, type, img, uses } = this;
+    uses = this._source.uses.max || this.uses.max ? uses : null;
+
+    Object.assign(context, {
+      name, type, img, uses, extras,
+      config: CONFIG.DND5E,
+      controlHints: game.settings.get("dnd5e", "controlHints"),
+      description: await TextEditor.enrichHTML(context.description || "", enrichmentOptions),
+      item: {
+        name: this.item.name, img: this.item.img
+      },
+      labels: foundry.utils.deepClone(this.labels),
+      properties: PropertyField.getLabels(context.properties, this),
+      subtitle: context.subtitle.filterJoin(" • ")
+    });
+    return context;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Capture the data describing how this activity is used.
+   * @returns {UsageData}
+   */
+  getUsageData() {
+    const { activation, duration, range, target } = this;
+    return { activation, duration, range, target };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Effects that can be applied from this activity.
+   * @returns {Promise<ActiveEffect5e[]>|null}
+   */
+  getApplicableEffects() {
+    const applicableEffects = this.applicableEffects;
+    return applicableEffects
+      ? Promise.all(applicableEffects.map(e => e.getEffect())).then(e => e.filter(_ => _))
+      : null;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Get the roll parts used to create the damage rolls.
+   * @param {Partial<DamageRollProcessConfiguration>} [config={}]  Existing damage configuration to merge into this one.
+   * @param {object} [options]                                     Damage configuration options.
+   * @param {DamageFormulaOptions} [options.formulaOptions]        Options to configure the formula.
+   * @param {ActivityRollData} [options.rollData]                  Use pre-existing roll data.
+   * @returns {DamageRollProcessConfiguration}
+   */
+  getDamageConfig(config={}, { formulaOptions, rollData }={}) {
+    if ( !this.damage?.parts ) return foundry.utils.mergeObject({ rolls: [] }, config);
+
+    const rollConfig = foundry.utils.deepClone(config);
+    rollData ??= this.getRollData({ roll: { ability: config.ability, attackMode: config.attackMode } });
+    rollData.roll ??= {};
+    Object.assign(rollData.roll, {
+      isCritical: rollConfig.isCritical,
+      properties: Array.from(this.item.system.properties ?? [])
+        .concat(config.properties ?? [])
+        .filter(p => CONFIG.DND5E.itemProperties[p]?.isPhysical)
+    });
+    const rules = {
+      bonus: AppliedRules.collect(`${this.constructor.damageRuleCategory}:bonus`, this.actor, this.item).toArray(),
+      consumed: new Set()
+    };
+    rollConfig.rolls = this._getDamageParts(config)
+      .map((d, index) => this._processDamagePart(d, rollConfig, rollData, index, { formulaOptions, rules }))
+      .filter(d => d.parts.length)
+      .concat(config.rolls ?? []);
+
+    return rollConfig;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Retrieve the damage parts and apply any necessary modification before they are prepared.
+   * @param {Partial<DamageRollProcessConfiguration>} [config={}]  Roll configuration being built.
+   * @returns {DamageData[]}
+   */
+  _getDamageParts(config={}) {
+    return Array.from(this.damage.parts);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare a data object which defines the data schema used by dice roll commands against this Activity.
+   * @param {RollDataOptions} [options]
+   * @returns {ActivityRollData}
+   */
+  getRollData(options={}) {
+    const rollData = this.item.getRollData(options);
+    rollData.activity = { ...this };
+    rollData.consumed = this.item.flags.dnd5e?.consumed;
+    rollData.mod = this.actor?.system.abilities?.[options.roll?.ability ?? this.ability]?.mod ?? 0;
+    return rollData;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Process a single damage part into a roll configuration.
+   * @param {DamageData} damage                                   Damage to prepare for the roll.
+   * @param {Partial<DamageRollProcessConfiguration>} rollConfig  Roll configuration being built.
+   * @param {ActivityRollData} rollData                           Roll data to populate with damage data.
+   * @param {number} [index=0]                                    Index of the damage part.
+   * @param {object} [options={}]
+   * @param {DamageFormulaOptions} [options.formulaOptions]       Options to configure the formula.
+   * @param {object} [options.rules]                              Data used to apply rules to each part.
+   * @returns {DamageRollConfiguration}
+   * @protected
+   */
+  _processDamagePart(damage, rollConfig, rollData, index=0, { formulaOptions, rules }={}) {
+    const scaledFormula = damage.scaledFormula(rollConfig.scaling ?? rollData.scaling, formulaOptions);
+    const parts = scaledFormula ? [scaledFormula] : [];
+    const lastType = this.item.getFlag("dnd5e", `last.${this.id}.damageType.${index}`);
+    // Fall back to the item's base damage type when this part specifies none (e.g. weapon/ammo base damage).
+    let { types } = damage;
+    if ( !types.size && this.item.system.offersBaseDamage && (this.constructor.damageRuleCategory !== "healing") ) {
+      types = this.item.system.damage.base.types;
+    }
+    const data = { ...rollData, roll: foundry.utils.deepClone(rollData.roll ?? {}) };
+    data.roll.damage ??= {};
+    data.roll.damage.type = (types.has(lastType) ? lastType : null) ?? types.first();
+
+    if ( index === 0 ) {
+      const actionType = this.getActionType(rollConfig.attackMode);
+      const bonus = foundry.utils.getProperty(this.actor ?? {}, `system.rolls.damage.${actionType}.bonus`);
+      if ( bonus && !/^0+$/.test(bonus) ) parts.push(bonus);
+      if ( this.item.system.damage?.bonus ) parts.push(String(this.item.system.damage.bonus));
+    }
+
+    if ( rules ) {
+      const ruleBonus = AppliedRules.createIterator(rules.bonus)
+        .filterWith(data, { consumed: rules.consumed })
+        .toFormula();
+      if ( ruleBonus ) {
+        data.ruleBonus = ruleBonus;
+        parts.push("@ruleBonus");
+      }
+    }
+
+    return {
+      data, parts,
+      options: {
+        type: data.roll.damage.type,
+        types: Array.from(types),
+        properties: data.roll.properties
+      }
+    };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Remap a UUID or identifier in a consumption target to the ID of an item on the actor.
+   * @param {string} target
+   * @returns {string}
+   * @internal
+   */
+  _remapConsumptionTarget(target) {
+    if ( !target || !this.actor || this.actor.items.has(target) ) return target;
+
+    // Re-link UUID target
+    const { type } = foundry.utils.parseUuid(target) ?? {};
+    if ( type === "Item" ) {
+      const item = this.actor.sourcedItems?.get(target)?.first();
+      if ( item ) return item.id;
+    }
+
+    // Re-link identifier target
+    else {
+      const item = this.actor.identifiedItems?.get(target)?.first();
+      if ( item ) return item.id;
+    }
+
+    return target;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Add an `canOverride` property to the provided object and, if `override` is `false`, replace the data on the
+   * activity with data from the item.
+   * @param {string} keyPath  Path of the property to set on the activity.
+   * @param {Item5e} [item]   Item to act as the source of the override.
+   * @internal
+   */
+  _setOverride(keyPath, item=this.item) {
+    const obj = foundry.utils.getProperty(this, keyPath);
+    Object.defineProperty(obj, "canOverride", {
+      value: safePropertyExists(item.system, keyPath),
+      configurable: true,
+      enumerable: false
+    });
+    if ( obj.canOverride && !obj.override && !obj.overrideSet && !this.isRider ) {
+      foundry.utils.mergeObject(obj, foundry.utils.getProperty(item.system, keyPath));
+      Object.defineProperty(obj, "overrideSet", { value: true, configurable: true, enumerable: false });
+    }
+  }
+}

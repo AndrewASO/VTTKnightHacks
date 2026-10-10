@@ -1,0 +1,178 @@
+_id: ReMbjfeOKoSj3O79
+name: Stoneskin
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>This spell turns the flesh of a willing creature you touch as hard as
+      stone. Until the spell ends, the target has resistance to nonmagical
+      bludgeoning, piercing, and slashing damage.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: hour
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 4
+  school: abj
+  materials:
+    value: Diamond dust worth 100 gp, which the spell consumes
+    consumed: true
+    cost: 100
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: cSVCA9h5OEo5lfBE
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: stoneskin
+sort: 0
+flags: {}
+img: icons/magic/earth/strike-fist-stone-gray.webp
+effects:
+  - origin: Compendium.dnd5e.spells.ReMbjfeOKoSj3O79
+    duration:
+      value: 1
+      units: hours
+      expiry: turnStart
+      expired: false
+    disabled: true
+    _id: cSVCA9h5OEo5lfBE
+    tint: '#ffffff'
+    transfer: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    name: Stoneskin
+    description: >-
+      <p>Until the spell ends, you have resistance to nonmagical bludgeoning,
+      piercing, and slashing damage.</p>
+    statuses: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781374318294
+      modifiedTime: 1781374318294
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    img: icons/magic/earth/strike-fist-stone-gray.webp
+    type: base
+    system:
+      changes:
+        - key: system.traits.dr.value
+          value: bludgeoning
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: piercing
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: slashing
+          priority: null
+          type: add
+        - key: system.traits.dr.bypasses
+          value: mgc
+          priority: null
+          type: add
+    sort: 0
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!ReMbjfeOKoSj3O79.cSVCA9h5OEo5lfBE'
+folder: 5auWSClKMDUIV5Ni
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037356009
+  modifiedTime: 1781374321006
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!ReMbjfeOKoSj3O79'

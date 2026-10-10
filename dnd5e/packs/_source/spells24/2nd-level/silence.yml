@@ -1,0 +1,140 @@
+name: Silence
+system:
+  description:
+    value: >-
+      <p>For the duration, no sound can be created within or pass through a
+      20-foot-radius Sphere centered on a point you choose within range. Any
+      creature or object entirely inside the Sphere has Immunity to Thunder
+      damage, and creatures have the &amp;Reference[deafened apply=false]
+      condition while entirely inside it. Casting a spell that includes a Verbal
+      component is impossible there.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    revision: 2
+    book: ''
+    license: CC-BY-4.0
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: '10'
+    units: minute
+  target:
+    affects:
+      choice: false
+    template:
+      units: ft
+      type: sphere
+      size: '20'
+      contiguous: false
+      stationary: false
+  range:
+    value: '120'
+    units: ft
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 2
+  school: ill
+  properties:
+    - vocal
+    - somatic
+    - concentration
+    - ritual
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        override: false
+        concentration: false
+      effects: []
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      img: ''
+      behaviors:
+        - name: ''
+          _id: p5aDVXeBpxvl5JRe
+          type: applyActiveEffect
+          config:
+            effects:
+              - Compendium.dnd5e.effects.ActiveEffect.phbeffSilenced00
+            sizes: []
+            types: []
+          level:
+            min: null
+            max: null
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      name: Cast
+  identifier: silence
+  method: spell
+  prepared: 0
+_id: phbsplSilence000
+type: spell
+img: icons/magic/control/debuff-chains-orb-movement-blue.webp
+effects: []
+folder: 3SjcO2acsFnWegp4
+sort: 500000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.365'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1786472101982
+  modifiedTime: 1786472101982
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplSilence000'

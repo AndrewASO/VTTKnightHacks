@@ -1,0 +1,125 @@
+_id: OPbdSlrhkUDNpgcS
+name: Wand of the War Mage +1
+type: equipment
+img: icons/weapons/wands/wand-gem-pink.webp
+system:
+  description:
+    value: >-
+      <p><em>Wand (requires attunement by a spellcaster)</em></p><p>While
+      holding this wand, you gain a bonus to spell attack rolls of +1. In
+      addition, you ignore &amp;reference[half cover] when making a spell
+      attack.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  quantity: 1
+  weight:
+    value: 1
+    units: lb
+  price:
+    value: 400
+    denomination: gp
+  attunement: required
+  equipped: false
+  rarity: uncommon
+  identified: true
+  cover: null
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  armor:
+    value: 0
+    dex: null
+    magicalBonus: ''
+  hp:
+    value: 0
+    max: 0
+    dt: null
+    conditions: ''
+  speed:
+    value: null
+    conditions: ''
+  strength: null
+  proficient: null
+  type:
+    value: wand
+    baseItem: ''
+  unidentified:
+    description: ''
+    name: Unidentified Wand
+  container: null
+  crewed: false
+  properties:
+    - foc
+    - mgc
+  activities: {}
+  attuned: false
+  identifier: wand-of-the-war-mage-1
+effects:
+  - name: War Mage's Accuracy +1
+    img: icons/magic/lightning/bolt-strike-beam-yellow.webp
+    origin: Compendium.dnd5e.items.Item.OPbdSlrhkUDNpgcS
+    _id: L2JsUOPt6kCEVZHT
+    type: base
+    system:
+      changes:
+        - key: system.bonuses.msak.attack
+          value: 1
+          priority: null
+          type: add
+        - key: system.bonuses.rsak.attack
+          value: 1
+          priority: null
+          type: add
+      magical: true
+    disabled: false
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>You gain a +1 bonus to spell attack rolls and ignore
+      &amp;reference[half cover] when making a spell attack roll.</p>
+    tint: '#ffffff'
+    transfer: true
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1745449884898
+      modifiedTime: 1783692564446
+      lastModifiedBy: dnd5ebuilder0000
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!OPbdSlrhkUDNpgcS.L2JsUOPt6kCEVZHT'
+folder: 1aDgsGVwDbPdxG2V
+sort: 300000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037176775
+  modifiedTime: 1783700195504
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!OPbdSlrhkUDNpgcS'

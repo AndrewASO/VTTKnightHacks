@@ -1,0 +1,231 @@
+_id: SAj03P2WBDiWu7zu
+name: Faithful Hound
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You conjure a phantom watchdog in an unoccupied space that you can see
+      within range, where it remains for the duration, until you dismiss it as
+      an action, or until you move more than 100 feet away from it.</p><p>The
+      hound is &amp;reference[Invisible apply=false] to all creatures except you
+      and can't be harmed. When a Small or larger creature comes within 30 feet
+      of it without first speaking the password that you specify when you cast
+      this spell, the hound starts barking loudly. The hound sees invisible
+      creatures and can see into the Ethereal Plane. It ignores
+      illusions.</p><p>At the start of each of your turns, the hound attempts to
+      bite one creature within 5 feet of it that is hostile to you. The hound's
+      Attack bonus is equal to your Spellcasting ability modifier + your
+      Proficiency Bonus. On a hit, it deals 4d8 piercing damage.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '8'
+    units: hour
+  target:
+    affects:
+      type: space
+      choice: false
+      count: ''
+      special: ''
+    template:
+      units: any
+      contiguous: false
+      type: ''
+  range:
+    value: '30'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 4
+  school: con
+  materials:
+    value: A tiny silver whistle, a piece of bone, and a thread
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: attack
+      activation:
+        type: special
+        value: null
+        override: true
+        condition: At the start of each of your turns while the Faithful Hound is active.
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: true
+      effects: []
+      range:
+        override: true
+        special: ''
+        units: ft
+        value: '5'
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+        affects:
+          choice: false
+          type: creature
+          count: '1'
+          special: ''
+        override: true
+      attack:
+        ability: ''
+        bonus: ''
+        critical:
+          threshold: null
+        flat: false
+        type:
+          value: melee
+          classification: ''
+      damage:
+        critical:
+          bonus: ''
+        includeBase: true
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 4
+            denomination: 8
+            bonus: ''
+            types:
+              - piercing
+            scaling:
+              mode: ''
+              number: 1
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 200000
+      name: ''
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    txlrVwlbaR355KwZ:
+      type: summon
+      name: Summon Hound
+      _id: txlrVwlbaR355KwZ
+      img: ''
+      sort: 100000
+      activation:
+        type: action
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        value: ''
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      bonuses:
+        ac: ''
+        hd: ''
+        hp: ''
+        attackDamage: ''
+        saveDamage: ''
+        healing: ''
+      creatureSizes: []
+      creatureTypes: []
+      match:
+        attacks: true
+        disposition: true
+        proficiency: true
+        saves: false
+        ability: ''
+      profiles:
+        - count: ''
+          name: ''
+          _id: xomklCZSPxj0cIRP
+          uuid: Compendium.dnd5e.monsters.Actor.GoBpZC30OYlQso2d
+          level:
+            min: null
+            max: null
+          types: []
+      summon:
+        prompt: true
+        mode: ''
+      tempHP: ''
+  identifier: faithful-hound
+sort: 0
+flags: {}
+img: icons/creatures/mammals/wolf-howl-moon-forest-blue.webp
+effects: []
+folder: 5auWSClKMDUIV5Ni
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037356311
+  modifiedTime: 1781377125045
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!SAj03P2WBDiWu7zu'

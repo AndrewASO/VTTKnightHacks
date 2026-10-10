@@ -1,0 +1,70 @@
+_id: phbrgrExpertise0
+name: Expertise
+type: feat
+folder: h5OUzaJcZzsNsOGc
+img: icons/magic/symbols/chevron-elipse-circle-blue.webp
+system:
+  description:
+    value: >-
+      <p>Choose two of your skill proficiencies with which you lack Expertise.
+      You gain Expertise in those skills.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 9
+    items: []
+    repeatable: false
+  properties: []
+  requirements: ''
+  activities: {}
+  enchant: {}
+  identifier: expertise
+  advancement:
+    Yscwm2LPBUNjW0pk:
+      _id: Yscwm2LPBUNjW0pk
+      type: Trait
+      configuration:
+        mode: expertise
+        allowReplacements: false
+        grants: []
+        choices:
+          - count: 2
+            pool:
+              - skills:*
+      value:
+        chosen: []
+      level: 9
+      flags: {}
+      hint: >-
+        <p>Choose two of your skill proficiencies with which you lack Expertise.
+        You gain Expertise in those skills.</p>
+      name: Expertise
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1790976133200
+  modifiedTime: 1790976133200
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!phbrgrExpertise0'

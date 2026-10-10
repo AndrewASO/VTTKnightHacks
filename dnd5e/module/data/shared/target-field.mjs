@@ -1,0 +1,201 @@
+import {
+  defaultUnits, formatLength, formatNumber, getPluralLocalizationKey, prepareFormulaValue
+} from "../../utils.mjs";
+import FormulaField from "../fields/formula-field.mjs";
+
+const { BooleanField, SchemaField, StringField } = foundry.data.fields;
+
+/**
+ * @import { ActivityRollData, ItemRollData } from "../../documents/_types.mjs";
+ * @import { TargetData, TargetLabels } from "./_types.mjs";
+ */
+
+/**
+ * Field for storing target data.
+ */
+export default class TargetField extends SchemaField {
+  constructor(fields={}, options={}) {
+    fields = {
+      template: new SchemaField({
+        count: new FormulaField({ deterministic: true }),
+        contiguous: new BooleanField(),
+        stationary: new BooleanField(),
+        type: new StringField(),
+        size: new FormulaField({ deterministic: true }),
+        width: new FormulaField({ deterministic: true }),
+        height: new FormulaField({ deterministic: true }),
+        units: new StringField({ required: true, blank: false, initial: () => defaultUnits("length") })
+      }),
+      affects: new SchemaField({
+        count: new FormulaField({ deterministic: true }),
+        type: new StringField(),
+        choice: new BooleanField(),
+        special: new StringField()
+      }),
+      ...fields
+    };
+    super(fields, options);
+  }
+
+  /* -------------------------------------------- */
+  /*  Data Preparation                            */
+  /* -------------------------------------------- */
+
+  /**
+   * Build the display labels for target data.
+   * @param {object} data                               Data from which to build the labels.
+   * @param {boolean} [data.capitalize=false]           Capitalize the target type in labels intended to stand alone,
+   *                                                    rather than read as part of a sentence.
+   * @param {Record<string, string>} [data.dimensions]  Template dimensions, derived from the type when omitted.
+   * @param {TargetData} data.target                    Resolved target data.
+   * @returns {TargetLabels}
+   */
+  static getLabels({ capitalize=false, dimensions, target }) {
+    /**
+     * Combine a count with its localized target type.
+     * @param {string} count                        Formatted count.
+     * @param {string} key                          Localization key for the target type.
+     * @param {object} [options={}]
+     * @param {boolean} [options.capitalize=false]  Capitalize the target type.
+     * @param {string} [options.special]            Description of a special target type.
+     * @returns {string}
+     */
+    const fmt = (count, key, { capitalize=false, special }={}) => {
+      let type = _loc(key, { special });
+      if ( capitalize ) type = type.capitalize();
+      return _loc("DND5E.TARGET.Formatted", { count, type }).trim();
+    };
+
+    // Generate the template labels
+    const template = {};
+    const templateConfig = CONFIG.DND5E.areaTargetTypes[target.template.type];
+    if ( templateConfig ) {
+      dimensions ??= TargetField.templateDimensions(target.template.type);
+      const parts = [];
+      if ( target.template.count > 1 ) parts.push(`${target.template.count} ×`);
+      if ( target.template.units in CONFIG.DND5E.movementUnits ) {
+        parts.push(formatLength(target.template.size, target.template.units));
+      }
+      template.statblock = fmt(
+        parts.filterJoin(" "),
+        getPluralLocalizationKey(target.template.count || 1, pr => `${templateConfig.counted}.${pr}`),
+        { capitalize }
+      ).capitalize();
+
+      const sizeUnit = CONFIG.DND5E.movementUnits[target.template.units]?.template ?? "";
+      if ( Object.keys(dimensions).length === 1 ) template.size = _loc("DND5E.AreaOfEffect.Description.SizeSimple", {
+        number: formatNumber(target.template.size), unit: sizeUnit
+      });
+      else template.size = game.i18n.getListFormatter({ type: "unit" })
+        .format(Object.entries(dimensions).map(([k, l]) =>
+          _loc("DND5E.AreaOfEffect.Description.SizeType", {
+            number: formatNumber(target.template[k]), unit: sizeUnit,
+            type: _loc(l.replace("DND5E.AreaOfEffect.Size.", "DND5E.AreaOfEffect.Description."))
+          })
+        ));
+
+      template.description = _loc(
+        getPluralLocalizationKey(target.template.count || 1, pr => `${templateConfig.counted}.${pr}Sized`),
+        { number: formatNumber(target.template.count, { words: true }), sizes: template.size }
+      );
+
+      template.type = templateConfig.label;
+    }
+
+    // Generate the affects labels
+    const affectsConfig = CONFIG.DND5E.individualTargetTypes[target.affects.type];
+    const { count, special } = target.affects;
+    const counted = affectsConfig?.counted ?? "DND5E.TARGET.Type.Target.Counted";
+    const described = special ? "DND5E.TARGET.Type.Special.Counted" : counted;
+    const affects = {
+      description: count
+        ? fmt(
+          formatNumber(count, { words: true }),
+          getPluralLocalizationKey(count, pr => `${described}.${pr}`),
+          { special }
+        )
+        : _loc(`${described}.${target.template.type ? "each" : "any"}`, { special }),
+      sheet: affectsConfig?.counted ? fmt(
+        count ? formatNumber(count) : _loc(`DND5E.TARGET.Count.${target.template.type ? "Every" : "Any"}`),
+        count ? getPluralLocalizationKey(count, pr => `${affectsConfig.counted}.${pr}`)
+          : `${affectsConfig.counted}.other`,
+        { capitalize }
+      ).capitalize() : (affectsConfig?.label ?? ""),
+      statblock: fmt(
+        formatNumber(count || 1, { words: true }),
+        getPluralLocalizationKey(count || 1, pr => `${counted}.${pr}`)
+      )
+    };
+
+    return { affects, template };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare data for this field. Should be called during the `prepareFinalData` stage.
+   * @this {ItemDataModel|BaseActivityData}
+   * @param {ItemRollData|ActivityRollData} rollData  Roll data used for formula replacements.
+   * @param {object} [labels]                         Object in which to insert generated labels.
+   */
+  static prepareData(rollData, labels) {
+    this.target.affects.scalar = this.target.affects.type
+      && (CONFIG.DND5E.individualTargetTypes[this.target.affects.type]?.scalar !== false);
+    if ( this.target.affects.scalar ) {
+      prepareFormulaValue(this, "target.affects.count", "DND5E.TARGET.FIELDS.target.affects.count.label", rollData);
+    } else this.target.affects.count = null;
+
+    const dimensions = this.target.template.dimensions = TargetField.templateDimensions(this.target.template.type);
+
+    if ( this.target.template.type ) {
+      this.target.template.count ||= "1";
+      if ( dimensions.width ) this.target.template.width ||= "5";
+      if ( dimensions.height ) this.target.template.height ||= "5";
+      prepareFormulaValue(this, "target.template.count", "DND5E.TARGET.FIELDS.target.template.count.label", rollData);
+      prepareFormulaValue(this, "target.template.size", "DND5E.TARGET.FIELDS.target.template.size.label", rollData);
+      prepareFormulaValue(this, "target.template.width", "DND5E.TARGET.FIELDS.target.template.width.label", rollData);
+      prepareFormulaValue(this, "target.template.height", "DND5E.TARGET.FIELDS.target.template.height.label", rollData);
+    } else {
+      this.target.template.count = null;
+      this.target.template.size = null;
+      this.target.template.width = null;
+      this.target.template.height = null;
+    }
+
+    const { affects, template } = TargetField.getLabels({ dimensions, target: this.target });
+    this.target.template.labels = template;
+    this.target.template.label = template.statblock ?? "";
+    this.target.affects.labels = affects;
+
+    if ( labels ) {
+      labels.description ??= {};
+      labels.description.affects ||= this.target.affects.labels.description;
+      labels.description.template ||= this.target.template.labels.description;
+      labels.description.templateSize ||= this.target.template.labels.size;
+      labels.description.templateType ||= this.target.template.labels.type;
+      labels.target = this.target.template.label || this.target.affects.labels.sheet;
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Create the template dimensions labels for a template type.
+   * @param {string} type  Area of effect type.
+   * @returns {{ size: string, [width]: string, [height]: string }}
+   */
+  static templateDimensions(type) {
+    const sizes = CONFIG.DND5E.areaTargetTypes[type]?.sizes;
+    const dimensions = { size: "DND5E.AreaOfEffect.Size.Label" };
+    if ( sizes ) {
+      if ( sizes.includes("radius") ) dimensions.size = "DND5E.AreaOfEffect.Size.Radius";
+      else if ( sizes.includes("length") ) dimensions.size = "DND5E.AreaOfEffect.Size.Length";
+      else if ( sizes.includes("width") ) dimensions.size = "DND5E.AreaOfEffect.Size.Width";
+      const hasWidth = sizes.includes("width") && (sizes.includes("length") || sizes.includes("radius"));
+      if ( sizes.includes("thickness") ) dimensions.width = "DND5E.AreaOfEffect.Size.Thickness";
+      else if ( hasWidth ) dimensions.width = "DND5E.AreaOfEffect.Size.Width";
+      if ( sizes.includes("height") ) dimensions.height = "DND5E.AreaOfEffect.Size.Height";
+    }
+    return dimensions;
+  }
+}

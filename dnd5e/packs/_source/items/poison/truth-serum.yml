@@ -1,0 +1,184 @@
+name: Truth Serum
+type: consumable
+img: icons/consumables/potions/bottle-bulb-corked-labeled-blue.webp
+system:
+  description:
+    value: >-
+      <p>A creature subjected to this poison must succeed on a [[/save]] saving
+      throw or become &amp;Reference[poisoned apply=false]{poisoned} for 1 hour.
+      The poisoned creature can't knowingly speak a lie, as if under the effect
+      of a @UUID[Compendium.dnd5e.spells.Item.CylBa7jR8DSbo8Z3]{Zone of Truth}
+      spell.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  quantity: 1
+  weight:
+    value: 0
+    units: lb
+  price:
+    value: 150
+    denomination: gp
+  attunement: ''
+  equipped: false
+  rarity: ''
+  identified: true
+  uses:
+    max: '1'
+    recovery: []
+    autoDestroy: true
+    spent: 0
+  damage:
+    base:
+      number: null
+      denomination: null
+      types: []
+      custom:
+        enabled: false
+      scaling:
+        number: 1
+    replace: false
+  type:
+    value: poison
+    subtype: ingested
+  unidentified:
+    description: ''
+  container: null
+  properties: []
+  magicalBonus: null
+  activities:
+    IXiAkr30YyhobMw8:
+      type: save
+      _id: IXiAkr30YyhobMw8
+      activation:
+        type: action
+        value: null
+        override: false
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets:
+          - type: itemUses
+            value: '1'
+            scaling: {}
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: XJxOfIIj9oraLfCb
+          uuid: null
+          level: {}
+          onSave: false
+      range:
+        override: false
+        units: self
+        special: ''
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: ''
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      damage:
+        parts: []
+        onSave: half
+      save:
+        ability: con
+        dc:
+          calculation: ''
+          formula: '11'
+        bonus: ''
+      name: ''
+      img: ''
+      appliedEffects: []
+      visibility:
+        level:
+          min: null
+          max: null
+        identifier: ''
+  attuned: false
+  identifier: truth-serum
+effects:
+  - name: Can't Lie
+    img: icons/consumables/potions/bottle-bulb-corked-labeled-blue.webp
+    system:
+      origin:
+        item: Compendium.dnd5e.items.Item.a86F565Pjdzym1jH
+        actor: null
+        behavior: null
+        effect: null
+        message: null
+      changes: []
+      conditions: '{}'
+      magical: false
+      rider:
+        statuses: []
+    transfer: false
+    _id: XJxOfIIj9oraLfCb
+    type: base
+    disabled: false
+    start: null
+    duration:
+      value: 1
+      units: hours
+      expiry: null
+      expired: false
+    description: >-
+      <p>You can't knowingly speak a lie, as if under the effect of a
+      @UUID[Compendium.dnd5e.spells.Item.CylBa7jR8DSbo8Z3]{Zone of Truth}
+      spell.</p>
+    origin: null
+    tint: '#ffffff'
+    statuses:
+      - poisoned
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags: {}
+    _stats:
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.3
+      createdTime: 1789767178445
+      modifiedTime: 1790271363539
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!a86F565Pjdzym1jH.XJxOfIIj9oraLfCb'
+sort: 100000
+flags: {}
+_id: a86F565Pjdzym1jH
+folder: ZzUfnm1OuSL02nLG
+ownership:
+  default: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.3
+  createdTime: 1725037220965
+  modifiedTime: 1789767178485
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!a86F565Pjdzym1jH'

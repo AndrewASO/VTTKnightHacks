@@ -1,0 +1,83 @@
+_id: 3sN91lT1R3oxcDKd
+name: Devil's Sight
+ownership:
+  default: 0
+type: feat
+system:
+  description:
+    value: >-
+      <p>You can see normally in darkness, both magical and nonmagical, to a
+      distance of 120 feet.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: eldritchInvocation
+  requirements: Warlock 2
+  properties: []
+  activities: {}
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: devils-sight
+flags: {}
+img: icons/magic/perception/silhouette-stealth-shadow.webp
+effects:
+  - _id: 3JYlSTG0olbm1FQC
+    disabled: false
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    origin: Item.3sN91lT1R3oxcDKd
+    transfer: true
+    flags: {}
+    tint: '#ffffff'
+    name: Devil's Sight
+    description: ''
+    statuses: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 4.0.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      exportSource: null
+    img: icons/magic/perception/silhouette-stealth-shadow.webp
+    type: base
+    system:
+      changes:
+        - key: system.attributes.senses.darkvision
+          value: 120
+          priority: null
+          type: upgrade
+    sort: 0
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!3sN91lT1R3oxcDKd.3JYlSTG0olbm1FQC'
+folder: 0uFCjs5gYeVtl38i
+sort: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 4.0.0
+  createdTime: 1725037379825
+  modifiedTime: 1725992287026
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!3sN91lT1R3oxcDKd'

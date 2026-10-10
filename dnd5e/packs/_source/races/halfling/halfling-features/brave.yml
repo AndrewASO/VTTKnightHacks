@@ -1,0 +1,47 @@
+_id: 7Yoo9hG0hfPSmBoC
+name: Brave
+ownership:
+  default: 0
+type: feat
+system:
+  description:
+    value: >-
+      <p>You have advantage on saving throws against being
+      &amp;reference[frightened apply=false].</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: race
+    subtype: ''
+  requirements: Halfling
+  properties:
+    - trait
+  activities: {}
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: brave
+flags: {}
+img: icons/skills/wounds/injury-face-impact-orange.webp
+effects: []
+folder: kbtbKofcv13crhke
+sort: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037392546
+  modifiedTime: 1781473057670
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!7Yoo9hG0hfPSmBoC'

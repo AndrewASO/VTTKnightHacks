@@ -1,0 +1,193 @@
+name: Guiding Bolt
+system:
+  description:
+    value: >-
+      <p>You hurl a bolt of light toward a creature within range. Make a ranged
+      spell attack against the target. On a hit, it takes 4d6 Radiant damage,
+      and the next attack roll made against it before the end of your next turn
+      has Advantage.</p><p><strong>Using a Higher-Level Spell Slot.</strong> The
+      damage increases by 1d6 for each spell slot level above 1.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: '1'
+    units: round
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+      stationary: false
+  range:
+    value: '120'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 1
+  school: evo
+  properties:
+    - vocal
+    - somatic
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: attack
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        override: false
+        concentration: false
+      effects:
+        - _id: rHzZCeXfdeTcYyk8
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      attack:
+        ability: ''
+        bonus: ''
+        critical:
+          threshold: null
+        flat: false
+        type:
+          value: ranged
+          classification: spell
+      damage:
+        critical:
+          bonus: ''
+        includeBase: true
+        parts:
+          - number: 4
+            denomination: 6
+            bonus: ''
+            types:
+              - radiant
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+            modifiers: []
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+      img: null
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: guiding-bolt
+  method: spell
+  prepared: 0
+_id: phbsplGuidingBol
+type: spell
+img: icons/magic/light/projectile-flare-blue.webp
+effects:
+  - name: Guiding Bolt
+    origin: Compendium.dnd5e.spells24.Item.phbsplGuidingBol
+    duration:
+      value: null
+      units: seconds
+      expiry: sourceEnd
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders: {}
+    img: icons/skills/targeting/target-strike-triple-blue.webp
+    _id: rHzZCeXfdeTcYyk8
+    type: base
+    system:
+      changes: []
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    description: >-
+      <p>The next attack roll made against the target before the end of your
+      next turn has Advantage.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - marked
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693578383
+      modifiedTime: 1787693578383
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!phbsplGuidingBol.rHzZCeXfdeTcYyk8'
+folder: pBaAAtXBCq9FVEnL
+sort: 2500000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1787693578383
+  modifiedTime: 1787693578383
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplGuidingBol'
