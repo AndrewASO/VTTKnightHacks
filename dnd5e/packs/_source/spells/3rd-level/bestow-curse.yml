@@ -1,0 +1,604 @@
+_id: pO4zGe5LmFIYqJiL
+name: Bestow Curse
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You touch a creature, and that creature must succeed on a Wisdom saving
+      throw or become cursed for the duration of the spell. When you cast this
+      spell, choose the nature of the curse from the following
+      options:</p><ul><li><p>Choose one ability score. While cursed, the target
+      has disadvantage on ability checks and saving throws made with that
+      ability score.</p></li><li><p>While cursed, the target has disadvantage on
+      attack rolls against you.</p></li><li><p>While cursed, the target must
+      make a Wisdom saving throw at the start of each of its turns. If it fails,
+      it wastes its action that turn doing nothing.</p></li><li><p>While the
+      target is cursed, your attacks and spells deal an extra 1d8 necrotic
+      damage to the target.</p></li></ul><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect. At the DM's option, you may choose an alternative curse
+      effect, but it should be no more powerful than those described above. The
+      DM has final say on such a curse's effect.</p><p><strong>At Higher
+      Levels.</strong> If you cast this spell using a spell slot of 4th level or
+      higher, the duration is concentration, up to 10 minutes. If you use a
+      spell slot of 5th level or higher, the duration is 8 hours. If you use a
+      spell slot of 7th level or higher, the duration is 24 hours. If you use a
+      9th level spell slot, the spell lasts until it is dispelled. Using a spell
+      slot of 5th level or higher grants a duration that doesn't require
+      concentration.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 3
+  school: nec
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: OSGSF1Zm61GXLvrC
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: pgBN0brGeJBSc413
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: RoAMbIx9IUqpNREv
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: KCdm5KtgQkFm9L9b
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: yO17H6NUUH6yTtJj
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: yFn5nMRayDT5pVeT
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: aahOmoNF6ZsMVxUs
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: Ebzd58ARPldBzKci
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: 2EP5ujWSLnkP1zV0
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+        bonus: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: ''
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: bestow-curse
+sort: 0
+flags: {}
+img: icons/magic/unholy/hand-light-pink.webp
+effects:
+  - name: Cursed Charisma
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: systems/dnd5e/icons/svg/abilities/charisma.svg
+    _id: OSGSF1Zm61GXLvrC
+    type: base
+    system:
+      changes:
+        - key: system.abilities.cha.check.roll.mode
+          value: -1
+          priority: null
+          type: add
+        - key: system.abilities.cha.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+    description: >-
+      <p>You have Disadvantage on Charisma checks and saving throws.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - cursed
+    sort: 0
+    _stats:
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL.ActiveEffect.OSGSF1Zm61GXLvrC
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861699311
+      modifiedTime: 1783217402003
+      lastModifiedBy: dnd5ebuilder0000
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.OSGSF1Zm61GXLvrC'
+  - name: Cursed Constitution
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: systems/dnd5e/icons/svg/abilities/constitution.svg
+    _id: pgBN0brGeJBSc413
+    type: base
+    system:
+      changes:
+        - key: system.abilities.con.check.roll.mode
+          value: -1
+          priority: null
+          type: add
+        - key: system.abilities.con.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+    description: >-
+      <p>You have Disadvantage on Constitution checks and saving throws.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - cursed
+    sort: 0
+    _stats:
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL.ActiveEffect.pgBN0brGeJBSc413
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861700362
+      modifiedTime: 1783217405566
+      lastModifiedBy: dnd5ebuilder0000
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.pgBN0brGeJBSc413'
+  - name: Cursed Dexterity
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: systems/dnd5e/icons/svg/abilities/dexterity.svg
+    _id: RoAMbIx9IUqpNREv
+    type: base
+    system:
+      changes:
+        - key: system.abilities.dex.check.roll.mode
+          value: -1
+          priority: null
+          type: add
+        - key: system.abilities.dex.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+    description: >-
+      <p>You have Disadvantage on Dexterity checks and saving throws.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - cursed
+    sort: 0
+    _stats:
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL.ActiveEffect.RoAMbIx9IUqpNREv
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861702288
+      modifiedTime: 1783217409287
+      lastModifiedBy: dnd5ebuilder0000
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.RoAMbIx9IUqpNREv'
+  - name: Cursed Intelligence
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: systems/dnd5e/icons/svg/abilities/intelligence.svg
+    _id: KCdm5KtgQkFm9L9b
+    type: base
+    system:
+      changes:
+        - key: system.abilities.int.check.roll.mode
+          value: -1
+          priority: null
+          type: add
+        - key: system.abilities.int.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+    description: >-
+      <p>You have Disadvantage on Intelligence checks and saving throws.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - cursed
+    sort: 0
+    _stats:
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL.ActiveEffect.KCdm5KtgQkFm9L9b
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861704580
+      modifiedTime: 1783217414140
+      lastModifiedBy: dnd5ebuilder0000
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.KCdm5KtgQkFm9L9b'
+  - name: Cursed Strength
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: systems/dnd5e/icons/svg/abilities/strength.svg
+    _id: yO17H6NUUH6yTtJj
+    type: base
+    system:
+      changes:
+        - key: system.abilities.str.check.roll.mode
+          value: -1
+          priority: null
+          type: add
+        - key: system.abilities.str.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+    description: >-
+      <p>You have Disadvantage on Strength checks and saving throws.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - cursed
+    sort: 0
+    _stats:
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL.ActiveEffect.yO17H6NUUH6yTtJj
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861706464
+      modifiedTime: 1783217417782
+      lastModifiedBy: dnd5ebuilder0000
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.yO17H6NUUH6yTtJj'
+  - name: Cursed Wisdom
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: systems/dnd5e/icons/svg/abilities/wisdom.svg
+    _id: yFn5nMRayDT5pVeT
+    type: base
+    system:
+      changes:
+        - key: system.abilities.wis.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+        - key: system.abilities.wis.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+    description: >-
+      <p>You have Disadvantage on Wisdom checks and saving throws.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - cursed
+    sort: 0
+    _stats:
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL.ActiveEffect.yFn5nMRayDT5pVeT
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861707655
+      modifiedTime: 1783217421087
+      lastModifiedBy: dnd5ebuilder0000
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.yFn5nMRayDT5pVeT'
+  - name: Cursed Attacks
+    img: icons/skills/melee/sword-damaged-broken-purple.webp
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    transfer: false
+    _id: aahOmoNF6ZsMVxUs
+    type: base
+    system:
+      changes: []
+    disabled: false
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>You have Disadvantage on attack rolls against the caster.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    statuses:
+      - cursed
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      compendiumSource: Item.aTXZkpQ5Ay6bIxZV.ActiveEffect.u7Yc7mxHYPDvipS1
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861708992
+      modifiedTime: 1783217424280
+      lastModifiedBy: dnd5ebuilder0000
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.aahOmoNF6ZsMVxUs'
+  - name: Cursed Actions
+    img: icons/magic/control/debuff-chains-shackles-movement-blue.webp
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    transfer: false
+    type: base
+    system:
+      changes: []
+    disabled: false
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnEnd
+      expired: false
+    description: >-
+      <p>In combat, you must succeed on a [[/save wis]] saving throw at the
+      start of each of your turns. On a failure, you waste your action on your
+      turn doing nothing.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    statuses:
+      - cursed
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      compendiumSource: Item.aTXZkpQ5Ay6bIxZV.ActiveEffect.T3x6XvQbSkg6kW6u
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861710228
+      modifiedTime: 1783217430033
+      lastModifiedBy: dnd5ebuilder0000
+    _id: Ebzd58ARPldBzKci
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.Ebzd58ARPldBzKci'
+  - name: Cursed Resilience
+    img: icons/skills/wounds/bone-broken-marrow-red.webp
+    origin: Compendium.dnd5e.spells.Item.pO4zGe5LmFIYqJiL
+    transfer: false
+    type: base
+    system:
+      changes: []
+    disabled: false
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>When the caster deals damqage to you with an attack or spell, they deal
+      an additional [[/damage 1d8 necrotic]] damage.</p><p>A
+      @UUID[Compendium.dnd5e.spells.Item.XZhdgVK3cLoxNCQl]{remove curse} spell
+      ends this effect.</p>
+    tint: '#ffffff'
+    statuses:
+      - cursed
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      compendiumSource: Item.aTXZkpQ5Ay6bIxZV.ActiveEffect.DRsQi8p3Zvhte2G0
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1761861711417
+      modifiedTime: 1783217434817
+      lastModifiedBy: dnd5ebuilder0000
+    _id: 2EP5ujWSLnkP1zV0
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!pO4zGe5LmFIYqJiL.2EP5ujWSLnkP1zV0'
+folder: 5Si35RRLLaaoWvC3
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037365284
+  modifiedTime: 1783217394618
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!pO4zGe5LmFIYqJiL'

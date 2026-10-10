@@ -1,0 +1,104 @@
+_id: phbclcLifeDomain
+name: Life Domain
+type: subclass
+folder: 4I70IkQQuwHPyfKp
+img: systems/dnd5e/icons/classes/life.webp
+system:
+  description:
+    value: >-
+      <div class="item-entry-details"><p class="item-entry-tag">Soothe the Hurts
+      of the World</p></div><p>The Life Domain focuses on the positive energy
+      that helps sustain all life in the multiverse. Clerics who tap into this
+      domain are masters of healing, using that life force to cure many
+      hurts.</p><p>Existence itself relies on the positive energy associated
+      with this domain, so a Cleric of almost any religious tradition might
+      choose it. This domain is particularly associated with agricultural
+      deities, gods of healing or endurance, and gods of home and community.
+      Religious orders of healing also seek the magic of this domain.</p><p
+      class="hide-in-embed"><em>@UUID[Compendium.dnd5e.content24.JournalEntry.phbCleric0000000.JournalEntryPage.aGYpgynZ3nkBCPaT]{Subclass
+      Details}</em></p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 3
+  identifier: life-domain
+  classIdentifier: cleric
+  advancement:
+    xGJEF0anyVTaO02x:
+      _id: xGJEF0anyVTaO02x
+      type: ItemGrant
+      configuration:
+        items:
+          - uuid: Compendium.dnd5e.classes24.Item.phbclcDiscipleOf
+            optional: false
+            sort: 0
+          - uuid: Compendium.dnd5e.classes24.Item.phbclcLifeSpells
+            optional: false
+            sort: 0
+          - uuid: Compendium.dnd5e.classes24.Item.phbclcPreserveLi
+            optional: false
+            sort: 0
+        optional: false
+        spell: null
+        sorting: m
+      value: {}
+      level: 3
+      name: Subclass Features
+      flags: {}
+      hint: ''
+    Qkx3Cd07TGIwBX91:
+      _id: Qkx3Cd07TGIwBX91
+      type: ItemGrant
+      configuration:
+        items:
+          - uuid: Compendium.dnd5e.classes24.Item.phbclcBlessedHea
+            optional: false
+            sort: 0
+        optional: false
+        spell: null
+        sorting: m
+      value: {}
+      level: 6
+      name: Subclass Features
+      flags: {}
+      hint: ''
+    fke7bQihEBwKmOXP:
+      _id: fke7bQihEBwKmOXP
+      type: ItemGrant
+      configuration:
+        items:
+          - uuid: Compendium.dnd5e.classes24.Item.phbclcSupremeHea
+            optional: false
+            sort: 0
+        optional: false
+        spell: null
+        sorting: m
+      value: {}
+      level: 17
+      name: Subclass Features
+      flags: {}
+      hint: ''
+  spellcasting:
+    progression: none
+    ability: ''
+    preparation:
+      formula: ''
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791233179439
+  modifiedTime: 1791233179439
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!phbclcLifeDomain'

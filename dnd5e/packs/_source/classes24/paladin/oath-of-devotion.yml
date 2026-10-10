@@ -1,0 +1,121 @@
+_id: phbpdnOathOfDevo
+name: Oath of Devotion
+type: subclass
+folder: VHaxJHEReTihmspe
+img: systems/dnd5e/icons/classes/devotion.webp
+system:
+  description:
+    value: >-
+      <div class="item-entry-details"><p class="item-entry-tag">Uphold the
+      Ideals of Justice and Order</p></div><p>The Oath of Devotion binds
+      Paladins to the ideals of justice and order. These Paladins meet the
+      archetype of the knight in shining armor. They hold themselves to the
+      highest standards of conduct, and some—for better or worse—hold the rest
+      of the world to the same standards.</p><p>Many who swear this oath are
+      devoted to gods of law and good and use their gods' tenets as the measure
+      of personal devotion. Others hold angels as their ideals and incorporate
+      images of angelic wings into their helmets or coats of arms.</p><p>These
+      paladins share the following tenets:</p><ul><li><p>Let your word be your
+      promise.</p></li><li><p>Protect the weak and never fear to
+      act.</p></li><li><p>Let your honorable deeds be an
+      example.</p></li></ul><p
+      class="hide-in-embed"><em>@UUID[Compendium.dnd5e.content24.JournalEntry.phbPaladin000000.JournalEntryPage.dw8zIx4aur7rRtx3]{Subclass
+      Details}</em></p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  identifier: oath-devotion
+  classIdentifier: paladin
+  advancement:
+    jxzvTfXzjLzIvQbF:
+      _id: jxzvTfXzjLzIvQbF
+      type: ItemGrant
+      configuration:
+        items:
+          - uuid: Compendium.dnd5e.classes24.Item.phbpdnDevotionSp
+            optional: false
+            sort: 0
+          - uuid: Compendium.dnd5e.classes24.Item.phbpdnSacredWeap
+            optional: false
+            sort: 0
+        optional: false
+        spell: null
+        sorting: m
+      value: {}
+      level: 3
+      name: Subclass Features
+      flags: {}
+      hint: ''
+    jix1tV556sLlpGYr:
+      _id: jix1tV556sLlpGYr
+      type: ItemGrant
+      configuration:
+        items:
+          - uuid: Compendium.dnd5e.classes24.Item.phbpdnDevotionAu
+            optional: false
+            sort: 0
+        optional: false
+        spell: null
+        sorting: m
+      value: {}
+      level: 7
+      name: Subclass Features
+      flags: {}
+      hint: ''
+    3t0heVzpZV6AClAz:
+      _id: 3t0heVzpZV6AClAz
+      type: ItemGrant
+      configuration:
+        items:
+          - uuid: Compendium.dnd5e.classes24.Item.phbpdnSmiteOfPro
+            optional: false
+            sort: 0
+        optional: false
+        spell: null
+        sorting: m
+      value: {}
+      level: 15
+      name: Subclass Features
+      flags: {}
+      hint: ''
+    1Koj8mZO5gVtRril:
+      _id: 1Koj8mZO5gVtRril
+      type: ItemGrant
+      configuration:
+        items:
+          - uuid: Compendium.dnd5e.classes24.Item.phbpdnHolyNimbus
+            optional: false
+            sort: 0
+        optional: false
+        spell: null
+        sorting: m
+      value: {}
+      level: 20
+      name: Subclass Features
+      flags: {}
+      hint: ''
+  spellcasting:
+    progression: none
+    ability: ''
+    preparation:
+      formula: ''
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791225411389
+  modifiedTime: 1791225411389
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 100000
+ownership:
+  default: 0
+_key: '!items!phbpdnOathOfDevo'

@@ -1,0 +1,93 @@
+name: Blessed Warrior
+system:
+  description:
+    value: >-
+      <p>You learn two Cleric cantrips of your choice.
+      <em>@UUID[Compendium.dnd-players-handbook.spells.Item.phbsplGuidance00]{Guidance}</em>
+      and
+      <em>@UUID[Compendium.dnd-players-handbook.spells.Item.phbsplSacredFlam]{Sacred
+      Flame}</em> are recommended. The chosen cantrips count as Paladin spells
+      for you, and Charisma is your spellcasting ability for them. Whenever you
+      gain a Paladin level, you can replace one of these cantrips with another
+      Cleric cantrip.</p>
+    chat: ''
+  activities: {}
+  uses:
+    spent: 0
+    recovery: []
+    max: ''
+  identifier: blessed-warrior
+  source:
+    revision: 2
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+  enchant: {}
+  type:
+    value: class
+    subtype: fightingStyle
+  prerequisites:
+    level: null
+    items: []
+    repeatable: false
+  properties: []
+  requirements: Paladin
+  advancement:
+    6dwyqBA13Ui6p4Bf:
+      type: ItemChoice
+      _id: 6dwyqBA13Ui6p4Bf
+      configuration:
+        allowDrops: true
+        choices:
+          '2':
+            count: 2
+            replacement: false
+        pool: []
+        restriction:
+          list:
+            - class:cleric
+          level: '0'
+          school: []
+        spell:
+          ability:
+            - cha
+          method: spell
+          uses:
+            max: ''
+            per: ''
+            requireSlot: false
+          prepared: 2
+        type: spell
+        sorting: a
+      value:
+        added: {}
+        replaced: {}
+      hint: >-
+        <p>You learn two Cleric cantrips of your choice. Guidance and Sacred
+        Flame are recommended. The chosen cantrips count as Paladin spells for
+        you, and Charisma is your spellcasting ability for them. Whenever you
+        gain a Paladin level, you can replace one of these cantrips with another
+        Cleric cantrip.</p>
+      name: Choose Cantrips
+      flags: {}
+  crewed: false
+_id: phbfstBlessedWar
+type: feat
+folder: 6uMLnndK8UPkb7Uy
+img: icons/skills/melee/sword-winged-holy-orange.webp
+effects: []
+sort: 0
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791494385871
+  modifiedTime: 1791494385871
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbfstBlessedWar'

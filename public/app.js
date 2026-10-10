@@ -16,6 +16,8 @@ const params = new URLSearchParams(window.location.search);
 const socket = io({ auth: { dmCode: params.get('dm') || '' } });
 
 let state = { tokens: [], creatures: {}, roster: [], isDM: false };
+let openFeatures = new Set();
+let openFeatureToken = null;
 let selected = []; // token ids, the first is the "from" token for measuring
 let tokenNodes = {}; // token id -> Konva group
 
@@ -72,52 +74,107 @@ function canMove(token) {
   return state.isDM || token.team === 'player';
 }
 
-// While dragging, keep the token locked to grid squares and inside the room.
-function snapPixels(pos) {
-  const col = Math.min(GRID.cols - 1, Math.max(0, Math.round(pos.x / GRID.size)));
-  const row = Math.min(GRID.rows - 1, Math.max(0, Math.round(pos.y / GRID.size)));
+function tokenSpan(token) {
+  return { w: token.w || 1, h: token.h || 1 };
+}
+
+// While dragging, keep the whole footprint locked to grid squares and inside the room.
+function snapPixels(pos, token) {
+  const { w, h } = tokenSpan(token);
+  const col = Math.min(GRID.cols - w, Math.max(0, Math.round(pos.x / GRID.size)));
+  const row = Math.min(GRID.rows - h, Math.max(0, Math.round(pos.y / GRID.size)));
   return { x: col * GRID.size, y: row * GRID.size };
 }
 
+function hpColor(pct) {
+  if (pct > 0.5) return '#6aa84f';
+  if (pct > 0.25) return '#d6a032';
+  return '#c0432f';
+}
+
+const tokenImages = {};
+
+function tokenPortrait(src) {
+  if (!src) return null;
+  if (!tokenImages[src]) {
+    const image = new Image();
+    image.src = `/${src}`;
+    image.onload = () => renderTokens();
+    tokenImages[src] = image;
+  }
+  return tokenImages[src];
+}
+
 function makeToken(token) {
-  const size = GRID.size;
+  const cell = GRID.size;
+  const { w, h } = tokenSpan(token);
+  const width = w * cell;
+  const height = h * cell;
   const isSelected = selected.includes(token.id);
+  const creature = state.creatures[token.creatureId];
+  const portrait = tokenPortrait(creature?.token);
 
   const group = new Konva.Group({
-    x: token.x * size,
-    y: token.y * size,
+    x: token.x * cell,
+    y: token.y * cell,
     draggable: canMove(token),
-    dragBoundFunc: snapPixels,
+    dragBoundFunc: (pos) => snapPixels(pos, token),
+    opacity: token.defeated ? 0.35 : 1,
   });
 
-  group.add(new Konva.Circle({
-    x: size / 2,
-    y: size / 2,
-    radius: size / 2 - 4,
+  group.add(new Konva.Ellipse({
+    x: width / 2,
+    y: height / 2,
+    radiusX: width / 2 - 4,
+    radiusY: height / 2 - 4,
     fill: token.team === 'monster' ? COLORS.monster : COLORS.player,
     stroke: isSelected ? COLORS.select : COLORS.edge,
     strokeWidth: isSelected ? 4 : 2,
   }));
 
-  group.add(new Konva.Text({
-    x: 0,
-    y: 0,
-    width: size,
-    height: size,
-    text: initials(token.name),
-    align: 'center',
-    verticalAlign: 'middle',
-    fontSize: 16,
-    fontStyle: 'bold',
-    fill: '#ffffff',
-    listening: false,
-  }));
+  if (portrait && portrait.complete && portrait.naturalWidth) {
+    const face = new Konva.Group({
+      listening: false,
+      clipFunc: (ctx) => {
+        ctx.ellipse(width / 2, height / 2, width / 2 - 4, height / 2 - 4, 0, 0, Math.PI * 2);
+      },
+    });
+    face.add(new Konva.Image({
+      x: 4,
+      y: 4,
+      width: width - 8,
+      height: height - 8,
+      image: portrait,
+    }));
+    group.add(face);
+  } else {
+    group.add(new Konva.Text({
+      x: 0,
+      y: 0,
+      width,
+      height,
+      text: initials(token.name),
+      align: 'center',
+      verticalAlign: 'middle',
+      fontSize: 16 * Math.min(w, h),
+      fontStyle: 'bold',
+      fill: '#ffffff',
+      listening: false,
+    }));
+  }
+
+  // Small HP bar along the bottom. Hidden when the viewer is not allowed to see HP.
+  if (token.hp !== null && token.maxHp) {
+    const pct = Math.max(0, token.hp / token.maxHp);
+    group.add(new Konva.Rect({ x: 6, y: height - 9, width: width - 12, height: 5, fill: '#3b4450', listening: false }));
+    group.add(new Konva.Rect({ x: 6, y: height - 9, width: (width - 12) * pct, height: 5, fill: hpColor(pct), listening: false }));
+  }
 
   group.on('click tap', (e) => selectToken(token.id, e.evt.shiftKey));
   group.on('dragmove', updateMeasure);
   group.on('dragend', () => {
-    const x = Math.round(group.x() / size);
-    const y = Math.round(group.y() / size);
+    const x = Math.round(group.x() / cell);
+    const y = Math.round(group.y() / cell);
     socket.emit('token:move', { id: token.id, x, y });
   });
 
@@ -152,10 +209,14 @@ function selectToken(id, additive) {
 
 function currentSquare(id) {
   const node = tokenNodes[id];
-  if (!node) return null;
+  const token = state.tokens.find((t) => t.id === id);
+  if (!node || !token) return null;
+  const { w, h } = tokenSpan(token);
   return {
     x: Math.round(node.x() / GRID.size),
     y: Math.round(node.y() / GRID.size),
+    w,
+    h,
   };
 }
 
@@ -177,11 +238,10 @@ function updateMeasure() {
     return;
   }
 
-  const half = GRID.size / 2;
-  const ax = a.x * GRID.size + half;
-  const ay = a.y * GRID.size + half;
-  const bx = b.x * GRID.size + half;
-  const by = b.y * GRID.size + half;
+  const ax = a.x * GRID.size + (a.w * GRID.size) / 2;
+  const ay = a.y * GRID.size + (a.h * GRID.size) / 2;
+  const bx = b.x * GRID.size + (b.w * GRID.size) / 2;
+  const by = b.y * GRID.size + (b.h * GRID.size) / 2;
 
   measureLayer.add(new Konva.Line({
     points: [ax, ay, bx, by],
@@ -210,15 +270,41 @@ function el(tag, text, className) {
   return node;
 }
 
+const ROSTER_LIMIT = 24;
+
+function rosterLabel(creature) {
+  return creature.class ? `${creature.name} · ${creature.class}` : creature.name;
+}
+
 function renderRoster() {
   const box = document.getElementById('roster');
   box.replaceChildren();
 
-  state.roster.forEach((c) => {
-    const button = el('button', c.name, c.team);
-    button.addEventListener('click', () => socket.emit('token:add', { creatureId: c.id }));
+  const query = document.getElementById('roster-search').value.trim().toLowerCase();
+  if (!query) {
+    box.appendChild(el('p', 'Type to search.', 'detail-sub'));
+    return;
+  }
+
+  const words = query.split(/\s+/);
+  const matches = state.roster
+    .filter((creature) => {
+      const haystack = `${creature.name} ${creature.class || ''}`.toLowerCase();
+      return words.every((word) => haystack.includes(word));
+    })
+    .sort((a, b) => rosterLabel(a).localeCompare(rosterLabel(b)));
+
+  matches.slice(0, ROSTER_LIMIT).forEach((creature) => {
+    const button = el('button', rosterLabel(creature), creature.team);
+    button.addEventListener('click', () => socket.emit('token:add', { creatureId: creature.id }));
     box.appendChild(button);
   });
+
+  if (matches.length === 0) {
+    box.appendChild(el('p', 'No matches.', 'detail-sub'));
+  } else if (matches.length > ROSTER_LIMIT) {
+    box.appendChild(el('p', 'Keep typing to narrow this.', 'detail-sub'));
+  }
 }
 
 function statBox(label, value) {
@@ -234,11 +320,24 @@ function renderDetail() {
 
   const token = state.tokens.find((t) => t.id === selected[0]);
   if (!token) {
+    openFeatures = new Set();
+    openFeatureToken = null;
     box.appendChild(el('p', 'Nothing selected.', 'detail-sub'));
     return;
   }
+  if (token.id !== openFeatureToken) {
+    openFeatures = new Set();
+    openFeatureToken = token.id;
+  }
 
   const c = state.creatures[token.creatureId];
+  if (c.token) {
+    const portrait = document.createElement('img');
+    portrait.className = 'portrait';
+    portrait.alt = '';
+    portrait.src = `/${c.token}`;
+    box.appendChild(portrait);
+  }
   box.appendChild(el('p', token.name, 'detail-name'));
   box.appendChild(el('p', c.class || c.size || '', 'detail-sub'));
 
@@ -268,15 +367,30 @@ function renderDetail() {
   }
 
   // Monsters call these traits, characters call them features.
+  // Each one starts collapsed. Opening one leaves the others as they are.
   const features = c.features || c.traits || [];
-  features.forEach((f) => {
-    const row = el('p', undefined, 'feature');
-    row.appendChild(el('b', `${f.name}. `));
-    row.appendChild(document.createTextNode(f.summary));
+  features.forEach((feature, index) => {
+    const key = `${index}:${feature.name}`;
+    const open = openFeatures.has(key);
+    const row = el('div', undefined, 'feature');
+    const toggle = el('button', feature.name, 'feature-toggle');
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.addEventListener('click', () => {
+      if (openFeatures.has(key)) openFeatures.delete(key);
+      else openFeatures.add(key);
+      renderDetail();
+    });
+    row.appendChild(toggle);
+    if (open) row.appendChild(el('p', feature.summary, 'feature-body'));
     box.appendChild(row);
   });
 
   if (state.isDM) {
+    const restore = el('button', 'Restore HP');
+    restore.addEventListener('click', () => socket.emit('token:restore', { id: token.id }));
+    box.appendChild(restore);
+
     const remove = el('button', 'Remove token', 'danger');
     remove.addEventListener('click', () => {
       socket.emit('token:remove', { id: token.id });
@@ -286,9 +400,95 @@ function renderDetail() {
   }
 }
 
+function tokenById(id) {
+  return state.tokens.find((t) => t.id === id);
+}
+
+// The farthest an action can reach, counting both melee reach and ranged distance.
+function maxReach(action) {
+  const reach = action.reach || 0;
+  const range = action.range ? action.range.long : 0;
+  return Math.max(reach, range);
+}
+
+// Shows one button per action the attacker has. Select an attacker, then
+// shift-click a target. Both stay selected so you can keep attacking.
+function renderAttack() {
+  const box = document.getElementById('attack-actions');
+  box.replaceChildren();
+  document.getElementById('attack-msg').textContent = '';
+
+  const attacker = tokenById(selected[0]);
+  const target = tokenById(selected[1]);
+
+  if (!attacker || !target) {
+    box.appendChild(el('p', 'Select an attacker, then shift-click a target.', 'detail-sub'));
+    return;
+  }
+
+  const creature = state.creatures[attacker.creatureId];
+  const actions = creature.actions || [];
+  const allowed = state.isDM || attacker.team === 'player';
+
+  if (actions.length === 0 || !allowed) {
+    box.appendChild(el('p', 'Pick one of your own characters as the attacker.', 'detail-sub'));
+    return;
+  }
+
+  const feet = feetBetween(attacker, target);
+
+  actions.forEach((action) => {
+    const button = el('button', action.name);
+    let hint = '';
+
+    if (attacker.defeated || target.defeated) {
+      hint = 'a defeated token is involved';
+    } else if (action.saveAbility) {
+      hint = 'needs save rules (coming soon)';
+    } else if (feet > maxReach(action)) {
+      hint = `out of range (${feet} ft away)`;
+    }
+
+    if (hint) {
+      button.disabled = true;
+      button.appendChild(el('span', hint, 'hint'));
+    }
+
+    button.addEventListener('click', () => {
+      socket.emit('attack:declare', {
+        attackerId: attacker.id,
+        targetId: target.id,
+        actionName: action.name,
+      });
+    });
+    box.appendChild(button);
+  });
+}
+
+// Newest entry first, so there is no scrolling needed to see the latest attack.
+function renderLog() {
+  const box = document.getElementById('log');
+  box.replaceChildren();
+
+  if (state.log.length === 0) {
+    box.appendChild(el('p', 'No attacks yet.', 'detail-sub'));
+    return;
+  }
+
+  state.log.slice().reverse().forEach((entry) => {
+    const item = el('div', undefined, `log-entry ${entry.outcome}`);
+    entry.lines.forEach((line, index) => {
+      item.appendChild(el('p', line, index === 0 ? 'log-head' : 'log-line'));
+    });
+    box.appendChild(item);
+  });
+}
+
 function renderPanel() {
   document.getElementById('role').textContent = state.isDM ? 'Dungeon Master view' : 'Player view';
   renderRoster();
+  renderAttack();
+  renderLog();
   renderDetail();
 }
 
@@ -300,6 +500,21 @@ socket.on('state', (newState) => {
   selected = selected.filter((id) => state.tokens.some((t) => t.id === id));
   renderTokens();
   renderPanel();
+});
+
+// Rule errors such as "out of range" come back only to the player who asked.
+socket.on('attack:error', ({ message }) => {
+  document.getElementById('attack-msg').textContent = message;
+});
+
+const rosterSearch = document.getElementById('roster-search');
+rosterSearch.addEventListener('input', renderRoster);
+rosterSearch.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter') return;
+  const first = document.querySelector('#roster button');
+  if (!first) return;
+  event.preventDefault();
+  first.click();
 });
 
 drawGrid();

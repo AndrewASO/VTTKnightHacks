@@ -1,0 +1,132 @@
+_id: 15Fa6q1nH27XfbR8
+name: Dispel Magic
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>Choose one creature, object, or magical effect within range. Any spell
+      of 3rd level or lower on the target ends. For each spell of 4th level or
+      higher on the target, make an ability check using your spellcasting
+      ability. The DC equals 10 + the spell's level. On a successful check, the
+      spell ends.</p><p><strong>At Higher Levels.</strong> When you cast this
+      spell using a spell slot of 4th level or higher, you automatically end the
+      effects of a spell on the target if the spell's level is equal to or less
+      than the level of the spell slot you used.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    value: '120'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 3
+  school: abj
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+  activities:
+    lHMXMFOvwhBwU5JN:
+      type: check
+      name: Cast
+      _id: lHMXMFOvwhBwU5JN
+      img: ''
+      sort: 100000
+      activation:
+        type: action
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        value: ''
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      check:
+        associated: []
+        dc:
+          calculation: ''
+          formula: ''
+        visible: true
+        ability: spellcasting
+        bonus: ''
+  identifier: dispel-magic
+sort: 0
+flags: {}
+img: icons/skills/melee/sword-damaged-broken-purple.webp
+effects: []
+folder: 5Si35RRLLaaoWvC3
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037345386
+  modifiedTime: 1781297896599
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!15Fa6q1nH27XfbR8'

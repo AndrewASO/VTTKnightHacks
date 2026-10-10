@@ -1,0 +1,200 @@
+name: Ray of Frost
+system:
+  description:
+    value: >-
+      <p>A frigid beam of blue-white light streaks toward a creature within
+      range. Make a ranged spell attack against the target. On a hit, it takes
+      1d8 Cold damage, and its Speed is reduced by 10 feet until the start of
+      your next turn.</p><p><strong>Cantrip Upgrade.</strong> The damage
+      increases by 1d8 when you reach levels 5 (2d8), 11 (3d8), and 17
+      (4d8).</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 3
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+      count: '1'
+      type: creature
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+      stationary: false
+  range:
+    units: ft
+    special: ''
+    value: '60'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  level: 0
+  school: evo
+  properties:
+    - vocal
+    - somatic
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    VQQgdw0BEVD6wapC:
+      type: attack
+      _id: VQQgdw0BEVD6wapC
+      sort: 0
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: 7dnnwBMWLykrVJub
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      attack:
+        critical:
+          threshold: null
+        flat: false
+        type:
+          value: ranged
+          classification: ''
+        ability: ''
+        bonus: ''
+      damage:
+        critical:
+          bonus: ''
+        includeBase: true
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 1
+            denomination: 8
+            bonus: ''
+            types:
+              - cold
+            scaling:
+              mode: whole
+              number: 1
+            modifiers: []
+      name: ''
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: ray-of-frost
+  method: spell
+  prepared: 2
+_id: phbsplRayofFrost
+type: spell
+img: icons/magic/water/projectile-icecicle-glowing.webp
+effects:
+  - name: Reduced Movement
+    img: icons/magic/water/projectile-icecicle-glowing.webp
+    origin: Compendium.dnd5e.spells24.Item.phbsplRayofFrost
+    transfer: false
+    _id: 7dnnwBMWLykrVJub
+    type: base
+    system:
+      changes:
+        - key: system.attributes.movement.bonus
+          value: -10
+          priority: null
+          type: add
+          phase: initial
+          _id: IfmY3KgiCyQ3SUWQ
+          conditions: '{}'
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    disabled: false
+    duration:
+      value: null
+      units: rounds
+      expiry: sourceStart
+      expired: false
+    description: >-
+      <p>The target's Speed is reduced by 10 feet until the start of your next
+      turn.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        riders: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1787693619069
+      modifiedTime: 1787693619069
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplRayofFrost.7dnnwBMWLykrVJub'
+folder: 4FhsY9FJQd7h7MZb
+sort: 200000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1787693619069
+  modifiedTime: 1787693619069
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplRayofFrost'

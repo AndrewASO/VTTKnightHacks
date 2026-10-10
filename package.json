@@ -4,7 +4,8 @@
   "description": "Hackathon VTT with automated 5e combat: grid, tokens, distance",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node combat/test.js"
   },
   "dependencies": {
     "express": "^4.19.2",

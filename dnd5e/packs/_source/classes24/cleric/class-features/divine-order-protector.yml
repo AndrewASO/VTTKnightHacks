@@ -1,0 +1,66 @@
+_id: phbDivineOrderPr
+name: 'Divine Order: Protector'
+type: feat
+img: icons/magic/holy/barrier-shield-winged-blue.webp
+system:
+  activities: {}
+  uses:
+    spent: 0
+    recovery: []
+    max: ''
+  description:
+    value: >-
+      <p>Trained for battle, you gain proficiency with Martial weapons and
+      training with Heavy armor.</p>
+    chat: ''
+  source:
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  enchant: {}
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 1
+    items: []
+    repeatable: false
+  properties:
+    - trait
+  requirements: Cleric
+  identifier: divine-order-protector
+  advancement:
+    Pw2NhGslXxcl0btG:
+      type: Trait
+      _id: Pw2NhGslXxcl0btG
+      configuration:
+        allowReplacements: false
+        choices: []
+        grants:
+          - armor:hvy
+          - weapon:mar
+        mode: default
+      flags: {}
+      level: 1
+      hint: ''
+      name: Protector
+      value: {}
+  crewed: false
+effects: []
+folder: 3wY92TRgyyyDkpmF
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791232041726
+  modifiedTime: 1791232041726
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 1300000
+ownership:
+  default: 0
+_key: '!items!phbDivineOrderPr'

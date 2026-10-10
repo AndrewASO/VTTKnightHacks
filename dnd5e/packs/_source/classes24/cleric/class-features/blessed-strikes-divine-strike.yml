@@ -1,0 +1,207 @@
+_id: phbDivineStrike0
+name: 'Blessed Strikes: Divine Strike'
+type: feat
+img: icons/magic/holy/prayer-hands-glowing-yellow.webp
+system:
+  activities:
+    uYVz8MBW0EZ2X0zD:
+      type: damage
+      _id: uYVz8MBW0EZ2X0zD
+      activation:
+        type: special
+        value: null
+        override: false
+        condition: When you hit a creature with an attack roll using a weapon
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>Once on each of your turns when you hit a creature with an attack
+          roll using a weapon, you can cause the target to take an extra 1d8
+          Necrotic or Radiant damage (your choice).</p>
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects: []
+      range:
+        override: false
+        units: self
+        special: ''
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: >-
+            When you a hit a creature with an attack roll using a weapon once
+            per turn
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      damage:
+        critical:
+          allow: true
+          bonus: ''
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 1
+            denomination: 8
+            bonus: ''
+            modifiers: []
+            types:
+              - necrotic
+              - radiant
+            scaling:
+              number: 1
+      name: Divine Strike
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        identifier: ''
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      behaviors: []
+      flags: {}
+    eeU1tB2ZL9CSISgz:
+      type: damage
+      activation:
+        type: special
+        value: null
+        override: false
+        condition: When you hit a creature with an attack roll using a weapon
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>Once on each of your turns when you hit a creature with an attack
+          roll using a weapon, you can cause the target to take an extra 2d8
+          Necrotic or Radiant damage (your choice).</p>
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects: []
+      range:
+        override: false
+        units: self
+        special: ''
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: >-
+            When you a hit a creature with an attack roll using a weapon once
+            per turn
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      damage:
+        critical:
+          allow: true
+          bonus: ''
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 2
+            denomination: 8
+            bonus: ''
+            modifiers: []
+            types:
+              - necrotic
+              - radiant
+            scaling:
+              number: 1
+      name: Improved Divine Strike
+      img: ''
+      visibility:
+        level:
+          min: 14
+          max: null
+        identifier: cleric
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      behaviors: []
+      flags: {}
+      _id: eeU1tB2ZL9CSISgz
+  uses:
+    spent: 0
+    recovery: []
+    max: ''
+  description:
+    value: >-
+      <p>Once on each of your turns when you hit a creature with an attack roll
+      using a weapon, you can cause the target to take an extra 1d8 Necrotic or
+      Radiant damage (your choice).</p>
+    chat: ''
+  source:
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  enchant: {}
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 7
+    items: []
+    repeatable: false
+  properties: []
+  requirements: Cleric
+  identifier: divine-strike
+  advancement: {}
+  crewed: false
+effects: []
+folder: 3wY92TRgyyyDkpmF
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791232041725
+  modifiedTime: 1791232041725
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 750000
+ownership:
+  default: 0
+_key: '!items!phbDivineStrike0'

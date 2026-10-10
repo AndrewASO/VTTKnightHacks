@@ -1,0 +1,55 @@
+import D20RollConfigurationDialog from "./d20-configuration-dialog.mjs";
+
+/**
+ * @import { SkillToolRollConfigurationDialogOptions } from "../../dice/_types.mjs";
+ */
+
+/**
+ * Extended roll configuration dialog that allows selecting abilities.
+ * @extends D20RollConfigurationDialog<SkillToolRollConfigurationDialogOptions>
+ */
+export default class SkillToolRollConfigurationDialog extends D20RollConfigurationDialog {
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    chooseAbility: true
+  };
+
+  /* -------------------------------------------- */
+  /*  Rendering                                   */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _prepareConfigurationContext(context, options) {
+    context = await super._prepareConfigurationContext(context, options);
+    if ( this.options.chooseAbility ) context.fields.unshift({
+      field: new foundry.data.fields.StringField({
+        required: true, blank: false, label: _loc("DND5E.Abilities")
+      }),
+      name: "ability",
+      options: Object.entries(CONFIG.DND5E.abilities).map(([value, { label }]) => ({ value, label })),
+      value: this.config.ability
+    });
+    return context;
+  }
+
+  /* -------------------------------------------- */
+  /*  Event Listeners and Handlers                */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  _onChangeForm(formConfig, event) {
+    super._onChangeForm(formConfig, event);
+    if ( event.target?.name !== "ability" ) return;
+
+    const ability = event.target.value ?? this.config.ability;
+    foundry.utils.setProperty(this.message, "data.system.ability", ability);
+
+    if ( this.config.skill ) {
+      const skillLabel = CONFIG.DND5E.skills[this.config.skill]?.label ?? "";
+      const abilityLabel = CONFIG.DND5E.abilities[ability]?.label ?? "";
+      const flavor = _loc("DND5E.SkillPromptTitle", { skill: skillLabel, ability: abilityLabel });
+      foundry.utils.setProperty(this.message, "data.flavor", flavor);
+      this._updateFrame({ window: { title: flavor } });
+    }
+  }
+}

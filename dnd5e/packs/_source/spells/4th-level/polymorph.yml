@@ -1,0 +1,155 @@
+_id: 04nMsTWkIFvkbXlY
+name: Polymorph
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>This spell transforms a creature that you can see within range into a
+      new form. An unwilling creature must make a Wisdom saving throw to avoid
+      the effect. The spell has no effect on a Shapechanger or a creature with 0
+      Hit Points.</p><p>The transformation lasts for the Duration, or until the
+      target drops to 0 Hit Points or dies. The new form can be any beast whose
+      Challenge rating is equal to or less than the target's (or the target's
+      level, if it doesn't have a challenge rating). The target's game
+      statistics, including mental Ability Scores, are replaced by the
+      Statistics of the chosen beast. It retains its Alignment and
+      personality.</p><p>The target assumes the Hit Points of its new form. When
+      it reverts to its normal form, the creature returns to the number of hit
+      points it had before it transformed. If it reverts as a result of dropping
+      to 0 hit points, any excess damage carries over to its normal form. As
+      long as the excess damage doesn't reduce the creature's normal form to 0
+      hit points, it isn't knocked Unconscious.</p><p>The creature is limited in
+      the Actions it can perform by the Nature of its new form, and it can't
+      speak, cast Spells, or take any other action that requires hands or
+      speech.</p><p>The target's gear melds into the new form. The creature
+      can't activate, use, wield, or otherwise benefit from any of its
+      Equipment.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: hour
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 4
+  school: trs
+  materials:
+    value: A caterpillar cocoon
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    xaPQ40shXqBqfbfy:
+      type: transform
+      name: Cast
+      _id: xaPQ40shXqBqfbfy
+      img: ''
+      sort: 100000
+      activation:
+        type: action
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        value: ''
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      profiles:
+        - cr: ''
+          name: Polymorph
+          _id: wSYICNSQ9beXr7de
+          uuid: null
+          sizes: []
+          types:
+            - beast
+          movement: []
+          level:
+            min: null
+            max: null
+      settings: null
+      transform:
+        customize: false
+        mode: cr
+        preset: polymorph
+  identifier: polymorph
+sort: 0
+flags: {}
+img: icons/creatures/mammals/ox-buffalo-horned-green.webp
+effects: []
+folder: 5auWSClKMDUIV5Ni
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037345165
+  modifiedTime: 1781374947705
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!04nMsTWkIFvkbXlY'

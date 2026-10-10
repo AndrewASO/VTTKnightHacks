@@ -1,0 +1,276 @@
+_id: J6Jpw5XzB5aTeqnz
+name: Plane Shift
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You and up to eight willing creatures who link hands in a circle are
+      transported to a different plane of existence. You can specify a target
+      destination in general terms, such as the City of Brass on the Elemental
+      Plane of Fire or the palace of Dispater on the second level of the Nine
+      Hells, and you appear in or near that destination. If you are trying to
+      reach the City of Brass, for example, you might arrive in its Street of
+      Steel, before its Gate of Ashes, or looking at the city from across the
+      Sea of Fire, at the DM's discretion.</p><p>Alternatively, if you know the
+      sigil sequence of a
+      @UUID[Compendium.dnd5e.spells.Item.8aWtP5hcrmcEesBW]{teleportation circle}
+      on another plane of existence, this spell can take you to that circle. If
+      the teleportation circle is too small to hold all the creatures you
+      transported, they appear in the closest unoccupied spaces next to the
+      circle.</p><p>You can use this spell to banish an unwilling creature to
+      another plane. Choose a creature within your reach and make a melee spell
+      attack against it. On a hit, the creature must make a Charisma saving
+      throw. If the creature fails this save, it is transported to a random
+      location on the plane of existence you specify. A creature so transported
+      must find its own way back to your current plane of existence.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: creature
+      count: '8'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 7
+  school: con
+  materials:
+    value: >-
+      A forked, metal rod worth at least 250 gp, attuned to a particular plane
+      of existence
+    consumed: false
+    cost: 250
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    RSLnITgU10HcABsr:
+      type: utility
+      name: 'Cast: Planar Travel'
+      _id: RSLnITgU10HcABsr
+      img: ''
+      sort: 100000
+      activation:
+        type: action
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        value: ''
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      roll:
+        prompt: false
+        visible: false
+        name: ''
+        formula: ''
+    BiYdn4VHVCaWsJmQ:
+      type: attack
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>You can use this spell to banish an unwilling creature to another
+          plane. Choose a creature within your reach and make a melee spell
+          attack against it. On a hit, the creature must make a Charisma saving
+          throw. If the creature fails this save, it is transported to a random
+          location on the plane of existence you specify. A creature so
+          transported must find its own way back to your current plane of
+          existence.</p>
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      attack:
+        ability: ''
+        bonus: ''
+        critical:
+          threshold: null
+        flat: false
+        type:
+          value: melee
+          classification: ''
+      damage:
+        critical:
+          bonus: ''
+        includeBase: true
+        parts: []
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 300000
+      img: ''
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      _id: BiYdn4VHVCaWsJmQ
+      name: 'Cast: Banishing Attack'
+    C5T8DFHfK0iVDfXN:
+      type: save
+      activation:
+        type: special
+        value: null
+        override: true
+        condition: When a creature is hit by an attack from this spell.
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: true
+      effects: []
+      range:
+        override: true
+        units: touch
+        special: ''
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+          type: ''
+        affects:
+          choice: false
+          type: creature
+          count: '1'
+          special: ''
+        override: true
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability:
+          - cha
+        dc:
+          calculation: spellcasting
+          formula: ''
+        bonus: ''
+        visible: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 500000
+      name: Banish Save
+      img: ''
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      _id: C5T8DFHfK0iVDfXN
+  identifier: plane-shift
+sort: 0
+flags: {}
+img: icons/commodities/treasure/stone-cracked-lightning-blue.webp
+effects: []
+folder: irCSpQWIMtp978TA
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037352792
+  modifiedTime: 1783214652036
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!J6Jpw5XzB5aTeqnz'

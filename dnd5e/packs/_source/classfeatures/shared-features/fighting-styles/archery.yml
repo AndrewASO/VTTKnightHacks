@@ -1,0 +1,81 @@
+_id: 8YwPFv3UAPjWVDNf
+name: Archery
+type: feat
+img: icons/weapons/bows/shortbow-recurve-yellow.webp
+system:
+  description:
+    value: <p>You gain a +2 bonus to attack rolls you make with ranged weapons</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: fightingStyle
+  requirements: Fighter 1, Champion 10, Ranger 2
+  properties: []
+  activities: {}
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: archery
+effects:
+  - _id: F0Bh4n8Tu1ZZnwSr
+    flags: {}
+    disabled: false
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    origin: Item.SDsWYh0xtS6nWuH8
+    tint: '#ffffff'
+    transfer: true
+    name: 'Fighting Style: Archery'
+    description: ''
+    statuses: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 4.0.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      exportSource: null
+    img: icons/weapons/bows/shortbow-recurve-yellow.webp
+    type: base
+    system:
+      changes:
+        - key: system.bonuses.rwak.attack
+          value: '+2'
+          priority: null
+          type: add
+    sort: 0
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!8YwPFv3UAPjWVDNf.F0Bh4n8Tu1ZZnwSr'
+folder: 159EPyqZTcus1HNJ
+sort: 0
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 4.0.0
+  createdTime: 1725037380937
+  modifiedTime: 1725992287418
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!8YwPFv3UAPjWVDNf'

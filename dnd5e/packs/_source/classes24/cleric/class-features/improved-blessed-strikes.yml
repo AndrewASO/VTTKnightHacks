@@ -1,0 +1,56 @@
+_id: phbclcImprovedBl
+name: Improved Blessed Strikes
+type: feat
+folder: 3wY92TRgyyyDkpmF
+img: icons/magic/holy/prayer-hands-glowing-yellow-white.webp
+system:
+  description:
+    value: >-
+      <p>The option you chose for Blessed Strikes grows more
+      powerful.</p><p><em><strong>Divine Strike.</strong></em> The extra damage
+      of your Divine Strike increases to 2d8.</p><p><em><strong>Potent
+      Spellcasting.</strong></em> When you cast a Cleric cantrip and deal damage
+      to a creature with it, you can give vitality to yourself or another
+      creature within 60 feet of yourself, granting a number of Temporary Hit
+      Points equal to twice your Wisdom modifier.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 14
+    items: []
+    repeatable: false
+  properties: []
+  requirements: Cleric
+  activities: {}
+  enchant: {}
+  identifier: improved-blessed-strikes
+  advancement: {}
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791232041725
+  modifiedTime: 1791232041725
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 700000
+ownership:
+  default: 0
+_key: '!items!phbclcImprovedBl'

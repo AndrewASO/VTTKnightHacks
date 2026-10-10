@@ -1,0 +1,23 @@
+# This snapshot vendors packs/ and dnd5e.css so the team can regenerate
+# Battlemat data without a Foundry pack build. The upstream checkout still
+# ignores those generated files.
+
+# Build leftovers
+dnd5e-compiled*
+dnd5e.lock
+dist/
+
+# IDE
+.idea/
+.nova/
+.vs/
+.vscode/
+*.code-workspace
+*.iml
+*.swp
+
+# Node Modules
+node_modules/
+
+# OS Specific
+.DS_Store

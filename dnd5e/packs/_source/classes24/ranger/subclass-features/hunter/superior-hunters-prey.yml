@@ -1,0 +1,202 @@
+_id: phbrgrSuperiorHu
+name: Superior Hunter's Prey
+type: feat
+folder: GWWL7NqfCEyqwfhZ
+img: icons/skills/ranged/arrows-flying-triple-blue.webp
+system:
+  description:
+    value: >-
+      <p>Once per turn when you deal damage to a creature marked by your
+      <em>@UUID[Compendium.dnd-players-handbook.spells.Item.phbsplHuntersMar]{Hunter's
+      Mark}</em>, you can also deal that spell's extra damage to a different
+      creature that you can see within 30 feet of the first
+      creature.</p><section id="secret-AuiRnxdHXs9cXvQV"
+      class="secret"><p><strong>Foundry Note</strong></p><p>You can apply the
+      damage from Hunter's Mark or use the <strong>Damage</strong> activity on
+      this feature.</p></section>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    license: CC-BY-4.0
+    revision: 1
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 11
+    items: []
+    repeatable: false
+  properties: []
+  requirements: ''
+  activities:
+    yqOAxbsX16RkOx06:
+      type: damage
+      _id: yqOAxbsX16RkOx06
+      activation:
+        type: ''
+        value: null
+        override: false
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects: []
+      range:
+        override: false
+        units: ft
+        special: Of the damaged creature
+        value: '30'
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: ''
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      damage:
+        critical:
+          allow: false
+          bonus: ''
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 1
+            denomination: 6
+            bonus: ''
+            modifiers: []
+            types:
+              - force
+            scaling:
+              number: 1
+      name: Hunter's Mark Damage
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: 19
+        identifier: ranger
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      behaviors: []
+      flags: {}
+    YN3zUmelRFXNX9tN:
+      type: damage
+      activation:
+        type: ''
+        value: null
+        override: false
+        condition: ''
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects: []
+      range:
+        override: false
+        units: ft
+        special: Of the damaged creature
+        value: '30'
+      target:
+        template:
+          contiguous: false
+          units: ft
+          type: ''
+          stationary: false
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: ''
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      damage:
+        critical:
+          allow: false
+          bonus: ''
+        parts:
+          - custom:
+              enabled: false
+              formula: ''
+            number: 1
+            denomination: 6
+            bonus: ''
+            modifiers: []
+            types:
+              - force
+            scaling:
+              number: 1
+      name: Improved Hunter's Mark Damage
+      img: ''
+      behaviors: []
+      flags: {}
+      visibility:
+        identifier: ranger
+        level:
+          min: 20
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      _id: YN3zUmelRFXNX9tN
+  enchant: {}
+  identifier: superior-hunters-prey
+  advancement: {}
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.6
+  createdTime: 1791495738850
+  modifiedTime: 1791495738850
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 500000
+ownership:
+  default: 0
+_key: '!items!phbrgrSuperiorHu'

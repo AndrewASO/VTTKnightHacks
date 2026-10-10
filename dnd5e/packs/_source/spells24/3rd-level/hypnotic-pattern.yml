@@ -1,0 +1,192 @@
+name: Hypnotic Pattern
+system:
+  description:
+    value: >-
+      <p>You create a twisting pattern of colors in a 30-foot Cube within range.
+      The pattern appears for a moment and vanishes. Each creature in the area
+      who can see the pattern must succeed on a Wisdom saving throw or have the
+      &amp;Reference[charmed apply=false] condition for the duration. While
+      Charmed, the creature has the &amp;Reference[incapacitated apply=false]
+      condition and a Speed of 0.</p><p>The spell ends for an affected creature
+      if it takes any damage or if someone else uses an action to shake the
+      creature out of its stupor.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    revision: 2
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      choice: false
+      type: ''
+    template:
+      units: ft
+      type: cube
+      size: '30'
+      contiguous: false
+      count: ''
+      stationary: false
+  range:
+    value: '120'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 3
+  school: ill
+  properties:
+    - somatic
+    - material
+    - concentration
+  materials:
+    value: a pinch of confetti
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        override: false
+        concentration: false
+      effects:
+        - _id: mjAs8ssQlgp0AQOp
+          onSave: false
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: half
+        parts: []
+      save:
+        ability:
+          - wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+        visible: true
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+      img: null
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: hypnotic-pattern
+  method: spell
+  prepared: 0
+_id: phbsplHypnoticPa
+type: spell
+img: icons/magic/control/hypnosis-mesmerism-swirl.webp
+effects:
+  - name: Hypnotized
+    origin: Compendium.dnd5e.spells24.Item.phbsplHypnoticPa
+    duration:
+      value: 60
+      units: seconds
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders: {}
+    img: icons/magic/control/hypnosis-mesmerism-eye-tan.webp
+    _id: mjAs8ssQlgp0AQOp
+    type: base
+    system:
+      changes:
+        - key: system.attributes.movement.multiplier
+          value: 0
+          priority: null
+          type: override
+          phase: initial
+          _id: EnLoDmMiguoOeZ1a
+          conditions: '{}'
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    description: >-
+      <p>While &amp;Reference[charmed apply=false], the creature has the
+      &amp;Reference[incapacitated apply=false] condition and a Speed of
+      0.</p><p>The spell ends for an affected creature if it takes any damage or
+      if someone else uses an action to shake the creature out of its
+      stupor.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - charmed
+      - incapacitated
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.365'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1786481123747
+      modifiedTime: 1786481123747
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!phbsplHypnoticPa.mjAs8ssQlgp0AQOp'
+folder: HCovEE4VoPGlIbKi
+sort: 1500000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.365'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1786481123747
+  modifiedTime: 1786481123747
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplHypnoticPa'

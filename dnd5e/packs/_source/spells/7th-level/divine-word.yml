@@ -1,0 +1,268 @@
+_id: T1vpZLam7LezjToj
+name: Divine Word
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You utter a divine word, imbued with the power that shaped the world at
+      the dawn of Creation. Choose any number of creatures you can see within
+      range. Each creature that can hear you must make a Charisma saving throw.
+      On a failed save, a creature suffers an effect based on its current hit
+      points:</p><ul><li><p>50 Hit Points or fewer: &amp;reference[Deafened
+      apply=false] for 1 minute</p></li><li><p>40 Hit Points or fewer:
+      &amp;reference[Deafened apply=false] and &amp;reference[Blinded
+      apply=false] for 10 minutes</p></li><li><p>30 Hit Points or fewer:
+      &amp;reference[Blinded apply=false], &amp;reference[Deafened apply=false],
+      and &amp;reference[Stunned apply=false] for 1 Hour</p></li><li><p>20 Hit
+      Points or fewer: killed instantly</p></li></ul><p>Regardless of its
+      current hit points, a celestial, an elemental, a fey, or a fiend that
+      fails its save is forced back to its plane of origin (if it isn't there
+      already) and can't return to your current plane for 24 hours by any means
+      short of a @UUID[Compendium.dnd5e.spells.Item.3okM6Gn63zzEULkz]{wish}
+      spell.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: bonus
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: creature
+      choice: false
+      count: ''
+      special: ''
+    template:
+      units: any
+      contiguous: false
+      type: ''
+  range:
+    value: '30'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 7
+  school: evo
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: ng33sfAG959luxm1
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: WFygB4koHfaqBOiK
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: QNru4BLkBqnn3uBB
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability: cha
+        dc:
+          calculation: spellcasting
+          formula: ''
+        bonus: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: divine-word
+sort: 0
+flags: {}
+img: icons/magic/lightning/bolt-strike-explosion-yellow.webp
+effects:
+  - name: Divine Word (50 HP or fewer)
+    origin: Compendium.dnd5e.spells.Item.T1vpZLam7LezjToj
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: true
+    _id: ng33sfAG959luxm1
+    description: <p>You are &amp;reference[Deafened apply=false] for 1 minute.</p>
+    transfer: false
+    statuses:
+      - deafened
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    tint: '#ffffff'
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781464275573
+      modifiedTime: 1781464502905
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    img: icons/magic/lightning/bolt-strike-explosion-yellow.webp
+    type: base
+    system:
+      changes: []
+    sort: 0
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!T1vpZLam7LezjToj.ng33sfAG959luxm1'
+  - name: Divine Word (40 HP or fewer)
+    origin: Compendium.dnd5e.spells.Item.T1vpZLam7LezjToj
+    duration:
+      value: 10
+      units: minutes
+      expiry: turnStart
+      expired: false
+    disabled: true
+    _id: WFygB4koHfaqBOiK
+    description: >-
+      <p>You are &amp;reference[Deafened apply=false] and &amp;reference[Blinded
+      apply=false] for 10 minutes.</p>
+    transfer: false
+    statuses:
+      - blinded
+      - deafened
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    tint: '#ffffff'
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781464332459
+      modifiedTime: 1781464506350
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    img: icons/magic/lightning/bolt-strike-explosion-yellow.webp
+    type: base
+    system:
+      changes: []
+    sort: 0
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!T1vpZLam7LezjToj.WFygB4koHfaqBOiK'
+  - name: Divine Word (30 HP or fewer)
+    origin: Compendium.dnd5e.spells.Item.T1vpZLam7LezjToj
+    duration:
+      value: 1
+      units: hours
+      expiry: turnStart
+      expired: false
+    disabled: true
+    _id: QNru4BLkBqnn3uBB
+    description: >-
+      <p>You are &amp;reference[Blinded apply=false], &amp;reference[Deafened
+      apply=false], and &amp;reference[Stunned apply=false] for 1 hour.</p>
+    transfer: false
+    statuses:
+      - blinded
+      - deafened
+      - stunned
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    tint: '#ffffff'
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781464399106
+      modifiedTime: 1781464509967
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    img: icons/magic/lightning/bolt-strike-explosion-yellow.webp
+    type: base
+    system:
+      changes: []
+    sort: 0
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!T1vpZLam7LezjToj.QNru4BLkBqnn3uBB'
+folder: irCSpQWIMtp978TA
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037356806
+  modifiedTime: 1783214697385
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!T1vpZLam7LezjToj'

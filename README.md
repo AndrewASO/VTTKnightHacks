@@ -1,0 +1,95 @@
+# Battlemat
+
+This is the KnightHacks virtual tabletop. The branch with the 2024 creature data and the combat board is `TestingCombat`. The default branch on GitHub is `InitialTest`, which is the earlier map. Clone this branch:
+
+```bash
+git clone -b TestingCombat https://github.com/AndrewASO/VTTKnightHacks
+cd VTTKnightHacks
+npm install
+npm start
+```
+
+The server listens on port 3000.
+
+- Dungeon Master: http://localhost:3000/?dm=dm
+- Player: http://localhost:3000/
+
+`npm test` runs `node combat/test.js`. It checks a goblin attack against Zanna and does not start the server.
+
+The DM code defaults to `dm`. Set `DM_CODE` and `PORT` in the environment to change them.
+
+## Creature data
+
+The server reads two files when it starts:
+
+- `data/characters.json` — 48 premade characters. There are 12 people, each saved at levels 1, 5, 11, and 17. A name looks like `Zanna (5)`.
+- `data/monsters.json` — 380 SRD 2024 NPCs.
+
+Add to map is a search box. A character matches on name, the level already in the name, and class. A result looks like `Zanna (5) · Wizard 5 (Evoker)`. A monster matches on its name.
+
+The selected token lists one dropdown per feature. Every dropdown starts collapsed, and opening one leaves the others as they are. Monster traits keep the full rules text, including damage, DCs, ranges, and Failure / Success lines. Player features drop the first sentence only when that sentence contains no number, then keep at most four sentences.
+
+Large creatures occupy their Foundry footprint. A Hill Giant is 3 by 3 squares. An Ancient Red Dragon is 4 by 4. A Goblin Warrior is 1 by 1. Distance is measured from the nearest squares.
+
+## The dnd5e folder
+
+`dnd5e/` inside this repository is a snapshot of the local Foundry dnd5e checkout plus the scripts that built the two JSON files. It is here so a teammate can regenerate that data without cloning Foundry first. It is not a contribution to the official Foundry project, and it must not be pushed to https://github.com/foundryvtt/dnd5e.
+
+Files added for this project:
+
+- `dnd5e/utils/export-vtt.mjs` reads the 2024 actor packs and writes `data/characters.json` and `data/monsters.json` in the Battlemat root.
+- `dnd5e/utils/parse-2024.mjs` writes the 2024 catalog under `dnd5e/data/2024/`.
+- `dnd5e/package.json` adds `parse:2024`, which runs parse and then export.
+- `dnd5e/data/2024/` holds `actors.jsonl`, `activities.jsonl`, `catalog.jsonl`, and `index.json`.
+
+The rest of `dnd5e/` is the system code, the SRD pack source in `packs/_source/`, the built LevelDB packs, fonts, and `dnd5e.css`. The exporter reads the YAML in `packs/_source`. Its output path is `../data`, which is the Battlemat `data/` directory next to `server.js`.
+
+Regenerate from the `dnd5e` directory:
+
+```bash
+cd dnd5e
+npm install
+npm run parse:2024
+```
+
+`npm install` in that directory can take a while. It builds CSS and pack databases. Commit the updated `data/characters.json` and `data/monsters.json` if you want the board to serve the new export.
+
+## Portraits
+
+Creature records still store token paths such as `tokens/humanoid/Goblin.webp`. Those image files are not in this repository.
+
+`server.js` serves `/tokens` from `../dnd5e/tokens`. That path is one directory above this repository, not `dnd5e/tokens` inside it. On a machine laid out like this, portraits load:
+
+```
+Knighthacks2026/
+  dnd5e/                 <- Foundry checkout, including tokens/
+  VTTKnightHacks/        <- this repo
+    dnd5e/               <- system snapshot, licenses only under tokens/
+    server.js
+```
+
+To get the same pictures, clone https://github.com/foundryvtt/dnd5e as a sibling folder named `dnd5e`, or copy the `tokens` folder from a Foundry dnd5e install to that sibling path. Restart the server after the folder is in place.
+
+Without that folder, every creature still places on the grid. The ellipse is teal for a character and red for a monster, and the board draws the creature's initials until an image loads.
+
+`dnd5e/tokens/` is omitted because `dnd5e/tokens/LICENSE` says the Forgotten Adventures images are for the dnd5e system and may not be redistributed or used outside Foundry Virtual Tabletop unless Forgotten Adventures grants a separate license. That covers every image in that folder. `dnd5e/tokens/composite/LICENSE` says the Caeora ring art may only be used to run the dnd5e system inside Foundry Virtual Tabletop. This GitHub repository is public, so those images stay out. The LICENSE files themselves are committed.
+
+Three other art folders are omitted for the same kind of restriction. The LICENSE file in each folder is committed:
+
+- `dnd5e/ui/official/LICENSE` — Wizards of the Coast artwork, only for running dnd5e inside Foundry Virtual Tabletop.
+- `dnd5e/icons/spell-tiers/LICENSE` — Rexard icons, may not be redistributed.
+- `dnd5e/icons/svg/schools/LICENSE` — Wizards of the Coast artwork, only for running dnd5e inside Foundry Virtual Tabletop.
+
+`.gitignore` blocks image files if someone copies them into those folders later.
+
+These are also not in git: `node_modules/` (run `npm install`), the Foundry `.git` history, and `.DS_Store` files.
+
+## Licenses for what is included
+
+The text from the System Reference Document 5.1 and System Reference Document 5.2 is under Creative Commons Attribution 4.0. The dnd5e system code is MIT. Full notices are in `dnd5e/README.md` and `dnd5e/LICENSE.txt`. Other assets that are included keep the license files that shipped with them.
+
+## Do not
+
+- Do not push the `dnd5e/` snapshot to https://github.com/foundryvtt/dnd5e.
+- Do not add the token images, `ui/official` artwork, spell-tier icons, or school icons to this repository.
+- Do not treat `InitialTest` as the branch that has this combat data. This work is on `TestingCombat`.

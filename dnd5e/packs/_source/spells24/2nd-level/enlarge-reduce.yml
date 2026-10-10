@@ -1,0 +1,312 @@
+name: Enlarge/Reduce
+system:
+  description:
+    value: >-
+      <p>For the duration, the spell enlarges or reduces a creature or an object
+      you can see within range (see the chosen effect below). A targeted object
+      must be neither worn nor carried. If the target is an unwilling creature,
+      it can make a Constitution saving throw. On a successful save, the spell
+      has no effect.</p><p>Everything that a targeted creature is wearing and
+      carrying changes size with it. Any item it drops returns to normal size at
+      once. A thrown weapon or piece of ammunition returns to normal size
+      immediately after it hits or misses a
+      target.</p><p><strong>Enlarge.</strong> The target's size increases by one
+      category—from Medium to Large, for example. The target also has Advantage
+      on Strength checks and Strength saving throws. The target's attacks with
+      its enlarged weapons or Unarmed Strikes deal an extra 1d4 damage on a
+      hit.</p><p><strong>Reduce.</strong> The target's size decreases by one
+      category—from Medium to Small, for example. The target also has
+      Disadvantage on Strength checks and Strength saving throws. The target's
+      attacks with its reduced weapons or Unarmed Strikes deal 1d4 less damage
+      on a hit (this can't reduce the damage below 1).</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    revision: 3
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: creatureOrObject
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: ''
+      stationary: false
+  range:
+    value: '30'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 2
+  school: trs
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  materials:
+    value: a pinch of powdered iron
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        override: false
+        concentration: false
+      effects:
+        - _id: Wi2E10l7n6Ka8k6u
+          onSave: false
+          uuid: null
+          level: {}
+        - _id: NXdtOxX4HvPeodml
+          onSave: false
+          uuid: null
+          level: {}
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: half
+        parts: []
+      save:
+        ability:
+          - con
+        dc:
+          calculation: spellcasting
+          formula: ''
+        visible: true
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+      img: null
+      behaviors: []
+      flags: {}
+      visibility:
+        level: {}
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: enlarge-reduce
+  method: spell
+  prepared: 0
+_id: phbsplEnlargeRed
+type: spell
+img: icons/consumables/mushrooms/mushroom-spotted-red.webp
+effects:
+  - name: Enlarged
+    origin: Compendium.dnd5e.spells24.Item.phbsplEnlargeRed
+    duration:
+      value: 60
+      units: seconds
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: icons/magic/control/silhouette-grow-shrink-tan.webp
+    _id: Wi2E10l7n6Ka8k6u
+    type: base
+    system:
+      changes:
+        - key: system.rolls.damage.mwak.bonus
+          value: 1d4
+          priority: null
+          type: add
+          phase: initial
+          _id: liAne1IbyyUNiCd4
+          conditions: '{}'
+        - key: system.rolls.damage.rwak.bonus
+          value: 1d4
+          priority: null
+          type: add
+          phase: initial
+          _id: 1tyB0m0RWR13wAn5
+          conditions: '{}'
+        - key: system.abilities.str.check.roll.mode
+          value: 1
+          priority: null
+          type: add
+          phase: initial
+          _id: PclGL5LwNTZqjO7v
+          conditions: '{}'
+        - key: system.abilities.str.save.roll.mode
+          value: 1
+          priority: null
+          type: add
+          phase: initial
+          _id: rwlTBEmpSIHiE04n
+          conditions: '{}'
+        - key: system.traits.size
+          type: add
+          value: 1
+          phase: initial
+          _id: qavAEe7zJsBCoVvd
+          conditions: '{}'
+          priority: null
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    description: >-
+      <p>The target’s size increases by one category—from Medium to Large, for
+      example. The target also has Advantage on Strength checks and Strength
+      saving throws. The target’s attacks with its enlarged weapons or Unarmed
+      Strikes deal an extra 1d4 damage on a hit.</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.365'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1786480120519
+      modifiedTime: 1786480120519
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplEnlargeRed.Wi2E10l7n6Ka8k6u'
+  - name: Reduced
+    origin: Compendium.dnd5e.spells24.Item.phbsplEnlargeRed
+    duration:
+      value: 60
+      units: seconds
+      expiry: turnStart
+      expired: false
+    disabled: false
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    img: icons/magic/control/silhouette-grow-shrink-blue.webp
+    _id: NXdtOxX4HvPeodml
+    type: base
+    system:
+      changes:
+        - key: system.rolls.damage.mwak.bonus
+          value: 1d4
+          priority: null
+          type: subtract
+          phase: initial
+          _id: Y6EVhD7qmhHWwX7S
+          conditions: '{}'
+        - key: system.rolls.damage.rwak.bonus
+          value: 1d4
+          priority: null
+          type: subtract
+          phase: initial
+          _id: 1tSKjRN5ozmQODHH
+          conditions: '{}'
+        - key: system.abilities.str.check.roll.mode
+          value: -1
+          priority: null
+          type: add
+          phase: initial
+          _id: 8hcR8EZuZfBZjX1r
+          conditions: '{}'
+        - key: system.abilities.str.save.roll.mode
+          value: -1
+          priority: null
+          type: add
+          phase: initial
+          _id: RfEQNZwYek96Scpu
+          conditions: '{}'
+        - key: system.traits.size
+          type: subtract
+          value: 1
+          phase: initial
+          _id: alrq1Wu0gwWCg3EA
+          conditions: '{}'
+          priority: null
+      magical: true
+      rider:
+        statuses: []
+      conditions: '{}'
+    description: >-
+      <p>The target’s size decreases by one category—from Medium to Small, for
+      example. The target also has Disadvantage on Strength checks and Strength
+      saving throws. The target’s attacks with its reduced weapons or Unarmed
+      Strikes deal 1d4 less damage on a hit (this can’t reduce the damage below
+      1).</p>
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.365'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1786480120519
+      modifiedTime: 1786480120519
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!phbsplEnlargeRed.NXdtOxX4HvPeodml'
+folder: 3SjcO2acsFnWegp4
+sort: 3700000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.365'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1786480120518
+  modifiedTime: 1786480120518
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplEnlargeRed'

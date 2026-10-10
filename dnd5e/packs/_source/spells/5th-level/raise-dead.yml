@@ -1,0 +1,210 @@
+_id: AGFMPAmuzwWO6Dfz
+name: Raise Dead
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You return a dead creature you touch to life, provided that it has been
+      dead no longer than 10 days. If the creature's soul is both willing and at
+      liberty to rejoin the body, the creature returns to life with 1 hit
+      point.</p><p>This spell also neutralizes any poisons and cures nonmagical
+      diseases that affected the creature at the time it died. This spell
+      doesn't, however, remove magical diseases, curses, or similar effects; if
+      these aren't first removed prior to casting the spell, they take effect
+      when the creature returns to life. The spell can't return an undead
+      creature to life.</p><p>This spell closes all mortal wounds, but it
+      doesn't restore missing body parts. If the creature is lacking body parts
+      or organs integral for its survival—its head, for instance—the spell
+      automatically fails.</p><p>Coming back from the dead is an ordeal. The
+      target takes a −4 penalty to all attack rolls, saving throws, and ability
+      checks. Every time the target finishes a long rest, the penalty is reduced
+      by 1 until it disappears.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: hour
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: spec
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 5
+  school: nec
+  materials:
+    value: A diamond worth at least 500gp, which the spell consumes.
+    consumed: true
+    cost: 500
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: heal
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: tiAHzh61HiuYLoYf
+          level: {}
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      healing:
+        number: null
+        denomination: null
+        bonus: ''
+        types:
+          - healing
+        custom:
+          enabled: true
+          formula: '1'
+        scaling:
+          mode: ''
+          number: null
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: raise-dead
+sort: 0
+flags: {}
+img: icons/environment/settlement/graveyard-tombstone-night.webp
+effects:
+  - name: Resurrection Sickness
+    img: icons/environment/settlement/graveyard-tombstone-night.webp
+    origin: Compendium.dnd5e.spells.Item.AGFMPAmuzwWO6Dfz
+    transfer: false
+    _id: tiAHzh61HiuYLoYf
+    type: base
+    system:
+      changes:
+        - key: system.bonuses.abilities.save
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.abilities.check
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.mwak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.msak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.rwak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.rsak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+    disabled: false
+    start: null
+    duration:
+      value: 4
+      units: days
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>Coming back from the dead is an ordeal. You take a −4 penalty to all
+      attack rolls, saving throws, and ability checks. Every time you finish a
+      long rest, the penalty is reduced by 1 until it disappears.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781401773080
+      modifiedTime: 1781401848383
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!AGFMPAmuzwWO6Dfz.tiAHzh61HiuYLoYf'
+folder: bG9QTayc46rfNkv2
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037349865
+  modifiedTime: 1781401773117
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!AGFMPAmuzwWO6Dfz'

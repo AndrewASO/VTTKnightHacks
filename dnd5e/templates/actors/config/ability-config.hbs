@@ -1,0 +1,61 @@
+<section class="flexcol">
+    {{!-- Ability Score & Maxmimum --}}
+    <fieldset class="card">
+        <legend>{{ localize "DND5E.ABILITY.SECTIONS.Score" ability=label }}</legend>
+        <div class="form-group split-group">
+            <label>{{ localize "DND5E.AbilityScore" }}</label>
+            <div class="form-fields">
+                {{ formField fields.value name=(concat prefix "value") value=data.value localize=true
+                             label=(localize "DND5E.AbilityScoreShort") classes="label-top" rootId=partId }}
+                {{ formField fields.max name=(concat prefix "max") value=data.max placeholder="20" localize=true
+                             label=(localize "DND5E.AbilityScoreMaxShort") classes="label-top" rootId=partId }}
+            </div>
+        </div>
+        {{ formField fields.proficient name=(concat prefix "proficient") value=data.proficient
+                     options=proficiencyOptions localize=true rootId=partId }}
+    </fieldset>
+
+    {{!-- Local Bonuses --}}
+    <fieldset class="card">
+        <legend>{{ localize "DND5E.ABILITY.SECTIONS.Bonuses.Label" ability=label }}</legend>
+        <div class="form-group">
+            <p class="hint">{{ localize "DND5E.ABILITY.SECTIONS.Bonuses.Hint" ability=label }}</p>
+        </div>
+        {{#each rollSections}}
+        {{ formField fields.bonus name=(concat prefix "bonus") value=data.bonus localize=true
+                     rootId=@root.partId }}
+        {{/each}}
+    </fieldset>
+
+    {{!-- Attack, Check & Save Rolls --}}
+    {{#each rollSections}}
+    <fieldset class="card">
+        <legend>{{ localize "DND5E.ROLL.Section" label=label }}</legend>
+        <div class="form-group split-group">
+            <label>{{ localize "DND5E.ROLL.Range.Label" }}</label>
+            <div class="form-fields">
+                {{ formField fields.min name=(concat prefix "min") value=data.min placeholder="1" type="number"
+                             localize=true label=(localize "DND5E.Minimum") hint=false classes="label-top"
+                             rootId=@root.partId }}
+                {{ formField fields.max name=(concat prefix "max") value=data.max placeholder="20" type="number"
+                             localize=true label=(localize "DND5E.Maximum") hint=false classes="label-top"
+                             rootId=@root.partId }}
+            </div>
+        </div>
+        {{ formField fields.mode name=(concat prefix "mode") value=data.mode options=@root.advantageModeOptions
+                     localize=true label=(localize "DND5E.AdvantageMode") rootId=@root.partId }}
+    </fieldset>
+    {{/each}}
+
+    {{!-- Global Bonuses --}}
+    {{#if global}}
+    <fieldset class="card">
+        <legend>{{ localize "DND5E.ABILITY.SECTIONS.Global.Label" }}</legend>
+        <div class="form-group">
+            <p class="hint">{{ localize "DND5E.ABILITY.SECTIONS.Global.Hint" }}</p>
+        </div>
+        {{ formField global.fields.check.fields.bonus value=global.data.check.bonus localize=true rootId=partId }}
+        {{ formField global.fields.save.fields.bonus value=global.data.save.bonus localize=true rootId=partId }}
+    </fieldset>
+    {{/if}}
+</section>

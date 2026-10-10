@@ -1,0 +1,20 @@
+<div class="chat-card bastion-card">
+
+    {{!-- Description --}}
+    <p class="order-description">{{{ description }}}</p>
+
+    {{!-- Damaged --}}
+    {{#if damaged}}
+    <p class="order-description">{{{ damaged }}}</p>
+    {{/if}}
+
+    {{!-- Roll --}}
+    {{{ roll }}}
+
+    {{!-- Buttons --}}
+    {{> "dnd5e.card-buttons" }}
+
+</div>
+
+{{!-- Rolls --}}
+{{> "dnd5e.card-rolls" }}

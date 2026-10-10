@@ -1,0 +1,145 @@
+name: Antimagic Field
+system:
+  description:
+    value: >-
+      <p>An aura of antimagic surrounds you in 10-foot Emanation. No one can
+      cast spells, take Magic actions, or create other magical effects inside
+      the aura, and those things can't target or otherwise affect anything
+      inside it. Magical properties of magic items don't work inside the aura or
+      on anything inside it.</p><p>Areas of effect created by spells or other
+      magic can't extend into the aura, and no one can teleport into or out of
+      it or use planar travel there. Portals close temporarily while in the
+      aura.</p><p>Ongoing spells, except those cast by an Artifact or a deity,
+      are suppressed in the area. While an effect is suppressed, it doesn't
+      function, but the time it spends suppressed counts against its
+      duration.</p><p><em>@UUID[Compendium.dnd-players-handbook.spells.Item.phbsplDispelMagi]{Dispel
+      Magic}</em> has no effect on the aura, and the auras created by different
+      <em>Antimagic Field</em> spells don't nullify each other.</p>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    revision: 1
+    book: ''
+    license: CC-BY-4.0
+  activation:
+    type: action
+    condition: ''
+    value: null
+  duration:
+    value: '1'
+    units: hour
+    expiry: null
+  target:
+    affects:
+      choice: false
+      count: ''
+      type: ''
+      special: ''
+    template:
+      units: ft
+      contiguous: false
+      type: radius
+      size: '10'
+      count: ''
+      stationary: false
+  range:
+    units: self
+    special: ''
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  level: 8
+  school: abj
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  materials:
+    value: iron filings
+    consumed: false
+    cost: 0
+    supply: 0
+  activities:
+    OxII9yaa3KpRduWZ:
+      type: utility
+      _id: OxII9yaa3KpRduWZ
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets: []
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+        expiry: null
+      effects: []
+      range:
+        override: false
+        units: self
+      target:
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      roll:
+        prompt: false
+        visible: false
+        name: ''
+        formula: ''
+      name: Cast
+      img: ''
+      behaviors:
+        - type: antimagic
+          _id: F4DC37GVr0SXzDeE
+          config: {}
+          level: {}
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+  identifier: antimagic-field
+  method: spell
+  prepared: 0
+_id: phbsplAntimagicF
+type: spell
+img: icons/magic/light/orb-container-orange.webp
+effects: []
+folder: M5CvwK9zVtzx6Dnn
+sort: 200000
+ownership:
+  default: 0
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1790961554250
+  modifiedTime: 1790961554250
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!phbsplAntimagicF'

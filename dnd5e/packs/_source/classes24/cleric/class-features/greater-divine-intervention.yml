@@ -1,0 +1,119 @@
+_id: phbclcGreaterDiv
+name: Greater Divine Intervention
+type: feat
+folder: 3wY92TRgyyyDkpmF
+img: icons/magic/light/beam-rays-yellow-blue.webp
+system:
+  description:
+    value: >-
+      <p>You can call on even more powerful divine intervention. When you use
+      your Divine Intervention feature, you can choose
+      <em>@UUID[Compendium.dnd-players-handbook.spells.Item.phbsplWish000000]{Wish}</em>
+      when you select a spell. If you do so, you can't use Divine Intervention
+      again until you finish [[/r 2d4]] Long Rests.</p><section
+      id="secret-LP9WqNdaJevppYeM" class="secret"><p><strong>Foundry
+      Note</strong></p><p>This feature will consume a use of your Divine
+      Intervention but it can not automatically recharge the usage after the
+      rolled number of Long Rests.</p></section>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    license: CC-BY-4.0
+    revision: 1
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 20
+    items: []
+    repeatable: false
+  properties:
+    - mgc
+  requirements: Cleric
+  activities:
+    s3KKPtM06fbBNMqp:
+      type: cast
+      spell:
+        uuid: Compendium.dnd-players-handbook.spells.Item.phbsplWish000000
+        challenge:
+          override: false
+        properties:
+          - material
+        spellbook: false
+        ability: ''
+        level: 9
+      _id: s3KKPtM06fbBNMqp
+      img: ''
+      sort: 100000
+      activation:
+        type: action
+        override: false
+      behaviors: []
+      consumption:
+        scaling:
+          allowed: false
+        spellSlot: true
+        targets:
+          - type: itemUses
+            value: '1'
+            target: feat:divine-intervention
+            scaling: {}
+      description:
+        value: ''
+        chatFlavor: ''
+      duration:
+        units: inst
+        expiry: null
+        concentration: false
+        override: false
+      flags: {}
+      range:
+        units: self
+        override: false
+      target:
+        template:
+          contiguous: false
+          stationary: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+        identifier: ''
+      name: ''
+  enchant: {}
+  identifier: greater-divine-intervention
+  advancement: {}
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791232041725
+  modifiedTime: 1791232041725
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 600000
+ownership:
+  default: 0
+_key: '!items!phbclcGreaterDiv'

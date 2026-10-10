@@ -1,0 +1,403 @@
+_id: kozNy29b0X6exFhY
+name: Flesh to Stone
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You attempt to turn one creature that you can see within range into
+      stone. If the target's body is made of flesh, the creature must make a
+      Constitution saving throw. On a failed save, it is
+      &amp;Reference[Restrained] as its flesh begins to harden. On a successful
+      save, the creature isn't affected.</p><p>A creature Restrained by this
+      spell must make another Constitution saving throw at the end of each of
+      its turns. If it successfully saves against this spell three times, the
+      spell ends. If it fails its saves three times, it is turned to stone and
+      subjected to the &amp;Reference[Petrified] condition for the duration. The
+      successes and failures don't need to be consecutive; keep track of both
+      until the target collects three of a kind.</p><p>If the creature is
+      physically broken while petrified, it suffers from similar deformities if
+      it reverts to its original state.</p><p>If you maintain your concentration
+      on this spell for the entire possible duration, the creature is turned to
+      stone until the effect is removed.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 6
+  school: trs
+  materials:
+    value: A pinch of lime, water, and earth
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    J3DB2z7n1E9Ey0Qx:
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+        value: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: mVqFBzC5qYpFnZFV
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+        units: self
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability:
+          - con
+        dc:
+          calculation: spellcasting
+          formula: ''
+        visible: true
+        bonus: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 100000
+      img: ''
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      _id: J3DB2z7n1E9Ey0Qx
+      name: Cast
+    ZLjky0SAN3L2Afkr:
+      type: save
+      activation:
+        type: special
+        value: null
+        override: true
+        condition: >-
+          At the end of each of the target's turns while they are incubating a
+          disease.
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+        value: >-
+          <p>At the end of each of the target's turns, it must make a
+          Constitution saving throw. After failing three of these saving throws,
+          the disease's effects last for the duration, and the creature stops
+          making these saves. After succeeding on three of these saving throws,
+          the creature recovers from the disease, and the spell
+          ends.</p><p>Since this spell induces a natural disease in its target,
+          any effect that removes a disease or otherwise ameliorates a disease's
+          effects apply to it.</p>
+      duration:
+        units: inst
+        concentration: false
+        override: true
+      effects:
+        - _id: GlcVeHlxmWkdMTiP
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: W767OHpOwFKPPaCL
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: lIhef4AI9rE2By2t
+          level: {}
+          onSave: false
+      range:
+        override: true
+        units: spec
+        special: ''
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+          stationary: false
+          type: ''
+        affects:
+          choice: false
+          count: '1'
+          type: creature
+          special: ''
+        override: true
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability:
+          - con
+        dc:
+          calculation: spellcasting
+          formula: ''
+        bonus: ''
+        visible: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 200000
+      name: Petrification Save
+      img: ''
+      flags: {}
+      visibility:
+        level:
+          min: null
+          max: null
+        requireAttunement: false
+        requireIdentification: false
+        requireMagic: false
+      _id: ZLjky0SAN3L2Afkr
+  identifier: flesh-to-stone
+sort: 0
+flags: {}
+img: icons/commodities/treasure/statue-bust-stone-grey.webp
+effects:
+  - name: Flesh to Stone
+    origin: Compendium.dnd5e.spells.Item.kozNy29b0X6exFhY
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    disabled: false
+    _id: mVqFBzC5qYpFnZFV
+    description: >-
+      <p>You are &amp;reference[Restrained apply=false] as your flesh begins to
+      harden. While restrained by this spell, you must make another Constitution
+      saving throw at the end of each of its turns. If you successfully saves
+      against this spell three times, the spell ends. If you fail you saves
+      three times, you are turned to stone and subjected to the
+      &amp;reference[Petrified] condition for the duration.</p>
+    transfer: false
+    statuses:
+      - restrained
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    tint: '#ffffff'
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781447726553
+      modifiedTime: 1781447743384
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    img: icons/magic/defensive/armor-stone-skin.webp
+    type: base
+    system:
+      changes: []
+    sort: 0
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!kozNy29b0X6exFhY.mVqFBzC5qYpFnZFV'
+  - name: Failed Flesh to Stone Save
+    img: icons/sundries/flags/banner-pink.webp
+    origin: Compendium.dnd5e.spells.Item.kozNy29b0X6exFhY
+    transfer: false
+    _id: GlcVeHlxmWkdMTiP
+    type: base
+    system:
+      changes: []
+    disabled: false
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>You have failed a saving throw against the
+      @UUID[Compendium.dnd5e.spells.Item.kozNy29b0X6exFhY]{Flesh to Stone}
+      spell.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781447738891
+      modifiedTime: 1781447760125
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.CjIq8Ed7bu3vVwT1.ActiveEffect.LhWesCC0aYGqzgk3
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!kozNy29b0X6exFhY.GlcVeHlxmWkdMTiP'
+  - name: Successful Flesh to Stone Save
+    img: icons/sundries/flags/banner-green.webp
+    origin: Compendium.dnd5e.spells.Item.kozNy29b0X6exFhY
+    transfer: false
+    _id: W767OHpOwFKPPaCL
+    type: base
+    system:
+      changes: []
+    disabled: false
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>You have succeeded a saving throw against the
+      @UUID[Compendium.dnd5e.spells.Item.kozNy29b0X6exFhY]{Flesh to Stone}
+      spell.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781447740108
+      modifiedTime: 1781447770515
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.CjIq8Ed7bu3vVwT1.ActiveEffect.NVfW1Rp0QTgISmDW
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!kozNy29b0X6exFhY.W767OHpOwFKPPaCL'
+  - name: Petrified
+    img: icons/commodities/treasure/statue-bust-stone-grey.webp
+    origin: Compendium.dnd5e.spells.Item.kozNy29b0X6exFhY
+    transfer: false
+    _id: lIhef4AI9rE2By2t
+    type: base
+    system:
+      changes: []
+    disabled: false
+    start: null
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: >-
+      <p>You are &amp;reference[Petrified apply=false] for the duration of the
+      spell or until the effect is removed.</p><p>If you are physically broken
+      while petrified, you suffers from similar deformities if you revert to
+      your original state.</p>
+    tint: '#ffffff'
+    statuses:
+      - petrified
+    showIcon: 2
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781447789294
+      modifiedTime: 1781447908161
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!kozNy29b0X6exFhY.lIhef4AI9rE2By2t'
+folder: 0pdesvXqKd55VOh2
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037364026
+  modifiedTime: 1781447937359
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!kozNy29b0X6exFhY'

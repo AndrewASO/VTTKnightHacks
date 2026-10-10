@@ -4,6 +4,7 @@ const os = require('os');
 const path = require('path');
 const { Server } = require('socket.io');
 const { GRID, insideRoom } = require('./public/rules.js');
+const { resolveAttack } = require('./combat/attack.js');
 
 const PORT = process.env.PORT || 3000;
 const DM_CODE = process.env.DM_CODE || 'dm';
@@ -23,9 +24,11 @@ const io = new Server(server);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/vendor/konva', express.static(path.join(__dirname, 'node_modules/konva')));
+app.use('/tokens', express.static(path.join(__dirname, '../dnd5e/tokens')));
 
 // The one source of truth. Clients only ever send intents.
-const board = { tokens: [], nextId: 1 };
+const board = { tokens: [], nextId: 1, log: [], nextLogId: 1 };
+const MAX_LOG_ENTRIES = 100;
 
 // Build the view a given role is allowed to see.
 // Players get full sheets for characters but only a name for monsters,
@@ -36,15 +39,26 @@ function buildState(isDM) {
   const tokens = board.tokens.map((t) => {
     const c = catalog[t.creatureId];
     const canSeeAll = isDM || c.team === 'player';
-    creatures[c.id] = canSeeAll ? c : { id: c.id, name: c.name, team: c.team };
+    creatures[c.id] = canSeeAll ? c : { id: c.id, name: c.name, team: c.team, token: c.token };
     return canSeeAll ? t : { ...t, hp: null, maxHp: null };
   });
 
   const roster = Object.values(catalog)
     .filter((c) => isDM || c.team === 'player')
-    .map((c) => ({ id: c.id, name: c.name, team: c.team }));
+    .map((c) => {
+      const entry = { id: c.id, name: c.name, team: c.team };
+      if (c.class) entry.class = c.class;
+      return entry;
+    });
 
-  return { tokens, creatures, roster, isDM };
+  // The DM sees every roll. Players only see the one-line outcome.
+  const log = board.log.map((entry) => ({
+    id: entry.id,
+    outcome: entry.outcome,
+    lines: isDM ? entry.dm : [entry.pub],
+  }));
+
+  return { tokens, creatures, roster, log, isDM };
 }
 
 function broadcast() {
@@ -53,15 +67,35 @@ function broadcast() {
   });
 }
 
-function isOccupied(x, y, ignoreId) {
-  return board.tokens.some((t) => t.id !== ignoreId && t.x === x && t.y === y);
+function footprintOf(token) {
+  return { w: token.w || 1, h: token.h || 1 };
 }
 
-// Scan the room left to right, top to bottom for the first open square.
-function findFreeSquare() {
+function isOccupied(x, y, ignoreId) {
+  return board.tokens.some((t) => {
+    if (t.id === ignoreId) return false;
+    const { w, h } = footprintOf(t);
+    return x >= t.x && x < t.x + w && y >= t.y && y < t.y + h;
+  });
+}
+
+// Every square of the rectangle has to be inside the room and empty.
+function fits(x, y, w, h, ignoreId) {
+  for (let dy = 0; dy < h; dy++) {
+    for (let dx = 0; dx < w; dx++) {
+      const cx = x + dx;
+      const cy = y + dy;
+      if (!insideRoom(cx, cy) || isOccupied(cx, cy, ignoreId)) return false;
+    }
+  }
+  return true;
+}
+
+// Scan the room left to right, top to bottom for the first open rectangle.
+function findFreeSpot(w, h) {
   for (let y = 1; y < GRID.rows; y++) {
     for (let x = 1; x < GRID.cols; x++) {
-      if (!isOccupied(x, y, null)) return { x, y };
+      if (fits(x, y, w, h, null)) return { x, y };
     }
   }
   return null;
@@ -82,7 +116,9 @@ io.on('connection', (socket) => {
     if (!socket.data.isDM && c.team !== 'player') return;
     if (c.team === 'player' && board.tokens.some((t) => t.creatureId === c.id)) return;
 
-    const spot = findFreeSquare();
+    const w = c.width || 1;
+    const h = c.height || 1;
+    const spot = findFreeSpot(w, h);
     if (!spot) return;
 
     // Monsters get numbered so "Goblin 1" and "Goblin 2" are easy to tell apart.
@@ -99,8 +135,11 @@ io.on('connection', (socket) => {
       team: c.team,
       x: spot.x,
       y: spot.y,
+      w,
+      h,
       hp: c.hp,
       maxHp: c.hp,
+      defeated: false,
     });
     broadcast();
   });
@@ -111,10 +150,57 @@ io.on('connection', (socket) => {
 
     // Reject moves that leave the room or land on another token.
     // Either way we broadcast, which snaps the dragged token back if rejected.
-    if (insideRoom(x, y) && !isOccupied(x, y, id)) {
+    const { w, h } = footprintOf(token);
+    if (fits(x, y, w, h, id)) {
       token.x = x;
       token.y = y;
     }
+    broadcast();
+  });
+
+  socket.on('attack:declare', ({ attackerId, targetId, actionName }) => {
+    const attacker = board.tokens.find((t) => t.id === attackerId);
+    const target = board.tokens.find((t) => t.id === targetId);
+    if (!attacker || !target || attacker.id === target.id) return;
+
+    // Players can only attack with their own side's tokens.
+    if (!socket.data.isDM && attacker.team !== 'player') return;
+
+    const result = resolveAttack({
+      attacker,
+      target,
+      actionName,
+      tokens: board.tokens,
+      catalog,
+    });
+
+    // Rule problems (out of range, defeated) go back to the sender only.
+    if (!result.ok) {
+      socket.emit('attack:error', { message: result.error });
+      return;
+    }
+
+    target.hp = result.hpAfter;
+    target.defeated = result.defeated;
+
+    board.log.push({
+      id: board.nextLogId++,
+      outcome: result.outcome,
+      dm: result.dm,
+      pub: result.pub,
+    });
+    if (board.log.length > MAX_LOG_ENTRIES) board.log.shift();
+
+    broadcast();
+  });
+
+  // Handy for demos: put a token back to full health.
+  socket.on('token:restore', ({ id }) => {
+    if (!socket.data.isDM) return;
+    const token = board.tokens.find((t) => t.id === id);
+    if (!token) return;
+    token.hp = token.maxHp;
+    token.defeated = false;
     broadcast();
   });
 

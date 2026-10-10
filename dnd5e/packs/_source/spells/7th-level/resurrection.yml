@@ -1,0 +1,303 @@
+_id: jhhT9PsHy5A7EojO
+name: Resurrection
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>You touch a dead creature that has been dead for no more than a
+      century, that didn't die of old age, and that isn't undead. If its soul is
+      free and willing, the target returns to life with all its hit
+      points.</p><p>This spell neutralizes any poisons and cures normal diseases
+      afflicting the creature when it died. It doesn't, however, remove magical
+      diseases, curses, and the like; if such effects aren't removed prior to
+      casting the spell, they afflict the target on its return to
+      life.</p><p>This spell closes all mortal wounds and restores any missing
+      body parts.</p><p>Coming back from the dead is an ordeal. The target takes
+      a −4 penalty to all attack rolls, saving throws, and ability checks. Every
+      time the target finishes a long rest, the penalty is reduced by 1 until it
+      disappears.</p><p>Casting this spell to restore life to a creature that
+      has been dead for one year or longer taxes you greatly. Until you finish a
+      long rest, you can't cast spells again, and you have disadvantage on all
+      attack rolls, ability checks, and saving throws.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: hour
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: spec
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 7
+  school: nec
+  materials:
+    value: A diamond worth at least 1,000 gp, which the spell consumes
+    consumed: true
+    cost: 1000
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: ydRvh0MNOPLGsycK
+          level: {}
+        - _id: tqHU3nZQatPgxW7r
+          level: {}
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: resurrection
+sort: 0
+flags: {}
+img: icons/magic/holy/saint-glass-portrait-halo.webp
+effects:
+  - name: Resurrection Sickness
+    img: icons/environment/settlement/graveyard-tombstone-night.webp
+    origin: Compendium.dnd5e.spells.Item.jhhT9PsHy5A7EojO
+    transfer: false
+    _id: ydRvh0MNOPLGsycK
+    type: base
+    system:
+      changes:
+        - key: system.bonuses.abilities.save
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.abilities.check
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.mwak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.msak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.rwak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+        - key: system.bonuses.rsak.attack
+          type: add
+          value: -4
+          phase: initial
+          priority: null
+    disabled: false
+    start: null
+    duration:
+      value: 4
+      units: days
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>Coming back from the dead is an ordeal. You take a −4 penalty to all
+      attack rolls, saving throws, and ability checks. Every time you finish a
+      long rest, the penalty is reduced by 1 until it disappears.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781463336472
+      modifiedTime: 1781463336472
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: >-
+        Compendium.dnd5e.spells.Item.AGFMPAmuzwWO6Dfz.ActiveEffect.tiAHzh61HiuYLoYf
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!jhhT9PsHy5A7EojO.ydRvh0MNOPLGsycK'
+  - name: Magical Fatigue
+    img: icons/magic/symbols/rune-sigil-red-orange.webp
+    origin: Compendium.dnd5e.spells.Item.jhhT9PsHy5A7EojO
+    transfer: false
+    _id: tqHU3nZQatPgxW7r
+    type: base
+    system:
+      changes:
+        - key: system.abilities.str.save.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.str.check.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.dex.save.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.dex.check.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.con.save.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.con.check.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.int.save.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.int.check.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.wis.save.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.wis.check.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.cha.save.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+        - key: system.abilities.cha.check.roll.mode
+          type: add
+          value: -1
+          phase: initial
+          priority: null
+    disabled: false
+    start: null
+    duration:
+      value: 8
+      units: hours
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>Until you finish a long rest, you can't cast spells again, and you have
+      disadvantage on attack rolls, ability checks, and saving throws.</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 2
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781463390924
+      modifiedTime: 1781463516540
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!jhhT9PsHy5A7EojO.tqHU3nZQatPgxW7r'
+folder: irCSpQWIMtp978TA
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037363708
+  modifiedTime: 1781463390965
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!jhhT9PsHy5A7EojO'

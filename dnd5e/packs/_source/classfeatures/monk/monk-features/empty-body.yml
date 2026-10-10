@@ -1,0 +1,186 @@
+_id: 3jwFt3hSqDswBlOH
+name: Empty Body
+ownership:
+  default: 0
+type: feat
+system:
+  description:
+    value: >-
+      <p>Beginning at 18th level, you can use your action to spend 4 ki points
+      to become invisible for 1 minute. During that time, you also have
+      resistance to all damage but force damage.</p>
+
+      <p>Additionally, you can spend 8 ki points to cast the
+      @UUID[Compendium.dnd5e.spells.Item.TIoadMIsUKD4edXi]{Astral Projection}
+      spell, without needing material components. When you do so, you can't take
+      any other creatures with you.</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  type:
+    value: class
+    subtype: ki
+  requirements: Monk 18
+  properties: []
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: 1
+        condition: Also requires 4 ki points (or 8 for Astral Projection).
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        concentration: false
+        value: '1'
+        units: minute
+        special: ''
+        override: false
+      effects:
+        - _id: 4dvYtqvbQGDsVi51
+      range:
+        units: self
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ''
+        affects:
+          count: ''
+          type: self
+          choice: false
+          special: ''
+        prompt: true
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+  enchant: {}
+  prerequisites:
+    level: null
+  identifier: superior-defense
+flags: {}
+img: icons/magic/perception/silhouette-stealth-shadow.webp
+effects:
+  - _id: 4dvYtqvbQGDsVi51
+    flags: {}
+    disabled: true
+    duration:
+      value: 60
+      units: seconds
+      expiry: turnStart
+      expired: false
+    origin: Item.xqRleciuHDZlYCl6
+    tint: '#ffffff'
+    transfer: false
+    name: 'Ki: Empty Body'
+    description: ''
+    statuses: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.367'
+      systemId: dnd5e
+      systemVersion: 4.0.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      exportSource: null
+    img: icons/magic/perception/silhouette-stealth-shadow.webp
+    type: base
+    system:
+      changes:
+        - key: system.traits.dr.value
+          value: fire
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: cold
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: acid
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: bludgeoning
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: lightning
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: necrotic
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: piercing
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: psychic
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: radiant
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: slashing
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: thunder
+          priority: null
+          type: add
+        - key: system.traits.dr.value
+          value: poison
+          priority: null
+          type: add
+    sort: 0
+    start: null
+    showIcon: 1
+    folder: null
+    _key: '!items.effects!3jwFt3hSqDswBlOH.4dvYtqvbQGDsVi51'
+folder: TMmNG8ujFDBEWXRe
+sort: 0
+_stats:
+  duplicateSource: null
+  coreVersion: '14.367'
+  systemId: dnd5e
+  systemVersion: 4.0.0
+  createdTime: 1725037379770
+  modifiedTime: 1725992286999
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!3jwFt3hSqDswBlOH'

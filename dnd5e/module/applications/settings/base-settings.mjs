@@ -1,0 +1,136 @@
+import Application5e from "../api/application.mjs";
+import { createCheckboxInput } from "../fields.mjs";
+
+const { BooleanField, DataField, NumberField, StringField } = foundry.data.fields;
+
+/**
+ * Base application for configuring system settings.
+ */
+export default class BaseSettingsConfig extends Application5e {
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    classes: ["standard-form"],
+    position: {
+      width: 500
+    },
+    form: {
+      closeOnSubmit: true,
+      handler: BaseSettingsConfig.#onCommitChanges
+    },
+    namespace: "dnd5e"
+  };
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  static PARTS = {
+    config: {
+      template: "systems/dnd5e/templates/settings/base-config.hbs"
+    },
+    footer: {
+      template: "templates/generic/form-footer.hbs"
+    }
+  };
+
+  /* -------------------------------------------- */
+  /*  Rendering                                   */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
+    context.fields = [];
+    context.buttons = [{ type: "submit", icon: "fas fa-save", label: "Save Changes" }];
+    return context;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Create the field data for a specific setting.
+   * @param {string} name  Setting key within the dnd5e namespace.
+   * @returns {object}
+   */
+  createSettingField(name) {
+    return BaseSettingsConfig.createSettingField(name);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Create the field data for a specific setting.
+   * @param {string} name                         Setting key.
+   * @param {object} [options={}]
+   * @param {string} [options.namespace="dnd5e"]  Namespace for the settings to change.
+   * @returns {object}
+   */
+  static createSettingField(name, { namespace="dnd5e" }={}) {
+    const setting = game.settings.settings.get(`${namespace}.${name}`);
+    if ( !setting ) throw new Error(`Setting \`${namespace}.${name}\` not registered.`);
+    const isDataField = setting.type instanceof DataField;
+    const Field = { [Boolean]: BooleanField, [Number]: NumberField, [String]: StringField }[setting.type];
+    if ( !isDataField && !Field ) {
+      throw new Error("Automatic field generation only available for Boolean, Number, or String types");
+    }
+    const data = {
+      name,
+      field: isDataField ? setting.type : new Field({ required: true, blank: false }),
+      hint: _loc(setting.hint),
+      label: _loc(setting.name),
+      value: game.settings.get(namespace, name)
+    };
+    if ( (setting.type === Boolean) || (setting.type instanceof BooleanField) ) data.input = createCheckboxInput;
+    if ( setting.choices ) data.options = Object.entries(setting.choices)
+      .map(([value, label]) => ({ value, label: _loc(label) }));
+    return data;
+  }
+
+  /* -------------------------------------------- */
+  /*  Event Listeners and Handlers                */
+  /* -------------------------------------------- */
+
+  /**
+   * Commit settings changes.
+   * This method processes the submitted form data, updates the settings, and determines if a reload is required.
+   * @this {BaseSettingsConfig}
+   * @param {SubmitEvent} event          The submission event.
+   * @param {HTMLFormElement} form       The submitted form element.
+   * @param {FormDataExtended} formData  The submitted form data.
+   * @returns {Promise<void>}            Resolves once the settings are updated, or prompts for a reload if required.
+   */
+  static async #onCommitChanges(event, form, formData) {
+    const changes = foundry.utils.expandObject(formData.object);
+    const { requiresClientReload, requiresWorldReload } = await BaseSettingsConfig.commitChanges(changes, {
+      namespace: this.options.namespace
+    });
+    if ( requiresClientReload || requiresWorldReload ) {
+      return foundry.applications.settings.SettingsConfig.reloadConfirm({ world: requiresWorldReload });
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Commit changes to various `dnd5e` settings and determine if a reload is required.
+   * @param {object} changes                      Changes to apply to settings within the dnd5e namespace.
+   * @param {object} [options={}]
+   * @param {string} [options.namespace="dnd5e"]  Namespace for the settings to change.
+   * @returns {{ requiresClientReload: boolean, requiresWorldReload: boolean }}
+   */
+  static async commitChanges(changes, { namespace="dnd5e" }={}) {
+    let requiresClientReload = false;
+    let requiresWorldReload = false;
+    for ( let [key, value] of Object.entries(changes) ) {
+      const setting = game.settings.settings.get(`${namespace}.${key}`);
+      const current = game.settings.get(namespace, key, { document: true });
+      const prior = current?._source?.value ?? current;
+      if ( current.value instanceof foundry.abstract.DataModel ) value = current.value.clone(value).toObject();
+      const updated = await game.settings.set(namespace, key, value, { document: true });
+      if ( prior === (updated?._source?.value ?? updated) ) continue;
+      requiresClientReload ||= (setting.scope !== "world") && setting.requiresReload;
+      requiresWorldReload ||= (setting.scope === "world") && setting.requiresReload;
+    }
+    return { requiresClientReload, requiresWorldReload };
+  }
+}

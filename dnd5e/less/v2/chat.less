@@ -1,0 +1,675 @@
+/* ---------------------------------- */
+/*  Chat Cards                        */
+/* ---------------------------------- */
+
+:is(.chat-popout, #chat-log, .chat-log) .message:not(.compact) {
+  padding: .5rem;
+  border: var(--dnd5e-border-gold);
+  border-block-end-width: 2px;
+  border-radius: 6px;
+  font-family: var(--dnd5e-font-roboto);
+  font-size: var(--font-size-13);
+  position: relative;
+  background: var(--dnd5e-chat-background);
+  color: var(--color-text-primary);
+
+  > .message-header, > .message-content { position: relative; }
+
+  &.blind, &.emote, &.whisper { border-block-end-width: 3px; }
+  &.emote { border-block-end-color: #e5af29; }
+  &.whisper { border-block-end-color: #7d7df1; }
+  &.blind { border-block-end-color: #c12fc1; }
+
+  /* Header */
+  .message-header {
+    color: var(--color-text-secondary);
+    margin-bottom: .375rem;
+
+    .message-delete { display: none; }
+
+    .message-sender {
+      display: flex;
+      align-items: start;
+      gap: .75rem;
+      white-space: unset;
+
+      .avatar {
+        height: 100%;
+        display: grid;
+        place-content: center;
+      }
+
+      img, video {
+        width: 38px;
+        height: 38px;
+        border: none;
+        flex: none;
+      }
+      .avatar:not(.token) img {
+        border-radius: 4px;
+        box-shadow: 0 0 6px rgb(0 0 0 / 85%);
+        background: var(--dnd5e-background-alt-1);
+        object-fit: cover;
+        object-position: top;
+      }
+      .avatar.token :is(img, video) {
+        object-fit: contain;
+        object-position: center;
+      }
+    }
+
+    .name-stacked {
+      flex: 1;
+      display: flex;
+      min-height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      line-height: normal;
+    }
+
+    .title {
+      font-family: var(--dnd5e-font-roboto-slab);
+      font-size: var(--font-size-16);
+      font-weight: bold;
+      color: var(--color-text-primary);
+    }
+
+    .subtitle { font-size: var(--font-size-11); }
+
+    .message-metadata {
+      font-size: var(--font-size-10);
+      transform: translate(2px, -4px);
+      flex: none;
+    }
+
+    .flavor-text {
+      margin-block-start: 4px;
+      margin-block-end: -4px;
+      font-style: italic;
+    }
+  }
+}
+
+/* Modifier Keys */
+:is(.chat-popout, #chat-log, .chat-log)[data-modifier-shift] {
+  .message :is(.message-header, .card-summary) .message-delete { display: unset; }
+  .message .message-header:has(.message-delete) .chat-control { display: none; }
+}
+
+/* ---------------------------------- */
+/*  Dice Rolls                        */
+/* ---------------------------------- */
+
+.dice-tooltip {
+  .tooltip-part {
+    border-top: var(--dnd5e-border-dotted);
+    padding: 2px 0;
+
+    &:first-child { border: none; }
+    &:last-child { padding-block-end: 0; }
+
+    &.constant-term {
+      display: grid;
+      min-block-size: 32px;
+
+      .dice {
+        > .flavor {
+          color: var(--color-text-secondary);
+          flex: 1;
+          font-size: var(--font-size-11);
+          margin-inline-start: 10px;
+          text-transform: uppercase;
+        }
+
+        > .total {
+          align-items: end;
+          margin-inline-end: 20px;
+        }
+      }
+    }
+  }
+
+  .dice {
+    display: flex;
+    align-items: center;
+
+    .dice-rolls {
+      flex: 1;
+      margin: 5px 0 5px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+
+      .roll {
+        float: unset;
+        margin: 0;
+      }
+
+      .constant {
+        font-family: var(--font-primary);
+        font-weight: bold;
+        font-size: var(--font-size-18);
+        margin-left: .25rem;
+
+        .sign {
+          font-weight: normal;
+          color: var(--color-text-tertiary);
+          margin-right: 2px;
+        }
+      }
+    }
+
+    .total {
+      flex-basis: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+
+      > img {
+        top: 6px;
+        position: absolute;
+        width: 32px;
+        border: none;
+        opacity: .1;
+        filter: var(--dnd5e-chat-damage-filter);
+      }
+
+      .label {
+        font-family: var(--dnd5e-font-roboto-condensed);
+        font-size: var(--font-size-10);
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .value {
+        font-family: var(--font-primary);
+        font-weight: bold;
+        font-size: var(--font-size-20);
+      }
+
+      .sign {
+        color: var(--color-text-tertiary);
+        font-weight: normal;
+        margin-right: 2px;
+      }
+    }
+  }
+}
+
+.dice-result {
+  display: flex;
+  flex-direction: column;
+
+  .dice-tooltip {
+    display: block;
+    flex: auto;
+    order: unset;
+    overflow: hidden;
+  }
+
+  .dice-formula, .dice-total {
+    background: var(--dnd5e-chat-button-background);
+    border-color: var(--dnd5e-chat-button-border);
+    border-radius: 3px;
+    box-shadow: none;
+    flex: auto;
+    line-height: normal;
+    margin: 0;
+    padding: .25rem;
+  }
+
+  .dice-formula { font-family: var(--dnd5e-font-roboto-condensed); }
+
+  .dice-total {
+    font-weight: bold;
+    padding: .125rem;
+    margin-top: .25rem;
+    font-family: var(--font-primary);
+    position: relative;
+
+    &::before, &::after {
+      position: absolute;
+      inset: 4px 0 4px auto;
+    }
+
+    &::before {
+      content: "";
+      width: 32px;
+      border-inline-start: var(--dnd5e-border-separator-heavy);
+    }
+
+    &::after {
+      color: var(--color-text-secondary);
+      content: "\f054";
+      display: grid;
+      font-family: var(--font-awesome);
+      font-size: var(--font-size-12);
+      padding: 0 12px;
+      place-content: center;
+      transition: all 250ms ease;
+    }
+
+    &.success:not(.fumble), &.critical {
+      background: var(--dnd5e-color-success-background);
+      border-color: var(--dnd5e-color-success);
+      color: var(--dnd5e-color-success-critical);
+      &::after { color: var(--dnd5e-color-success); }
+    }
+
+    &.failure:not(.critical), &.fumble {
+      background: var(--dnd5e-color-failure-background);
+      border-color: var(--dnd5e-color-failure);
+      color: var(--dnd5e-color-failure-critical);
+      &::after { color: var(--dnd5e-color-failure); }
+    }
+
+    &.critical, &.fumble {
+      border-width: 3px;
+      border-style: double;
+    }
+
+    > .icons {
+      position: absolute;
+      inset: 0 auto 0 8px;
+      display: flex;
+      align-items: center;
+      opacity: .35;
+    }
+  }
+
+  .dice-tooltip-collapser {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 250ms ease;
+  }
+}
+
+.dice-roll {
+  cursor: var(--cursor-pointer);
+
+  .dice-flavor { display: none; }
+
+  &.expanded {
+    .dice-total::after { transform: rotate(-90deg); }
+    .dice-tooltip-collapser { grid-template-rows: 1fr; }
+  }
+
+  &.secret-roll {
+    cursor: initial;
+    .dice-total::before, .dice-total::after {
+      content: none;
+    }
+    .dice-total > i { display: none; }
+  }
+}
+
+/* ----------------------------------------- */
+/*  Inline Roll Actions                      */
+/* ----------------------------------------- */
+
+.roll-link-group, .roll-link, .reference-link {
+  a {
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+    &:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+    i {
+      color: var(--color-text-dark-inactive);
+      margin-inline-end: 0.25em;
+    }
+
+    &.enricher-action {
+      padding-inline-end: 1px;
+    }
+  }
+  a + a {
+    margin-inline-start: 2px;
+  }
+}
+
+/* ---------------------------------- */
+/*  Chat Notifications                */
+/* ---------------------------------- */
+
+#chat-notifications {
+  .chat-message {
+    .chat-control { display: none; }
+  }
+}
+
+/* ---------------------------------- */
+/*  Chat Popouts                      */
+/* ---------------------------------- */
+
+.chat-popout {
+  margin: 0;
+  background: none;
+  box-shadow: none;
+
+  .window-header {
+    border: none;
+    inset: 0 0 auto 0;
+    z-index: 1;
+    padding: 7px 6px 0 8px;
+    background: none;
+
+    :is(a, button).header-button, .header-control {
+      height: 15px;
+      border-radius: 100%;
+      background: rgb(0 0 0 / 25%);
+      font-size: var(--font-size-10);
+      min-height: unset;
+    }
+
+    :is(a, button):is(.header-button, .header-control) {
+      width: 15px;
+      display: inline-grid;
+      place-content: center;
+      color: var(--color-text-light-highlight);
+      margin: 0;
+      padding: 0;
+
+      > i { margin: 0; }
+    }
+
+    .header-control {
+      flex: 0 0 15px;
+      &:hover { text-shadow: 0 0 8px red; }
+    }
+  }
+  &:not(.minimized) .window-header .window-title {
+    block-size: 1px;
+    visibility: hidden;
+  }
+
+  .window-content {
+    padding: 0;
+    background: none;
+    overflow: visible;
+
+    .message {
+      margin: 0;
+      box-shadow: 0 0 20px var(--color-shadow-dark);
+    }
+  }
+
+  &.minimized {
+    background: url("../../ui/denim075.png");
+    max-height: var(--header-height);
+    .window-header { padding-block: 0; }
+  }
+
+  &:not(.minimized) .window-header { position: absolute; }
+
+  .message-metadata { padding-right: 18px; }
+}
+
+/* ---------------------------------- */
+/*  Item Cards                        */
+/* ---------------------------------- */
+
+.dnd5e2:not(.compact) .chat-card {
+  display: flex;
+  flex-direction: column;
+  gap: .375rem;
+
+  + .dice-roll { margin-top: .375rem; }
+
+  .description {
+    padding: .5rem;
+    border: var(--dnd5e-border-gold);
+    border-radius: 3px;
+    background: var(--dnd5e-background-card);
+    overflow: hidden;
+
+    .summary {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+
+      > img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .name-stacked {
+        flex: 1;
+        padding-right: .5rem;
+      }
+
+      > i {
+        font-size: var(--font-size-14);
+        color: var(--color-text-secondary);
+        margin-right: 8px;
+        transition: all 250ms ease;
+      }
+    }
+
+    .details {
+      font-family: var(--dnd5e-font-roboto);
+      font-size: var(--font-size-11);
+      padding: 0;
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: all 250ms ease;
+
+      > .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+        overflow: hidden;
+
+        /* Immediate children vert margins
+         * are handled by the column gap */
+        > * { margin-block: 0; }
+      }
+
+      p {
+        margin: 0;
+        &:first-child { padding-top: .5rem; }
+      }
+    }
+
+    &.critical {
+      border-width: 3px;
+      border-style: double;
+
+      .summary .subtitle {
+        color: var(--dnd5e-color-success);
+        text-transform: uppercase;
+      }
+    }
+
+    &.collapsible .summary { cursor: var(--cursor-pointer); }
+    &.collapsed {
+      .summary > i { transform: rotate(-90deg); }
+      .details {
+        grid-template-rows: 0fr;
+        opacity: 0;
+      }
+    }
+  }
+
+  .card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: .375rem;
+    [hidden] { display: none; }
+  }
+
+  .pills .pill {
+    font-size: var(--font-size-10);
+    line-height: 1;
+  }
+}
+
+.message:not(.compact) .dice-roll + .chat-card {
+  margin-block-start: .375rem;
+}
+
+.chat-sidebar, .chat-popout, #chat-notifications {
+  &:not([data-gm-user]) .message:not(.compact) .card-header[data-concealed] {
+    .summary { cursor: inherit; }
+    .fa-chevron-down, .details { display: none; }
+  }
+}
+
+.message:not(.compact) {
+  p.supplement {
+    margin: 0;
+    font-size: var(--font-size-11);
+    color: var(--color-text-secondary);
+    padding: 0 .25rem;
+
+    > strong {
+      color: var(--color-text-primary);
+      text-transform: uppercase;
+      font-size: var(--font-size-10);
+      margin-right: .25rem;
+    }
+  }
+
+  .dice-roll + p.supplement { margin: .5rem 0; }
+}
+
+/* Damage & Effects Trays */
+.message.dnd5e2:not(:nth-last-child(-n + 5)) :is(.card-tray, .effects-tray, .targets-tray) {
+  content-visibility: auto;
+}
+
+.hidden-dc { display: contents; }
+.visible-dc { display: none; }
+[data-display-challenge] {
+  .hidden-dc { display: none; }
+  .visible-dc { display: contents; }
+}
+
+/* ---------------------------------- */
+/*  Enchantment                       */
+/* ---------------------------------- */
+
+enchantment-application.dnd5e2 {
+  margin: 4px 0 -6px;
+
+  .drop-area {
+    gap: 4px;
+    place-content: normal;
+    text-align: start;
+
+    &.empty { min-block-size: 38px; }
+
+    &:not(.empty) {
+      color: inherit;
+      font-size: var(--font-size-12);
+      font-style: normal;
+    }
+
+    p {
+      place-content: center;
+      text-align: center;
+    }
+
+    .preview {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      &:not(:last-child) {
+        border-block-end: var(--dnd5e-border-dotted);
+        padding-block-end: 4px;
+      }
+
+      > img {
+        block-size: 24px;
+        inline-size: 24px;
+        flex: 0 0 24px;
+      }
+      > .name {
+        flex: 1;
+        font-family: var(--dnd5e-font-roboto-slab);
+        font-weight: bold;
+      }
+      > a {
+        flex: 0 0 20px;
+      }
+    }
+  }
+
+  .count-area {
+    margin: 4px 4px 0;
+    font-size: var(--font-size-10);
+    text-align: end;
+    text-transform: uppercase;
+  }
+}
+
+/* ---------------------------------- */
+/*  Target Evaluations                */
+/* ---------------------------------- */
+
+:is(.chat-popout, #chat-log, .chat-log) .message .evaluation {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+
+  .target {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 0 8px;
+    cursor: var(--cursor-pointer);
+
+    > i { font-size: var(--font-size-14); }
+
+    .name {
+      font-family: var(--dnd5e-font-roboto-slab);
+      font-size: var(--font-size-14);
+      font-weight: bold;
+    }
+
+    .name-stacked {
+      flex: 1;
+      line-height: normal;
+      min-height: 24px;
+
+      .title {
+        font-size: var(--font-size-16);
+        display: flex;
+        align-items: center;
+        gap: .325rem;
+
+        > i { font-size: var(--font-size-14); }
+      }
+    }
+
+    .ac {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      font-size: var(--font-size-14);
+      margin-left: auto;
+      opacity: .75;
+
+      > span {
+        font-weight: bold;
+        font-family: var(--font-primary);
+        word-break: keep-all;
+      }
+    }
+
+    &.hit > i { color: var(--dnd5e-color-success); }
+
+    &.miss > i {
+      color: var(--dnd5e-color-failure);
+      height: 12px;
+    }
+  }
+}

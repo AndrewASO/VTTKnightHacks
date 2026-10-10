@@ -1,0 +1,162 @@
+_id: UDUnlfPsOAbq2RSE
+name: Blur
+ownership:
+  default: 0
+type: spell
+system:
+  description:
+    value: >-
+      <p>Your body becomes blurred, shifting and wavering to all who can see
+      you. For the duration, any creature has disadvantage on attack rolls
+      against you. An attacker is immune to this effect if it doesn't rely on
+      sight, as with &amp;reference[blindsight], or can see through illusions,
+      as with &amp;reference[truesight].</p>
+    chat: ''
+  source:
+    custom: ''
+    book: ''
+    page: ''
+    license: CC-BY-4.0
+    rules: '2014'
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: self
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: self
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 2
+  school: ill
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: X4jof8gIhjMeaX9E
+          level: {}
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: blur
+sort: 0
+flags: {}
+img: icons/magic/air/fog-gas-smoke-dense-gray.webp
+effects:
+  - name: Blur
+    img: icons/magic/air/fog-gas-smoke-dense-gray.webp
+    origin: Compendium.dnd5e.spells.Item.UDUnlfPsOAbq2RSE
+    transfer: false
+    _id: X4jof8gIhjMeaX9E
+    type: base
+    system:
+      changes: []
+    disabled: false
+    start: null
+    duration:
+      value: 1
+      units: minutes
+      expiry: turnStart
+      expired: false
+    description: >-
+      <p>Your body has become blurred, shifting and wavering to all who can see
+      you. For the duration, any creature has disadvantage on attack rolls
+      against you. An attacker is immune to this effect if it doesn't rely on
+      sight, as with &amp;reference[blindsight], or can see through illusions,
+      as with &amp;reference[truesight].</p>
+    tint: '#ffffff'
+    statuses: []
+    showIcon: 1
+    folder: null
+    sort: 0
+    flags:
+      dnd5e:
+        riders:
+          statuses: []
+    _stats:
+      coreVersion: '14.361'
+      systemId: dnd5e
+      systemVersion: 6.0.0
+      createdTime: 1781220153860
+      modifiedTime: 1781220199250
+      lastModifiedBy: dnd5ebuilder0000
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    _key: '!items.effects!UDUnlfPsOAbq2RSE.X4jof8gIhjMeaX9E'
+folder: Qi4Se3we69ukl2V9
+_stats:
+  duplicateSource: null
+  coreVersion: '14.361'
+  systemId: dnd5e
+  systemVersion: 6.0.0
+  createdTime: 1725037357236
+  modifiedTime: 1781220153897
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+_key: '!items!UDUnlfPsOAbq2RSE'

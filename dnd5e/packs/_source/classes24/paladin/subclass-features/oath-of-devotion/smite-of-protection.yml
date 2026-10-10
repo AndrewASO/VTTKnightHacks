@@ -1,0 +1,100 @@
+_id: phbpdnSmiteOfPro
+name: Smite of Protection
+type: feat
+folder: pDo2UCh4t1Z03F5z
+img: icons/magic/symbols/cog-shield-white-blue.webp
+system:
+  description:
+    value: >-
+      <p>Your magical smite now radiates protective energy. Whenever you cast
+      @UUID[Compendium.dnd-players-handbook.spells.Item.phbsplDivineSmit]{Divine
+      Smite}, you and your allies have &amp;Reference[Half Cover] while in your
+      Aura of Protection. The aura has this benefit until the start of your next
+      turn.</p><section id="secret-zaNpOup6oPMC6RtV"
+      class="secret"><p><strong>Foundry Note</strong></p><p>This feature
+      includes an Active Effect which provides the Half Cover status but it is
+      not automatically granted as creatures enter/exit your aura.</p></section>
+    chat: ''
+  source:
+    custom: ''
+    rules: '2024'
+    book: ''
+    license: CC-BY-4.0
+    revision: 1
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: 15
+    items: []
+    repeatable: false
+  properties: []
+  requirements: ''
+  activities: {}
+  enchant: {}
+  identifier: smite-of-protection
+  advancement: {}
+  crewed: false
+effects:
+  - name: Smite of Protection
+    img: icons/magic/symbols/cog-shield-white-blue.webp
+    _id: EyWEQv8qPwbXyDmA
+    type: base
+    system:
+      changes: []
+      origin:
+        actor: null
+        behavior: null
+        effect: null
+        item: null
+        message: null
+      conditions: '{}'
+      magical: false
+      rider:
+        statuses: []
+    disabled: true
+    duration:
+      value: null
+      units: seconds
+      expiry: null
+      expired: false
+    description: ''
+    origin: null
+    tint: '#ffffff'
+    transfer: true
+    statuses:
+      - coverHalf
+    sort: 0
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '14.368'
+      systemId: dnd5e
+      systemVersion: 6.0.5
+      createdTime: 1791225411391
+      modifiedTime: 1791225411391
+      lastModifiedBy: dnd5ebuilder0000
+      exportSource: null
+    showIcon: 2
+    start: null
+    folder: null
+    _key: '!items.effects!phbpdnSmiteOfPro.EyWEQv8qPwbXyDmA'
+flags: {}
+_stats:
+  duplicateSource: null
+  coreVersion: '14.368'
+  systemId: dnd5e
+  systemVersion: 6.0.5
+  createdTime: 1791225411390
+  modifiedTime: 1791225411390
+  lastModifiedBy: dnd5ebuilder0000
+  exportSource: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!phbpdnSmiteOfPro'
