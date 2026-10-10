@@ -1,0 +1,75 @@
+[
+  {
+    "id": "pc-fighter", "name": "Dagny Stonebrow", "team": "player",
+    "class": "Fighter 3 (Champion)", "race": "Dwarf",
+    "ac": 19, "hp": 31, "speed": 25, "proficiency": 2,
+    "abilities": { "str": 16, "dex": 12, "con": 16, "int": 10, "wis": 12, "cha": 8 },
+    "resist": ["poison"], "immune": [], "vuln": [], "conditionImmune": [],
+    "features": [
+      { "name": "Dwarven Resilience", "summary": "Resistance to poison damage and advantage on saves against being poisoned.",
+        "mods": [{ "key": "resist", "mode": "add", "value": "poison" }] },
+      { "name": "Fighting Style: Defense", "summary": "+1 AC while wearing armor (already included in AC 19)." },
+      { "name": "Second Wind", "summary": "Bonus action, heal 1d10 + 3. Once per short rest." },
+      { "name": "Action Surge", "summary": "Take one extra action on your turn. Once per short rest." },
+      { "name": "Improved Critical", "summary": "Weapon attacks crit on 19 or 20.",
+        "mods": [{ "key": "attack.critRange", "mode": "set", "value": 19 }] }
+    ],
+    "actions": [
+      { "name": "Longsword", "kind": "weapon", "properties": ["versatile"], "reach": 5,
+        "damage": [{ "dice": "1d8", "type": "slashing" }] },
+      { "name": "Handaxe", "kind": "weapon", "properties": ["light", "thrown"], "reach": 5,
+        "range": { "normal": 20, "long": 60 },
+        "damage": [{ "dice": "1d6", "type": "slashing" }] },
+      { "name": "Light Crossbow", "kind": "weapon", "properties": ["ranged", "loading", "two-handed"],
+        "range": { "normal": 80, "long": 320 },
+        "damage": [{ "dice": "1d8", "type": "piercing" }] }
+    ]
+  },
+  {
+    "id": "pc-rogue", "name": "Wren Ashdown", "team": "player",
+    "class": "Rogue 3 (Thief)", "race": "Human",
+    "ac": 14, "hp": 21, "speed": 30, "proficiency": 2,
+    "abilities": { "str": 8, "dex": 17, "con": 12, "int": 12, "wis": 12, "cha": 10 },
+    "resist": [], "immune": [], "vuln": [], "conditionImmune": [],
+    "features": [
+      { "name": "Sneak Attack", "summary": "Once per turn, +2d6 damage on a finesse or ranged hit if you have advantage, or an ally is within 5 ft of the target.",
+        "mods": [{ "key": "damage.bonus", "mode": "add", "value": "2d6", "when": "sneakAttack" }] },
+      { "name": "Cunning Action", "summary": "Bonus action to Dash, Disengage, or Hide." },
+      { "name": "Fast Hands", "summary": "Use Cunning Action bonus action for Sleight of Hand, thieves' tools, or Use an Object." }
+    ],
+    "actions": [
+      { "name": "Rapier", "kind": "weapon", "properties": ["finesse"], "reach": 5,
+        "damage": [{ "dice": "1d8", "type": "piercing" }] },
+      { "name": "Shortbow", "kind": "weapon", "properties": ["ranged", "two-handed"],
+        "range": { "normal": 80, "long": 320 },
+        "damage": [{ "dice": "1d6", "type": "piercing" }] },
+      { "name": "Dagger", "kind": "weapon", "properties": ["finesse", "light", "thrown"], "reach": 5,
+        "range": { "normal": 20, "long": 60 },
+        "damage": [{ "dice": "1d4", "type": "piercing" }] }
+    ]
+  },
+  {
+    "id": "pc-wizard", "name": "Ilyan Vael", "team": "player",
+    "class": "Wizard 3 (Evoker)", "race": "Elf",
+    "ac": 12, "hp": 20, "speed": 30, "proficiency": 2,
+    "abilities": { "str": 8, "dex": 14, "con": 14, "int": 16, "wis": 12, "cha": 10 },
+    "resist": [], "immune": [], "vuln": [], "conditionImmune": [],
+    "features": [
+      { "name": "Arcane Recovery", "summary": "Once per day after a short rest, recover spell slots totaling up to 2 levels." },
+      { "name": "Sculpt Spells", "summary": "Choose creatures that automatically succeed on saves against your evocation spells and take no damage." },
+      { "name": "Fey Ancestry", "summary": "Advantage on saves against being charmed. Magic cannot put you to sleep." }
+    ],
+    "actions": [
+      { "name": "Fire Bolt", "kind": "spell", "attackAbility": "int", "range": { "normal": 120, "long": 120 },
+        "damage": [{ "dice": "1d10", "type": "fire" }] },
+      { "name": "Burning Hands", "kind": "spell", "saveAbility": "dex", "saveDc": 13, "onSave": "half",
+        "area": { "shape": "cone", "feet": 15 },
+        "damage": [{ "dice": "3d6", "type": "fire" }] },
+      { "name": "Magic Missile", "kind": "spell", "autoHit": true, "range": { "normal": 120, "long": 120 },
+        "damage": [{ "dice": "1d4+1", "type": "force", "darts": 3 }] },
+      { "name": "Dagger", "kind": "weapon", "properties": ["finesse", "light", "thrown"], "reach": 5,
+        "range": { "normal": 20, "long": 60 },
+        "damage": [{ "dice": "1d4", "type": "piercing" }] }
+    ]
+  }
+]

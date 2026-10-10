@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Battlemat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <section class="board-wrap">
+      <div id="board"></div>
+    </section>
+
+    <aside class="panel">
+      <h1>Battlemat</h1>
+      <p id="role" class="role"></p>
+
+      <section>
+        <h2>Add to map</h2>
+        <div id="roster" class="roster"></div>
+      </section>
+
+      <section>
+        <h2>Distance</h2>
+        <p id="distance" class="distance"></p>
+      </section>
+
+      <section>
+        <h2>Selected token</h2>
+        <div id="detail"></div>
+      </section>
+    </aside>
+  </main>
+
+  <script src="/vendor/konva/konva.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="rules.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

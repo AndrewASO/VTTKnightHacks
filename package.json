@@ -1,0 +1,14 @@
+{
+  "name": "battlemat",
+  "version": "0.1.0",
+  "description": "Hackathon VTT with automated 5e combat: grid, tokens, distance",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "konva": "^9.3.0",
+    "socket.io": "^4.7.5"
+  }
+}
